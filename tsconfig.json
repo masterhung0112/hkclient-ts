@@ -18,8 +18,9 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./",
     "rootDir": "./src",
+    "alwaysStrict": true,
     "removeComments": true,
     "noEmit": false,
     "importHelpers": true,
@@ -42,10 +43,22 @@
       ],
       "test/*": [
         "src/test/*"
+      ],
+      "*": [
+        "src/*",
+        "node_modules/*"
       ]
     },
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "plugins": [
+      { 
+        "transform": "@zerollup/ts-transform-paths",
+        "exclude": [
+          "*"
+        ] 
+      }
+    ],
   }
 }

@@ -11,14 +11,15 @@ import serviceReducer from '../reducers'
 import devTools from 'remote-redux-devtools'
 import reducerRegistry from './reducer_registry'
 
-const windowAny = window as any
+// const windowAny = window as any
 
 const devToolsEnhancer =
-  typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-    ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-    : () => {
+  // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
+    // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
+    // : 
+    () => {
         return devTools({
-          name: 'Mattermost',
+          name: 'hkclient-ts',
           hostname: 'localhost',
           port: 5678,
           realtime: true,

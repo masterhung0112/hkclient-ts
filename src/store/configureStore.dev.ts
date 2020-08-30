@@ -8,23 +8,34 @@ import { createOffline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import serviceReducer from '../reducers'
-import devTools from 'remote-redux-devtools'
 import reducerRegistry from './reducer_registry'
 
 // const windowAny = window as any
 
-const devToolsEnhancer =
-  // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-    // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-    // : 
-    () => {
-        return devTools({
-          name: 'hkclient-ts',
-          hostname: 'localhost',
-          port: 5678,
-          realtime: true,
-        })
-      }
+// const devToolsEnhancer =
+//   // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
+//     // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
+//     // : 
+//     () => {
+//         return devTools({
+//           name: 'hkclient-ts',
+//           hostname: 'localhost',
+//           port: 5678,
+//           realtime: true,
+//         })
+//       }
+
+function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
+  const loadReduxDevtools = process.env.NODE_ENV !== 'test'
+
+  if (loadReduxDevtools) {
+    const { composeWithDevTools } = require('redux-devtools-extension')
+    return composeWithDevTools(redux.applyMiddleware(offlineConfigMiddleware, ...createMiddleware(clientOptions)))
+  }
+
+  return redux.applyMiddleware(...createMiddleware(clientOptions))
+
+}
 
 export default function configureServiceStore(
   preloadedState: any,
@@ -36,15 +47,14 @@ export default function configureServiceStore(
   const baseOfflineConfig = Object.assign({}, defaultOfflineConfig, offlineConfig, userOfflineConfig)
   const baseState = Object.assign({}, initialState, preloadedState)
 
-  const loadReduxDevtools = process.env.NODE_ENV !== 'test'
   const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
 
-  const composeEnhancers = loadReduxDevtools ? devToolsEnhancer() : redux.compose
+  // const composeEnhancers = loadReduxDevtools ? devToolsEnhancer() : redux.compose
 
   const store = redux.createStore(
     enhanceReducer(createDevReducer(baseState, serviceReducer, appReducer)),
     baseState,
-    composeEnhancers(redux.applyMiddleware(middleware, ...createMiddleware(clientOptions)), enhanceStore)
+    redux.compose(bindMiddlware(middleware, clientOptions), enhanceStore)
   )
 
   reducerRegistry.setChangeListener((reducers: any) => {

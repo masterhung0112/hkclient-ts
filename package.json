@@ -28,17 +28,17 @@
     "build": "echo 0",
     "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet 'src/**/*.ts' 'src/**/*.test.ts'",
     "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet 'src/**/*.ts' 'src/**/*.test.ts' --fix",
-    "dev": "ttsc --outDir ${WEBAPP_DIR:-../hungknow-webapp}/node_modules/hkclient-ts",
-    "dev:watch": "ttsc --watch --outDir ${WEBAPP_DIR:-../hungknow-webapp}/node_modules/hkclient-ts"
+    "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",
+    "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.6.0",
     "cross-fetch": "^3.0.5",
     "redux": "^4.0.5",
     "redux-action-buffer": "^1.2.0",
+    "redux-devtools-extension": "^2.13.8",
     "redux-persist": "4.9.1",
     "redux-persist-node-storage": "^2.0.0",
-    "redux-thunk": "^2.3.0",
-    "remote-redux-devtools": "^0.5.16"
+    "redux-thunk": "^2.3.0"
   }
 }

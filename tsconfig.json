@@ -29,20 +29,38 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
+      "types": [
+        "src/types"
+      ],
       "types/*": [
         "src/types/*"
+      ],
+      "store": [
+        "src/store"
       ],
       "store/*": [
         "src/store/*"
       ],
+      "utils": [
+        "src/utils"
+      ],
       "utils/*": [
         "src/utils/*"
+      ],
+      "hkclient": [
+        "src/hkclient"
       ],
       "hkclient/*": [
         "src/hkclient/*"
       ],
       "test/*": [
         "src/test/*"
+      ],
+      "action-types": [
+        "src/action-types"
+      ],
+      "action-types/*": [
+        "src/action-types/*"
       ],
       "*": [
         "src/*",

@@ -17,6 +17,7 @@ module.exports = async () => {
       '^hkclient/(.*)$': '<rootDir>/src/hkclient/$1',
       '^utils/(.*)$': '<rootDir>/src/utils/$1',
       '^test/(.*)$': '<rootDir>/src/test/$1',
+      '^action-types/(.*)$': '<rootDir>/src/action-types/$1',
     },
   }
 }

@@ -52,3 +52,9 @@ export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
     return reduce(state, action)
   }
 }
+
+export const BATCH = 'BATCHING_REDUCER.BATCH'
+
+export function batchActions(actions: Action[], type = BATCH) {
+  return {type, meta: {batch: true}, payload: actions}
+}

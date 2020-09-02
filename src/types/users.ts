@@ -1,3 +1,5 @@
+import { IDMappedObjects } from './utilities'
+
 export type UserProfile = {
   id: string
   create_at: number
@@ -34,4 +36,5 @@ export type UserProfile = {
 
 export type UsersState = {
   currentUserId: string
+  profiles: IDMappedObjects<UserProfile>
 }

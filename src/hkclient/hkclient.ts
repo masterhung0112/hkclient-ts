@@ -5,6 +5,7 @@ import { ServerError } from 'types/errors'
 import { cleanUrlForLogging } from 'utils/sentry'
 import { buildQueryString } from 'utils/helpers'
 import fetch from 'cross-fetch'
+import { ClientConfig } from 'types/config'
 
 const HEADER_AUTH = 'Authorization'
 const HEADER_BEARER = 'BEARER'
@@ -92,6 +93,13 @@ export default class HkClient {
   getMe = () => {
     return this.doFetch<UserProfile>(`${this.getUserRoute('me')}`, { method: 'get' })
   }
+
+  getClientConfigOld = () => {
+      return this.doFetch<ClientConfig>(
+          `${this.baseRoute}/config/client?format=old`,
+          {method: 'get'},
+      );
+  };
 
   /********
    * Client Helpers

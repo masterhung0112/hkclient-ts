@@ -144,9 +144,17 @@ export default class HkClient {
 
     let data
     try {
-      data = response.json()
+      data = await response.json()
     } catch (err) {
       // Throw exception when fail to convert message into json
+      throw new ClientError(this.url, {
+        message: 'Received invalid response from the server.',
+        intl: {
+            id: 'mobile.request.invalid_response',
+            defaultMessage: 'Received invalid response from the server.',
+        },
+        url,
+      });
     }
 
     if (headers.has(HEADER_X_VERSION_ID) && !headers.get('Cache-Control')) {

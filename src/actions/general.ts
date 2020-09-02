@@ -3,6 +3,11 @@ import { HkClient } from 'hkclient';
 import { forceLogoutIfNecessary } from './helpers';
 import { GeneralTypes } from 'action-types';
 
+export function setUrl(url: string): boolean {
+    HkClient.url = url
+    return true
+}
+
 export function getClientConfig(): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         let data;

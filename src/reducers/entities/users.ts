@@ -1,5 +1,7 @@
 import { GenericAction } from 'types/actions'
 import { combineReducers } from 'redux'
+import { IDMappedObjects } from 'types/utilities'
+import { UserProfile } from 'types/users'
 
 function currentUserId(state = '', action: GenericAction) {
   //   switch (action.type) {
@@ -22,7 +24,15 @@ function currentUserId(state = '', action: GenericAction) {
   return state
 }
 
+
+function profiles(state: IDMappedObjects<UserProfile> = {}, action: GenericAction) {
+  return state
+}
+
 export default combineReducers({
   // the current selected user
   currentUserId,
+
+  // object where every key is a user id and has an object with the users details
+  profiles,
 })

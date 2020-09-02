@@ -61,6 +61,18 @@ export default function configureServiceStore(
     store.replaceReducer(enhanceReducer(createDevReducer(baseState, reducers)))
   })
 
+  if ((module as any).hot) {
+    // Enable Webpack hot module replacement for reducers
+    (module as any).hot.accept(() => {
+        const nextServiceReducer = require('../reducers').default; // eslint-disable-line global-require
+        let nextAppReducer;
+        if (getAppReducer) {
+            nextAppReducer = getAppReducer(); // eslint-disable-line global-require
+        }
+        store.replaceReducer(createDevReducer(baseState, reducerRegistry.getReducers(), nextServiceReducer, nextAppReducer));
+    });
+  }
+
   return store
 }
 

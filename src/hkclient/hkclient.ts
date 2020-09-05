@@ -17,12 +17,32 @@ export const HEADER_X_VERSION_ID = 'X-Version-Id'
 
 export default class HkClient {
   logToConsole = false
+  userIdValue = ''
+  userRolesVal?: string;
+
   serverVersionVal = ''
   urlVal = ''
   urlVersion = '/api/v1'
   defaultHeaders: { [x: string]: string } = {}
   token = ''
   includeCookies = true
+  enableLogging = false
+
+  set userId(userId: string) {
+    this.userIdValue = userId
+  }
+
+  get userId() {
+    return this.userIdValue
+  }
+
+  set userRoles(roles: string) {
+    this.userRolesVal = roles
+  }
+
+  get userRoles() {
+    return this.userRolesVal
+  }
 
   get url() {
     return this.urlVal
@@ -184,6 +204,24 @@ export default class HkClient {
       status_code: data.status_code,
       url,
     })
+  }
+
+  logClientError = (message: string, level = 'ERROR') => {
+    const url = `${this.baseRoute}/logs`;
+
+    if (!this.enableLogging) {
+        throw new ClientError(this.url, {
+            message: 'Logging disabled.',
+            url,
+        });
+    }
+
+    return this.doFetch<{
+        message: string;
+    }>(
+        url,
+        {method: 'post', body: JSON.stringify({message, level})},
+    );
   }
 }
 

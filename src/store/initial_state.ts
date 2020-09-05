@@ -11,6 +11,11 @@ const state: GlobalState = {
       currentUserId: '',
       profiles: {},
     },
+    teams: {
+      currentTeamId: '',
+      teams: {},
+      myMembers: {}
+    }
   },
   // errors: [],
 }

@@ -39,6 +39,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "4.9.1",
     "redux-persist-node-storage": "^2.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serialize-error": "^7.0.1"
   }
 }

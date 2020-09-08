@@ -3,6 +3,8 @@ import { HkClient } from 'hkclient';
 import { getConfig } from 'selectors/entities/general';
 import { UserTypes } from 'action-types';
 import { bindClientFunc } from './helpers';
+import { getMyPreferences } from './preferences';
+import { loadRolesIfNeeded } from './roles';
 
 export function loadMe(): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -18,9 +20,9 @@ export function loadMe(): ActionFunc {
         const promises = [
             dispatch(getMe()),
             dispatch(getMyPreferences()),
-            dispatch(getMyTeams()),
-            dispatch(getMyTeamMembers()),
-            dispatch(getMyTeamUnreads()),
+            // dispatch(getMyTeams()),
+            // dispatch(getMyTeamMembers()),
+            // dispatch(getMyTeamUnreads()),
         ];
 
         // Sometimes the server version is set in one or the other

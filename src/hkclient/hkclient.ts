@@ -6,6 +6,7 @@ import { cleanUrlForLogging } from 'utils/sentry'
 import { buildQueryString } from 'utils/helpers'
 import fetch from 'cross-fetch'
 import { ClientConfig } from 'types/config'
+import { PreferenceType } from 'types/preferences'
 
 const HEADER_AUTH = 'Authorization'
 const HEADER_BEARER = 'BEARER'
@@ -72,6 +73,10 @@ export default class HkClient {
     return `${this.usersRoute}/${userId}`
   }
 
+  getPreferencesRoute(userId: string) {
+    return `${this.getUserRoute(userId)}/preferences`;
+  }
+
   /***
    * User Routes
    */
@@ -120,6 +125,13 @@ export default class HkClient {
           {method: 'get'},
       );
   };
+
+  getMyPreferences = () => {
+    return this.doFetch<PreferenceType>(
+        `${this.getPreferencesRoute('me')}`,
+        {method: 'get'},
+    );
+  }
 
   /********
    * Client Helpers

@@ -29,6 +29,7 @@ class TestHelper {
     this.basicClient = hkClient
 
     this.activateMocking()
+    this.initMockEntities()
 
     return {
       hkclient: this.basicClient,
@@ -82,7 +83,7 @@ class TestHelper {
         update_at: 1507840900004,
         delete_at: 0,
     };
-}
+  }
 
   initMockEntities = () => {
     this.basicUser = this.fakeUserWithId();

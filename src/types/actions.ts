@@ -1,5 +1,5 @@
 import { GlobalState } from './store'
-import { Reducer } from 'redux'
+import { Reducer, Dispatch } from 'redux'
 
 export type GetStateFunc = () => GlobalState
 export type GenericAction = {
@@ -57,4 +57,16 @@ export const BATCH = 'BATCHING_REDUCER.BATCH'
 
 export function batchActions(actions: Action[], type = BATCH) {
   return {type, meta: {batch: true}, payload: actions}
+}
+
+declare module 'redux' {
+  /*
+  * Overload to add thunk support to Redux's dispatch() function.
+  * Useful for react-redux or any other library which could use this type.
+  */
+ export interface Dispatch<A extends Action = AnyAction> {
+   <TReturnType = any>(
+     actionFunc: ActionFunc,
+   ): TReturnType;
+ }
 }

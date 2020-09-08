@@ -1,3 +1,4 @@
 export type ClientConfig = {
-    DiagnosticId: string;
+    DiagnosticId: string
+    DefaultClientLocale: string
 }

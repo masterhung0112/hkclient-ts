@@ -6,6 +6,7 @@ const state: GlobalState = {
       // appState: false,
       // credentials: {},
       config: {},
+      serverVersion: '',
     },
     users: {
       currentUserId: '',
@@ -15,6 +16,10 @@ const state: GlobalState = {
       currentTeamId: '',
       teams: {},
       myMembers: {}
+    },
+    roles: {
+      roles: {},
+      pending: new Set(),
     }
   },
   // errors: [],

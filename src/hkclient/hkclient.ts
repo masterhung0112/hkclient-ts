@@ -7,6 +7,7 @@ import { buildQueryString } from 'utils/helpers'
 import fetch from 'cross-fetch'
 import { ClientConfig } from 'types/config'
 import { PreferenceType } from 'types/preferences'
+import { Role } from 'types/roles'
 
 const HEADER_AUTH = 'Authorization'
 const HEADER_BEARER = 'BEARER'
@@ -77,6 +78,10 @@ export default class HkClient {
     return `${this.getUserRoute(userId)}/preferences`;
   }
 
+  get rolesRoute() {
+    return `${this.baseRoute}/roles`
+  }
+
   /***
    * User Routes
    */
@@ -130,6 +135,13 @@ export default class HkClient {
     return this.doFetch<PreferenceType>(
         `${this.getPreferencesRoute('me')}`,
         {method: 'get'},
+    );
+  }
+
+  getRolesByNames = (rolesNames: string[]) => {
+    return this.doFetch<Role[]>(
+        `${this.rolesRoute}/names`,
+        {method: 'post', body: JSON.stringify(rolesNames)},
     );
   }
 

@@ -1,7 +1,7 @@
 import nock from 'nock'
 import HkClient from 'hkclient/hkclient'
 import { generateId } from 'utils/helpers'
-import { DEFAULT_LOCALE } from 'constants/general'
+import { General } from '../constants'
 
 export const DEFAULT_SERVER = 'http://localhost:8065'
 const PASSWORD = 'password1'
@@ -64,7 +64,7 @@ class TestHelper {
         email: this.fakeEmail(),
         allow_marketing: true,
         password: PASSWORD,
-        locale: DEFAULT_LOCALE,
+        locale: General.DEFAULT_LOCALE,
         username: this.generateId(),
         first_name: this.generateId(),
         last_name: this.generateId(),

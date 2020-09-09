@@ -8,6 +8,7 @@ import fetch from 'cross-fetch'
 import { ClientConfig } from 'types/config'
 import { PreferenceType } from 'types/preferences'
 import { Role } from 'types/roles'
+import { Channel, ChannelMembership } from 'types/channels'
 
 const HEADER_AUTH = 'Authorization'
 const HEADER_BEARER = 'BEARER'
@@ -82,6 +83,22 @@ export default class HkClient {
     return `${this.baseRoute}/roles`
   }
 
+  getChannelsRoute() {
+    return `${this.baseRoute}/channels`;
+  }
+
+  getChannelRoute(channelId: string) {
+    return `${this.getChannelsRoute()}/${channelId}`;
+  }
+
+  getChannelMembersRoute(channelId: string) {
+    return `${this.getChannelRoute(channelId)}/members`;
+  }
+
+  getChannelMemberRoute(channelId: string, userId: string) {
+    return `${this.getChannelMembersRoute(channelId)}/${userId}`;
+  }
+
   /***
    * User Routes
    */
@@ -142,6 +159,27 @@ export default class HkClient {
     return this.doFetch<Role[]>(
         `${this.rolesRoute}/names`,
         {method: 'post', body: JSON.stringify(rolesNames)},
+    );
+  }
+
+  getMyChannels = (teamId: string, includeDeleted = false) => {
+    return this.doFetch<Channel[]>(
+        `${this.getUserRoute('me')}/teams/${teamId}/channels${buildQueryString({include_deleted: includeDeleted})}`,
+        {method: 'get'},
+    );
+  }
+
+  getMyChannelMember = (channelId: string) => {
+    return this.doFetch<ChannelMembership>(
+        `${this.getChannelMemberRoute(channelId, 'me')}`,
+        {method: 'get'},
+    );
+  }
+
+  getMyChannelMembers = (teamId: string) => {
+    return this.doFetch<ChannelMembership[]>(
+        `${this.getUserRoute('me')}/teams/${teamId}/channels/members`,
+        {method: 'get'},
     );
   }
 

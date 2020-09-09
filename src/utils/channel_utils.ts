@@ -3,6 +3,7 @@ import { General } from '../constants';
 import { UsersState, UserProfile } from 'types/users';
 import { displayUsername } from './user_utils';
 import { IDMappedObjects } from 'types/utilities';
+import { GlobalState } from 'types/store';
 
 export function isDirectChannel(channel: Channel): boolean {
     return channel.type === General.DM_CHANNEL;
@@ -92,4 +93,15 @@ function completeDirectGroupInfo(usersState: UsersState, teammateNameDisplay: st
     }
 
     return channel;
+}
+
+export function getChannelsIdForTeam(state: GlobalState, teamId: string): Array<string> {
+    const {channels} = state.entities.channels;
+
+    return Object.keys(channels).map((key) => channels[key]).reduce((res, channel: Channel) => {
+        if (channel.team_id === teamId) {
+            res.push(channel.id);
+        }
+        return res;
+    }, [] as string[]);
 }

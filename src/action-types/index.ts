@@ -3,6 +3,7 @@ import GeneralTypes from './general'
 import ErrorTypes from './errors'
 import PreferenceTypes from './preferences'
 import RoleTypes from './roles'
+import ChannelTypes from './channels'
 
 export {
     GeneralTypes,
@@ -10,4 +11,5 @@ export {
     PreferenceTypes,
     ErrorTypes,
     RoleTypes,
+    ChannelTypes,
 }

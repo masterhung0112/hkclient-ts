@@ -18,3 +18,7 @@ export function hasNewPermissions(state: GlobalState): boolean {
            (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 4, 8, 0)) ||
            (version.match(/^4.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 4, 8, 0))
 }
+
+export const getServerVersion = (state: GlobalState): string => {
+    return state.entities.general.serverVersion;
+}

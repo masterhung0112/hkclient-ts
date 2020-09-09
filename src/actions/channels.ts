@@ -1,6 +1,6 @@
 import { ActionFunc, DispatchFunc, GetStateFunc, batchActions } from 'types/actions';
 import { isMinimumServerVersion } from 'utils/helpers';
-import { forceLogoutIfNecessary } from './helpers';
+import { forceLogoutIfNecessary, bindClientFunc } from './helpers';
 import { logError } from './errors';
 import { loadRolesIfNeeded } from './roles';
 import { HkClient } from 'hkclient';
@@ -74,5 +74,38 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
         }
 
         return {data: {channels, members: channelMembers}};
+    };
+}
+
+export function getMyChannelMember(channelId: string) {
+    return bindClientFunc({
+        clientFunc: HkClient.getMyChannelMember,
+        onSuccess: ChannelTypes.RECEIVED_MY_CHANNEL_MEMBER,
+        params: [
+            channelId,
+        ],
+    });
+}
+
+export function getChannelByNameAndTeamName(teamName: string, channelName: string, includeDeleted = false): ActionFunc {
+    return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+        let data;
+        try {
+            data = await HkClient.getChannelByNameAndTeamName(teamName, channelName, includeDeleted);
+        } catch (error) {
+            forceLogoutIfNecessary(error, dispatch, getState);
+            dispatch(batchActions([
+                {type: ChannelTypes.CHANNELS_FAILURE, error},
+                logError(error),
+            ]));
+            return {error};
+        }
+
+        dispatch({
+            type: ChannelTypes.RECEIVED_CHANNEL,
+            data,
+        });
+
+        return {data};
     };
 }

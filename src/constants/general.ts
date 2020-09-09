@@ -6,6 +6,7 @@ export default {
     SHOW_NICKNAME_FULLNAME: 'nickname_full_name',
     SHOW_FULLNAME: 'full_name',
   },
+  DEFAULT_CHANNEL: 'town-square',
   DM_CHANNEL: 'D',
   GM_CHANNEL: 'G',
 }

@@ -99,6 +99,22 @@ export default class HkClient {
     return `${this.getChannelMembersRoute(channelId)}/${userId}`;
   }
 
+  getTeamsRoute() {
+    return `${this.baseRoute}/teams`;
+  }
+
+  getTeamRoute(teamId: string) {
+      return `${this.getTeamsRoute()}/${teamId}`;
+  }
+
+  getTeamSchemeRoute(teamId: string) {
+      return `${this.getTeamRoute(teamId)}/scheme`;
+  }
+
+  getTeamNameRoute(teamName: string) {
+      return `${this.getTeamsRoute()}/name/${teamName}`;
+  }
+
   /***
    * User Routes
    */
@@ -179,6 +195,15 @@ export default class HkClient {
   getMyChannelMembers = (teamId: string) => {
     return this.doFetch<ChannelMembership[]>(
         `${this.getUserRoute('me')}/teams/${teamId}/channels/members`,
+        {method: 'get'},
+    );
+  }
+
+  getChannelByNameAndTeamName = (teamName: string, channelName: string, includeDeleted = false) => {
+    // this.trackEvent('api', 'api_channel_get_by_name_and_teamName', {include_deleted: includeDeleted});
+
+    return this.doFetch<Channel>(
+        `${this.getTeamNameRoute(teamName)}/channels/name/${channelName}?include_deleted=${includeDeleted}`,
         {method: 'get'},
     );
   }

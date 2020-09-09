@@ -105,3 +105,12 @@ export function getChannelsIdForTeam(state: GlobalState, teamId: string): Array<
         return res;
     }, [] as string[]);
 }
+
+export function sortChannelsByDisplayName(locale: string, a: Channel, b: Channel): number {
+    // if both channels have the display_name defined
+    if (a.display_name && b.display_name && a.display_name !== b.display_name) {
+        return a.display_name.toLowerCase().localeCompare(b.display_name.toLowerCase(), locale, {numeric: true});
+    }
+
+    return a.name.toLowerCase().localeCompare(b.name.toLowerCase(), locale, {numeric: true});
+}

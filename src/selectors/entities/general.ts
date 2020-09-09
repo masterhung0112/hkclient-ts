@@ -6,6 +6,10 @@ export function getConfig(state: GlobalState): Partial<ClientConfig> {
     return state.entities.general.config;
 }
 
+export function getLicense(state: GlobalState): any {
+    return state.entities.general.license;
+}
+
 export function hasNewPermissions(state: GlobalState): boolean {
     const version = state.entities.general.serverVersion;
 

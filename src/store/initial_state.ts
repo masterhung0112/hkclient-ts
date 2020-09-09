@@ -7,10 +7,13 @@ const state: GlobalState = {
       // credentials: {},
       config: {},
       serverVersion: '',
+      license: {},
     },
     users: {
       currentUserId: '',
       profiles: {},
+      statuses: {},
+      profilesInChannel: {},
     },
     teams: {
       currentTeamId: '',

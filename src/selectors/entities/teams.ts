@@ -1,6 +1,6 @@
 import { GlobalState } from 'types/store';
 import { createSelector } from 'reselect'
-import { Team } from 'types/teams';
+import { Team, TeamMembership } from 'types/teams';
 import { IDMappedObjects } from 'types/utilities';
 
 export function getTeams(state: GlobalState): IDMappedObjects<Team> {
@@ -23,3 +23,20 @@ export function getTeam(state: GlobalState, id: string): Team {
     const teams = getTeams(state);
     return teams[id];
 }
+
+export const getMyTeamMember: (state: GlobalState, teamId: string) => TeamMembership = createSelector(
+    getTeamMemberships,
+    (state: GlobalState, teamId: string) => teamId,
+    (teamMemberships, teamId) => {
+        return teamMemberships[teamId] || {
+            mention_count: 0,
+            msg_count: 0,
+            team_id: '',
+            user_id: '',
+            roles: '',
+            delete_at: 0,
+            scheme_user: false,
+            scheme_admin: false
+        };
+    },
+)

@@ -1,6 +1,6 @@
 {
   "include": [
-    "src"
+    "src", "index.d.ts"
   ],
   "exclude": [
     "node_modules",
@@ -61,6 +61,12 @@
       ],
       "action-types/*": [
         "src/action-types/*"
+      ],
+      "constants": [
+        "src/constants"
+      ],
+      "constants/*": [
+        "src/constants/*"
       ],
       "*": [
         "src/*",

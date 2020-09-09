@@ -1,4 +1,5 @@
-import { IDMappedObjects } from './utilities'
+import { IDMappedObjects, RelationOneToOne, RelationOneToMany } from './utilities'
+import { Channel } from './channels'
 
 export type UserProfile = {
   id: string
@@ -37,4 +38,6 @@ export type UserProfile = {
 export type UsersState = {
   currentUserId: string
   profiles: IDMappedObjects<UserProfile>
+  profilesInChannel: RelationOneToMany<Channel, UserProfile>
+  statuses: RelationOneToOne<UserProfile, string>
 }

@@ -12,6 +12,7 @@
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
     "@zerollup/ts-transform-paths": "^1.7.18",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -26,8 +27,8 @@
   },
   "scripts": {
     "build": "echo 0",
-    "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet 'src/**/*.ts' 'src/**/*.test.ts'",
-    "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet 'src/**/*.ts' 'src/**/*.test.ts' --fix",
+    "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
+    "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
     "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",
     "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts"
   },
@@ -39,6 +40,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "4.9.1",
     "redux-persist-node-storage": "^2.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "serialize-error": "^7.0.1"
   }
 }

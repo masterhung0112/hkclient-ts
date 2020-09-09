@@ -6,11 +6,37 @@ const state: GlobalState = {
       // appState: false,
       // credentials: {},
       config: {},
+      serverVersion: '',
+      license: {},
     },
     users: {
       currentUserId: '',
       profiles: {},
+      statuses: {},
+      profilesInChannel: {},
     },
+    teams: {
+      currentTeamId: '',
+      teams: {},
+      myMembers: {}
+    },
+    channels: {
+      currentChannelId: '',
+      channels: {},
+      channelsInTeam: {},
+      myMembers: {},
+      membersInChannel: {},
+      stats: {},
+      groupsAssociatedToChannel: {},
+      totalCount: 0,
+      manuallyUnread: {},
+      channelModerations: {},
+      channelMemberCountsByGroup: {},
+    },
+    roles: {
+      roles: {},
+      pending: new Set(),
+    }
   },
   // errors: [],
 }

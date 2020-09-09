@@ -6,6 +6,9 @@ import { cleanUrlForLogging } from 'utils/sentry'
 import { buildQueryString } from 'utils/helpers'
 import fetch from 'cross-fetch'
 import { ClientConfig } from 'types/config'
+import { PreferenceType } from 'types/preferences'
+import { Role } from 'types/roles'
+import { Channel, ChannelMembership } from 'types/channels'
 
 const HEADER_AUTH = 'Authorization'
 const HEADER_BEARER = 'BEARER'
@@ -17,12 +20,32 @@ export const HEADER_X_VERSION_ID = 'X-Version-Id'
 
 export default class HkClient {
   logToConsole = false
+  userIdValue = ''
+  userRolesVal?: string;
+
   serverVersionVal = ''
   urlVal = ''
   urlVersion = '/api/v1'
   defaultHeaders: { [x: string]: string } = {}
   token = ''
   includeCookies = true
+  enableLogging = false
+
+  set userId(userId: string) {
+    this.userIdValue = userId
+  }
+
+  get userId() {
+    return this.userIdValue
+  }
+
+  set userRoles(roles: string) {
+    this.userRolesVal = roles
+  }
+
+  get userRoles() {
+    return this.userRolesVal
+  }
 
   get url() {
     return this.urlVal
@@ -50,6 +73,46 @@ export default class HkClient {
 
   getUserRoute(userId: string) {
     return `${this.usersRoute}/${userId}`
+  }
+
+  getPreferencesRoute(userId: string) {
+    return `${this.getUserRoute(userId)}/preferences`;
+  }
+
+  get rolesRoute() {
+    return `${this.baseRoute}/roles`
+  }
+
+  getChannelsRoute() {
+    return `${this.baseRoute}/channels`;
+  }
+
+  getChannelRoute(channelId: string) {
+    return `${this.getChannelsRoute()}/${channelId}`;
+  }
+
+  getChannelMembersRoute(channelId: string) {
+    return `${this.getChannelRoute(channelId)}/members`;
+  }
+
+  getChannelMemberRoute(channelId: string, userId: string) {
+    return `${this.getChannelMembersRoute(channelId)}/${userId}`;
+  }
+
+  getTeamsRoute() {
+    return `${this.baseRoute}/teams`;
+  }
+
+  getTeamRoute(teamId: string) {
+      return `${this.getTeamsRoute()}/${teamId}`;
+  }
+
+  getTeamSchemeRoute(teamId: string) {
+      return `${this.getTeamRoute(teamId)}/scheme`;
+  }
+
+  getTeamNameRoute(teamName: string) {
+      return `${this.getTeamsRoute()}/name/${teamName}`;
   }
 
   /***
@@ -100,6 +163,50 @@ export default class HkClient {
           {method: 'get'},
       );
   };
+
+  getMyPreferences = () => {
+    return this.doFetch<PreferenceType>(
+        `${this.getPreferencesRoute('me')}`,
+        {method: 'get'},
+    );
+  }
+
+  getRolesByNames = (rolesNames: string[]) => {
+    return this.doFetch<Role[]>(
+        `${this.rolesRoute}/names`,
+        {method: 'post', body: JSON.stringify(rolesNames)},
+    );
+  }
+
+  getMyChannels = (teamId: string, includeDeleted = false) => {
+    return this.doFetch<Channel[]>(
+        `${this.getUserRoute('me')}/teams/${teamId}/channels${buildQueryString({include_deleted: includeDeleted})}`,
+        {method: 'get'},
+    );
+  }
+
+  getMyChannelMember = (channelId: string) => {
+    return this.doFetch<ChannelMembership>(
+        `${this.getChannelMemberRoute(channelId, 'me')}`,
+        {method: 'get'},
+    );
+  }
+
+  getMyChannelMembers = (teamId: string) => {
+    return this.doFetch<ChannelMembership[]>(
+        `${this.getUserRoute('me')}/teams/${teamId}/channels/members`,
+        {method: 'get'},
+    );
+  }
+
+  getChannelByNameAndTeamName = (teamName: string, channelName: string, includeDeleted = false) => {
+    // this.trackEvent('api', 'api_channel_get_by_name_and_teamName', {include_deleted: includeDeleted});
+
+    return this.doFetch<Channel>(
+        `${this.getTeamNameRoute(teamName)}/channels/name/${channelName}?include_deleted=${includeDeleted}`,
+        {method: 'get'},
+    );
+  }
 
   /********
    * Client Helpers
@@ -184,6 +291,24 @@ export default class HkClient {
       status_code: data.status_code,
       url,
     })
+  }
+
+  logClientError = (message: string, level = 'ERROR') => {
+    const url = `${this.baseRoute}/logs`;
+
+    if (!this.enableLogging) {
+        throw new ClientError(this.url, {
+            message: 'Logging disabled.',
+            url,
+        });
+    }
+
+    return this.doFetch<{
+        message: string;
+    }>(
+        url,
+        {method: 'post', body: JSON.stringify({message, level})},
+    );
   }
 }
 

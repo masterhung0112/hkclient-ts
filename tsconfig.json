@@ -62,6 +62,12 @@
       "action-types/*": [
         "src/action-types/*"
       ],
+      "actions": [
+        "src/actions"
+      ],
+      "actions/*": [
+        "src/actions/*"
+      ],
       "constants": [
         "src/constants"
       ],

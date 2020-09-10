@@ -66,3 +66,23 @@ export function getMe(): ActionFunc {
         return me;
     };
 }
+
+export function getUserByUsername(username: string): ActionFunc {
+    return bindClientFunc({
+        clientFunc: HkClient.getUserByUsername,
+        onSuccess: UserTypes.RECEIVED_PROFILE,
+        params: [
+            username,
+        ],
+    });
+}
+
+export function getUserByEmail(email: string): ActionFunc {
+    return bindClientFunc({
+        clientFunc: HkClient.getUserByEmail,
+        onSuccess: UserTypes.RECEIVED_PROFILE,
+        params: [
+            email,
+        ],
+    });
+}

@@ -74,6 +74,12 @@
       "constants/*": [
         "src/constants/*"
       ],
+      "selectors": [
+        "src/selectors"
+      ],
+      "selectors/*": [
+        "src/selectors/*"
+      ],
       "*": [
         "src/*",
         "node_modules/*"

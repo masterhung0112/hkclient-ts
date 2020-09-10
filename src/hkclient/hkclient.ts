@@ -157,6 +157,20 @@ export default class HkClient {
     return this.doFetch<UserProfile>(`${this.getUserRoute('me')}`, { method: 'get' })
   }
 
+  getUserByUsername = (username: string) => {
+    return this.doFetch<UserProfile>(
+        `${this.usersRoute}/username/${username}`,
+        {method: 'get'},
+    );
+  }
+
+  getUserByEmail = (email: string) => {
+    return this.doFetch<UserProfile>(
+        `${this.usersRoute}/email/${email}`,
+        {method: 'get'},
+    );
+  }
+
   getClientConfigOld = () => {
       return this.doFetch<ClientConfig>(
           `${this.baseRoute}/config/client?format=old`,

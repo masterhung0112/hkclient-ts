@@ -6,8 +6,8 @@ const state: GlobalState = {
       // appState: false,
       // credentials: {},
       config: {},
-      serverVersion: '',
       license: {},
+      serverVersion: '',
     },
     users: {
       currentUserId: '',

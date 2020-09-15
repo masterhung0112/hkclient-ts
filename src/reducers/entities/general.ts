@@ -1,10 +1,24 @@
-import { ClientConfig } from 'types/config'
+import { ClientConfig, ClientLicense } from 'types/config'
 import { GenericAction } from 'types/actions'
 import { combineReducers } from 'redux'
 import { UserTypes, GeneralTypes } from 'action-types';
 
 function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
     return state
+}
+
+function license(state: ClientLicense = {}, action: GenericAction) {
+    switch (action.type) {
+    // case GeneralTypes.CLIENT_LICENSE_RECEIVED:
+    //     return action.data;
+    // case GeneralTypes.SET_CONFIG_AND_LICENSE:
+    //     return Object.assign({}, state, action.data.license);
+    // case GeneralTypes.CLIENT_LICENSE_RESET:
+    case UserTypes.LOGOUT_SUCCESS:
+        return {};
+    default:
+        return state;
+    }
 }
 
 function serverVersion(state = '', action: GenericAction) {
@@ -18,7 +32,9 @@ function serverVersion(state = '', action: GenericAction) {
     }
 }
 
+
 export default combineReducers({
     config,
+    license,
     serverVersion,
 })

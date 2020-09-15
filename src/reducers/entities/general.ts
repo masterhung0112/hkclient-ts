@@ -4,6 +4,18 @@ import { combineReducers } from 'redux'
 import { UserTypes, GeneralTypes } from 'action-types';
 
 function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
+    switch (action.type) {
+        case GeneralTypes.CLIENT_CONFIG_RECEIVED:
+            return Object.assign({}, state, action.data);
+        // case UserTypes.LOGIN: // Used by the mobile app
+        // case GeneralTypes.SET_CONFIG_AND_LICENSE:
+        //     return Object.assign({}, state, action.data.config);
+        // case GeneralTypes.CLIENT_CONFIG_RESET:
+        case UserTypes.LOGOUT_SUCCESS:
+            return {};
+        default:
+            return state;
+        }
     return state
 }
 

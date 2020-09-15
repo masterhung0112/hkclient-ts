@@ -29,8 +29,8 @@ function currentUserId(state = '', action: GenericAction) {
 
 function profiles(state: IDMappedObjects<UserProfile> = {}, action: GenericAction) {
   switch (action.type) {
-  case UserTypes.RECEIVED_ME: {
-  // case UserTypes.RECEIVED_PROFILE: {
+  case UserTypes.RECEIVED_ME:
+  case UserTypes.RECEIVED_PROFILE: {
     const data = action.data || action.payload;
     const user = {...data};
     const oldUser = state[data.id];

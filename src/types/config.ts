@@ -5,6 +5,11 @@ export type ClientConfig = {
     TeammateNameDisplay: string
     LockTeammateNameDisplay: string
     NoAccounts: string
+    EnableSignUpWithEmail: string
+    SiteName: string
+    TermsOfServiceLink: string
+    PrivacyPolicyLink: string
+    CustomDescriptionText: string
 }
 
 export type ClientLicense = Record<string, string>

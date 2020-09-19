@@ -1,72 +1,92 @@
-import { GlobalState } from './store'
-import { Reducer, Dispatch } from 'redux'
+import { GlobalState } from "./store";
+import { Reducer, Dispatch, ActionCreator } from "redux";
 
-export type GetStateFunc = () => GlobalState
+export type GetStateFunc = () => GlobalState;
 export type GenericAction = {
-  type: string
-  data?: any
-  meta?: any
-  error?: any
-  index?: number
-  displayable?: boolean
-  postId?: string
-  sessionId?: string
-  currentUserId?: string
+  type: string;
+  data?: any;
+  meta?: any;
+  error?: any;
+  index?: number;
+  displayable?: boolean;
+  postId?: string;
+  sessionId?: string;
+  currentUserId?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  remove?: Function | string[]
-  timestamp?: number
-  [extraProps: string]: any
-}
-export type Thunk = (b: DispatchFunc, a: GetStateFunc) => Promise<ActionResult> | ActionResult
+  remove?: Function | string[];
+  timestamp?: number;
+  [extraProps: string]: any;
+};
+
+export type Thunk = (
+  b: DispatchFunc,
+  a: GetStateFunc
+) => Promise<ActionResult>;
 
 type BatchAction = {
-  type: 'BATCHING_REDUCER.BATCH'
-  payload: Array<GenericAction>
+  type: "BATCHING_REDUCER.BATCH";
+  payload: Array<GenericAction>;
   meta: {
-    batch: true
-  }
-}
+    batch: true;
+  };
+};
 
-export type ActionResult =
-  | {
-      data: any
-    }
-  | {
-      error: any
-    }
+export type ActionResult = {
+  error?: any
+  data?: any
+};
 
-export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResult>
+export type DispatchFunc = (
+  action: Action,
+  getState?: GetStateFunc | null
+) => Promise<ActionResult>;
 
 export type ActionFunc = (
   dispatch: DispatchFunc,
   getState: GetStateFunc
-) => Promise<ActionResult | ActionResult[]> | ActionResult
+) => Promise<ActionResult>;
 
-export type Action = GenericAction | Thunk | BatchAction | ActionFunc
+export type Action = GenericAction | Thunk | BatchAction | ActionFunc;
+
+export type ActionCreatorClient<T extends (...args: any[]) => any> = (...args: Parameters<T>) => ReturnType<ReturnType<T>>;
 
 export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
   return function batchingReducer(state, action) {
-    if (action && 'meta' in action && action.meta.batch) {
-      return action.payload.reduce(batchingReducer, state)
+    if (action && "meta" in action && action.meta.batch) {
+      return action.payload.reduce(batchingReducer, state);
     }
-    return reduce(state, action)
-  }
+    return reduce(state, action);
+  };
 }
 
-export const BATCH = 'BATCHING_REDUCER.BATCH'
+export const BATCH = "BATCHING_REDUCER.BATCH";
 
 export function batchActions(actions: Action[], type = BATCH) {
-  return {type, meta: {batch: true}, payload: actions}
+  return { type, meta: { batch: true }, payload: actions };
 }
 
-declare module 'redux' {
+export interface ExtActionCreator<A = ActionFunc> {
+  (...args: any[]): A
+}
+
+/**
+ * Object whose values are action creator functions.
+ */
+export interface ExtActionCreatorsMapObject<A = ActionFunc> {
+  [key: string]: ExtActionCreator<A>
+}
+
+declare module "redux" {
   /*
-  * Overload to add thunk support to Redux's dispatch() function.
-  * Useful for react-redux or any other library which could use this type.
-  */
- export interface Dispatch<A extends Action = AnyAction> {
-   <TReturnType = any>(
-     actionFunc: ActionFunc,
-   ): TReturnType;
- }
+   * Overload to add thunk support to Redux's dispatch() function.
+   * Useful for react-redux or any other library which could use this type.
+   */
+  export interface Dispatch<A extends Action = AnyAction> {
+    <TReturnType = any>(actionFunc: ActionFunc): TReturnType;
+  }
+
+  function bindActionCreators<A, M extends ExtActionCreatorsMapObject<any>>
+    (actionCreator: M, dispatch: DispatchFunc): {
+      [K in keyof M]: ActionCreatorClient<M[K]>
+    }
 }

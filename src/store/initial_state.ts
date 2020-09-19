@@ -7,6 +7,7 @@ const state: GlobalState = {
       // credentials: {},
       config: {},
       license: {},
+      deviceToken: '',
       serverVersion: '',
     },
     users: {

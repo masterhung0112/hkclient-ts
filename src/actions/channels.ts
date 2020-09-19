@@ -1,4 +1,4 @@
-import { ActionFunc, DispatchFunc, GetStateFunc, batchActions } from 'types/actions';
+import { ActionFunc, DispatchFunc, GetStateFunc, batchActions, Action } from 'types/actions';
 import { isMinimumServerVersion } from 'utils/helpers';
 import { forceLogoutIfNecessary, bindClientFunc } from './helpers';
 import { logError } from './errors';
@@ -8,7 +8,7 @@ import { ChannelTypes } from 'action-types';
 import { getChannelsIdForTeam } from 'utils/channel_utils';
 import { getServerVersion } from 'selectors/entities/general';
 
-export function selectChannel(channelId: string) {
+export function selectChannel(channelId: string): Action {
     return {
         type: ChannelTypes.SELECT_CHANNEL,
         data: channelId,
@@ -77,7 +77,7 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
     };
 }
 
-export function getMyChannelMember(channelId: string) {
+export function getMyChannelMember(channelId: string): ActionFunc {
     return bindClientFunc({
         clientFunc: HkClient.getMyChannelMember,
         onSuccess: ChannelTypes.RECEIVED_MY_CHANNEL_MEMBER,

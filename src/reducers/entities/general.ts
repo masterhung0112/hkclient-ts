@@ -33,6 +33,15 @@ function license(state: ClientLicense = {}, action: GenericAction) {
     }
 }
 
+function deviceToken(state = '', action: GenericAction) {
+    switch (action.type) {
+    // case GeneralTypes.RECEIVED_APP_DEVICE_TOKEN:
+    //     return action.data;
+    default:
+        return state;
+    }
+}
+
 function serverVersion(state = '', action: GenericAction) {
     switch (action.type) {
     // case GeneralTypes.RECEIVED_SERVER_VERSION:
@@ -48,5 +57,6 @@ function serverVersion(state = '', action: GenericAction) {
 export default combineReducers({
     config,
     license,
+    deviceToken,
     serverVersion,
 })

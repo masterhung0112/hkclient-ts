@@ -14,8 +14,8 @@ export const offlineConfig = {
 
     return effect()
   },
-  discard: (error: Error, action: Action, retries: number) => {
-    if ('meta' in action && action.meta && action.meta.offline.hasOwnProperty('maxRetry')) {
+  discard: (error: Error, action: Action, retries: number): boolean => {
+    if ('meta' in action && action.meta && Object.prototype.hasOwnProperty.call(action.meta.offline, 'maxRetry')) {
       return retries >= action.meta.offline.maxRetry
     }
 
@@ -23,7 +23,7 @@ export const offlineConfig = {
   },
 }
 
-export function createReducer(baseState: any, ...reducers: Reducer[]) {
+export function createReducer(baseState: Record<string, any>, ...reducers: Reducer[]) {
   reducerRegistry.setReducers(Object.assign({}, ...reducers))
   const baseReducer = combineReducers(reducerRegistry.getReducers())
 

@@ -68,10 +68,10 @@
       "actions/*": [
         "src/actions/*"
       ],
-      "constants": [
+      "hkconstants": [
         "src/constants"
       ],
-      "constants/*": [
+      "hkconstants/*": [
         "src/constants/*"
       ],
       "selectors": [

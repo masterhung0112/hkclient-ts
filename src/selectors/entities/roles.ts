@@ -10,7 +10,7 @@ export const getMyTeamRoles: (state: GlobalState) => Dictionary<Set<string>> = c
         const roles: Dictionary<Set<string>> = {};
         if (teamsMemberships) {
             for (const key in teamsMemberships) {
-                if (teamsMemberships.hasOwnProperty(key) && teamsMemberships[key].roles) {
+                if (Object.prototype.hasOwnProperty.call(teamsMemberships, key) && teamsMemberships[key].roles) {
                     roles[key] = new Set<string>(teamsMemberships[key].roles.split(' '));
                 }
             }

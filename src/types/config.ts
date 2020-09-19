@@ -9,7 +9,20 @@ export type ClientConfig = {
     SiteName: string
     TermsOfServiceLink: string
     PrivacyPolicyLink: string
-    CustomDescriptionText: string
+    CustomDescriptionText: string,
+    PasswordMinimumLength: string,
+    PasswordRequireLowercase: string,
+    PasswordRequireUppercase: string,
+    PasswordRequireNumber: string,
+    PasswordRequireSymbol: string
 }
 
 export type ClientLicense = Record<string, string>
+
+export type PasswordConfig = {
+    minimumLength: number;
+    requireLowercase: boolean;
+    requireNumber: boolean;
+    requireSymbol: boolean;
+    requireUppercase: boolean;
+}

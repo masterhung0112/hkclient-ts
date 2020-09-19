@@ -22,7 +22,7 @@ export default async function testConfigureStore(preloadedState = null) {
     },
     retry: (action, retries) => 200 * (retries + 1),
     discard: (error, action, retries) => {
-      if (action.meta && action.meta.offline.hasOwnProperty('maxRetry')) {
+      if (action.meta && Object.prototype.hasOwnProperty.call(action.meta.offline, 'maxRetry')) {
         return retries >= action.meta.offline.maxRetry
       }
 

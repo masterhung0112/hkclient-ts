@@ -1,5 +1,8 @@
-let localizeFunction: Function | null = null;
-export function setLocalizeFunction(func: Function) {
+type localizeFunction = (id: string, defaultMessage: string) => string
+
+let localizeFunction: localizeFunction | null = null;
+
+export function setLocalizeFunction(func: localizeFunction): void {
     localizeFunction = func;
 }
 

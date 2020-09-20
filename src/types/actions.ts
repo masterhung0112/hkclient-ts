@@ -36,6 +36,9 @@ export type ActionResult = {
   data?: any
 };
 
+export type ActionResultType = ActionResult | ActionResult[]
+
+
 export type DispatchFunc = (
   action: Action,
   getState?: GetStateFunc | null
@@ -44,7 +47,7 @@ export type DispatchFunc = (
 export type ActionFunc = (
   dispatch: DispatchFunc,
   getState: GetStateFunc
-) => Promise<ActionResult>;
+) => Promise<ActionResultType | ActionResultType[]>;
 
 export type Action = GenericAction | Thunk | BatchAction | ActionFunc;
 

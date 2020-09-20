@@ -1,2 +1,31 @@
+# OSX
+#
+.DS_Store
+
+# Compiled files
+/action-types
+/actions
+/hkclient
+/constants
+/reducers
+/selectors
+/store
+/utils
+/types
+/test
+
+# browser bundle
+/lib
+
+# flow
+/flow-typed
+/.flowinstall
+
+.vscode/
+
+# node.js
+#
 node_modules/
-package-lock.json
+npm-debug.log
+.npminstall
+.yarninstall

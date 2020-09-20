@@ -13,6 +13,7 @@
     "@typescript-eslint/parser": "^4.1.1",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -27,7 +28,8 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
-    "build": "echo 0",
+    "build": "cross-env NODE_ENV=production ttsc",
+    "build:rollup": "cross-env NODE_ENV=production rollup -c",
     "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
     "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
     "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",

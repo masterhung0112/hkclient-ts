@@ -10,7 +10,11 @@
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "prettier/flowtype",
+        "prettier/react",
+        "prettier/standard"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -22,12 +26,23 @@
     },
     "plugins": [
         "react",
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules": {
         "strict": 0,
         "@typescript-eslint/no-var-requires": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "prettier/prettier": ["error",
+            {
+                "printWidth": 120,
+                "singleQuote": true,
+                "trailingComma": "es5",
+                "semi": false,
+                "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+                "no-unused-vars": ["error"]
+            }
+        ]
     }
 }

@@ -20,7 +20,7 @@ class TestHelper {
 
   activateMocking() {
     if (!nock.isActive()) {
-        nock.activate();
+      nock.activate()
     }
   }
 
@@ -41,9 +41,9 @@ class TestHelper {
   }
 
   tearDown = async () => {
-    nock.restore();
+    nock.restore()
 
-    this.basicClient = null;
+    this.basicClient = null
     // this.basicUser = null;
     // this.basicTeam = null;
     // this.basicTeamMember = null;
@@ -53,40 +53,40 @@ class TestHelper {
   }
 
   generateId = () => {
-    return generateId();
+    return generateId()
   }
 
   fakeEmail = () => {
-    return 'success' + this.generateId() + '@simulator.amazonses.com';
+    return 'success' + this.generateId() + '@simulator.amazonses.com'
   }
 
   fakeUser = () => {
     return {
-        email: this.fakeEmail(),
-        allow_marketing: true,
-        password: PASSWORD,
-        locale: General.DEFAULT_LOCALE,
-        username: this.generateId(),
-        first_name: this.generateId(),
-        last_name: this.generateId(),
-        create_at: Date.now(),
-        delete_at: 0,
-        roles: 'system_user',
-    };
+      email: this.fakeEmail(),
+      allow_marketing: true,
+      password: PASSWORD,
+      locale: General.DEFAULT_LOCALE,
+      username: this.generateId(),
+      first_name: this.generateId(),
+      last_name: this.generateId(),
+      create_at: Date.now(),
+      delete_at: 0,
+      roles: 'system_user',
+    }
   }
 
   fakeUserWithId = (id = this.generateId()) => {
     return {
-        ...this.fakeUser(),
-        id,
-        create_at: 1507840900004,
-        update_at: 1507840900004,
-        delete_at: 0,
-    };
+      ...this.fakeUser(),
+      id,
+      create_at: 1507840900004,
+      update_at: 1507840900004,
+      delete_at: 0,
+    }
   }
 
   initMockEntities = () => {
-    this.basicUser = this.fakeUserWithId();
+    this.basicUser = this.fakeUserWithId()
     this.basicUser.roles = 'system_user system_admin'
   }
 }

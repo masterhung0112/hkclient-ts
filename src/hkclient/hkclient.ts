@@ -21,7 +21,7 @@ export const HEADER_X_VERSION_ID = 'X-Version-Id'
 export default class HkClient {
   logToConsole = false
   userIdValue = ''
-  userRolesVal?: string;
+  userRolesVal?: string
 
   serverVersionVal = ''
   urlVal = ''
@@ -76,7 +76,7 @@ export default class HkClient {
   }
 
   getPreferencesRoute(userId: string) {
-    return `${this.getUserRoute(userId)}/preferences`;
+    return `${this.getUserRoute(userId)}/preferences`
   }
 
   get rolesRoute() {
@@ -84,35 +84,35 @@ export default class HkClient {
   }
 
   getChannelsRoute() {
-    return `${this.baseRoute}/channels`;
+    return `${this.baseRoute}/channels`
   }
 
   getChannelRoute(channelId: string) {
-    return `${this.getChannelsRoute()}/${channelId}`;
+    return `${this.getChannelsRoute()}/${channelId}`
   }
 
   getChannelMembersRoute(channelId: string) {
-    return `${this.getChannelRoute(channelId)}/members`;
+    return `${this.getChannelRoute(channelId)}/members`
   }
 
   getChannelMemberRoute(channelId: string, userId: string) {
-    return `${this.getChannelMembersRoute(channelId)}/${userId}`;
+    return `${this.getChannelMembersRoute(channelId)}/${userId}`
   }
 
   getTeamsRoute() {
-    return `${this.baseRoute}/teams`;
+    return `${this.baseRoute}/teams`
   }
 
   getTeamRoute(teamId: string) {
-    return `${this.getTeamsRoute()}/${teamId}`;
+    return `${this.getTeamsRoute()}/${teamId}`
   }
 
   getTeamSchemeRoute(teamId: string) {
-    return `${this.getTeamRoute(teamId)}/scheme`;
+    return `${this.getTeamRoute(teamId)}/scheme`
   }
 
   getTeamNameRoute(teamName: string) {
-    return `${this.getTeamsRoute()}/name/${teamName}`;
+    return `${this.getTeamsRoute()}/name/${teamName}`
   }
 
   /***
@@ -161,12 +161,9 @@ export default class HkClient {
       id,
       password,
       token,
-    };
+    }
 
-    return this.doFetch<UserProfile>(
-      `${this.usersRoute}/login`,
-      { method: 'post', body: JSON.stringify(body) },
-    );
+    return this.doFetch<UserProfile>(`${this.usersRoute}/login`, { method: 'post', body: JSON.stringify(body) })
   }
 
   getMe = () => {
@@ -174,59 +171,40 @@ export default class HkClient {
   }
 
   getUserByUsername = (username: string) => {
-    return this.doFetch<UserProfile>(
-      `${this.usersRoute}/username/${username}`,
-      { method: 'get' },
-    );
+    return this.doFetch<UserProfile>(`${this.usersRoute}/username/${username}`, { method: 'get' })
   }
 
   getUserByEmail = (email: string) => {
-    return this.doFetch<UserProfile>(
-      `${this.usersRoute}/email/${email}`,
-      { method: 'get' },
-    );
+    return this.doFetch<UserProfile>(`${this.usersRoute}/email/${email}`, { method: 'get' })
   }
 
   getClientConfigOld = () => {
-    return this.doFetch<ClientConfig>(
-      `${this.baseRoute}/config/client?format=old`,
-      { method: 'get' },
-    );
-  };
+    return this.doFetch<ClientConfig>(`${this.baseRoute}/config/client?format=old`, { method: 'get' })
+  }
 
   getMyPreferences = () => {
-    return this.doFetch<PreferenceType>(
-      `${this.getPreferencesRoute('me')}`,
-      { method: 'get' },
-    );
+    return this.doFetch<PreferenceType>(`${this.getPreferencesRoute('me')}`, { method: 'get' })
   }
 
   getRolesByNames = (rolesNames: string[]) => {
-    return this.doFetch<Role[]>(
-      `${this.rolesRoute}/names`,
-      { method: 'post', body: JSON.stringify(rolesNames) },
-    );
+    return this.doFetch<Role[]>(`${this.rolesRoute}/names`, { method: 'post', body: JSON.stringify(rolesNames) })
   }
 
   getMyChannels = (teamId: string, includeDeleted = false) => {
     return this.doFetch<Channel[]>(
       `${this.getUserRoute('me')}/teams/${teamId}/channels${buildQueryString({ include_deleted: includeDeleted })}`,
-      { method: 'get' },
-    );
+      { method: 'get' }
+    )
   }
 
   getMyChannelMember = (channelId: string) => {
-    return this.doFetch<ChannelMembership>(
-      `${this.getChannelMemberRoute(channelId, 'me')}`,
-      { method: 'get' },
-    );
+    return this.doFetch<ChannelMembership>(`${this.getChannelMemberRoute(channelId, 'me')}`, { method: 'get' })
   }
 
   getMyChannelMembers = (teamId: string) => {
-    return this.doFetch<ChannelMembership[]>(
-      `${this.getUserRoute('me')}/teams/${teamId}/channels/members`,
-      { method: 'get' },
-    );
+    return this.doFetch<ChannelMembership[]>(`${this.getUserRoute('me')}/teams/${teamId}/channels/members`, {
+      method: 'get',
+    })
   }
 
   getChannelByNameAndTeamName = (teamName: string, channelName: string, includeDeleted = false) => {
@@ -234,8 +212,8 @@ export default class HkClient {
 
     return this.doFetch<Channel>(
       `${this.getTeamNameRoute(teamName)}/channels/name/${channelName}?include_deleted=${includeDeleted}`,
-      { method: 'get' },
-    );
+      { method: 'get' }
+    )
   }
 
   /********
@@ -291,7 +269,7 @@ export default class HkClient {
           defaultMessage: 'Received invalid response from the server.',
         },
         url,
-      });
+      })
     }
 
     if (headers.has(HEADER_X_VERSION_ID) && !headers.get('Cache-Control')) {
@@ -324,21 +302,18 @@ export default class HkClient {
   }
 
   logClientError = (message: string, level = 'ERROR') => {
-    const url = `${this.baseRoute}/logs`;
+    const url = `${this.baseRoute}/logs`
 
     if (!this.enableLogging) {
       throw new ClientError(this.url, {
         message: 'Logging disabled.',
         url,
-      });
+      })
     }
 
     return this.doFetch<{
-      message: string;
-    }>(
-      url,
-      { method: 'post', body: JSON.stringify({ message, level }) },
-    );
+      message: string
+    }>(url, { method: 'post', body: JSON.stringify({ message, level }) })
   }
 }
 

@@ -19,7 +19,7 @@ const state: GlobalState = {
     teams: {
       currentTeamId: '',
       teams: {},
-      myMembers: {}
+      myMembers: {},
     },
     channels: {
       currentChannelId: '',
@@ -37,7 +37,7 @@ const state: GlobalState = {
     roles: {
       roles: {},
       pending: new Set(),
-    }
+    },
   },
   // errors: [],
 }

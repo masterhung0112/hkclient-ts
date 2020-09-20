@@ -1,51 +1,51 @@
-import { GlobalState } from 'types/store';
-import { createSelector } from 'reselect';
-import { getCurrentUser } from './users';
-import { UserProfile } from 'types/users';
+import { GlobalState } from 'types/store'
+import { createSelector } from 'reselect'
+import { getCurrentUser } from './users'
+import { UserProfile } from 'types/users'
 
 export type PermissionsOptions = {
-    channel?: string;
-    team?: string;
-    permission: string;
+  channel?: string
+  team?: string
+  permission: string
 }
 
 export function getRoles(state: GlobalState) {
-    return state.entities.roles.roles;
+  return state.entities.roles.roles
 }
 
 export const getMySystemRoles: (state: GlobalState) => Set<string> = createSelector(
-    getCurrentUser,
-    (user: UserProfile) => {
-        if (user) {
-            return new Set<string>(user.roles.split(' '));
-        }
+  getCurrentUser,
+  (user: UserProfile) => {
+    if (user) {
+      return new Set<string>(user.roles.split(' '))
+    }
 
-        return new Set<string>();
-    },
-);
+    return new Set<string>()
+  }
+)
 
 export const getMySystemPermissions: (state: GlobalState) => Set<string> = createSelector(
-    getMySystemRoles,
-    getRoles,
-    (mySystemRoles: Set<string>, roles) => {
-        const permissions = new Set<string>();
+  getMySystemRoles,
+  getRoles,
+  (mySystemRoles: Set<string>, roles) => {
+    const permissions = new Set<string>()
 
-        for (const roleName of mySystemRoles) {
-            if (roles[roleName]) {
-                for (const permission of roles[roleName].permissions) {
-                    permissions.add(permission);
-                }
-            }
+    for (const roleName of mySystemRoles) {
+      if (roles[roleName]) {
+        for (const permission of roles[roleName].permissions) {
+          permissions.add(permission)
         }
+      }
+    }
 
-        return permissions;
-    },
-);
+    return permissions
+  }
+)
 
 export const haveISystemPermission: (state: GlobalState, options: PermissionsOptions) => boolean = createSelector(
-    getMySystemPermissions,
-    (state: GlobalState, options: PermissionsOptions) => options.permission,
-    (permissions, permission) => {
-        return permissions.has(permission);
-    },
-);
+  getMySystemPermissions,
+  (state: GlobalState, options: PermissionsOptions) => options.permission,
+  (permissions, permission) => {
+    return permissions.has(permission)
+  }
+)

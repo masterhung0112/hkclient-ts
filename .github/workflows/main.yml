@@ -33,7 +33,7 @@ jobs:
         run: npm run check-types
 
       - name: Run check lint
-        run: npm run check
+        run: npm run eslint:check
 
       # Runs a set of commands using the runners shell
       - name: Run test

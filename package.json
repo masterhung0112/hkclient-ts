@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production ttsc",
     "build:rollup": "cross-env NODE_ENV=production rollup -c",
-    "prepare": "npm run build",
+    "postinstall": "npm run build",
     "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
     "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
     "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",

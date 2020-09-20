@@ -1,8 +1,17 @@
 {
   "name": "hkclient-ts",
   "version": "1.0.0",
-  "description": "Client SDK",
+  "description": "Client SDK for Hung Know web application",
   "license": "MIT",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production ttsc",
+    "build:rollup": "cross-env NODE_ENV=production rollup -c",
+    "prepare": "npm run build",
+    "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
+    "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
+    "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",
+    "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
@@ -26,14 +35,6 @@
     "tslib": "^2.0.1",
     "ttypescript": "^1.5.11",
     "typescript": "^3.9.7"
-  },
-  "scripts": {
-    "build": "cross-env NODE_ENV=production ttsc",
-    "build:rollup": "cross-env NODE_ENV=production rollup -c",
-    "check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
-    "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
-    "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",
-    "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.6.0",

@@ -11,6 +11,7 @@
     "fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
     "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts",
     "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts",
+    "check-types": "tsc",
     "test": "cross-env NODE_ENV='development' jest",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu TZ=Etc/UTC jest --ci --maxWorkers=8"
   },

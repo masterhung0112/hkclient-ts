@@ -15,7 +15,7 @@ import reducerRegistry from './reducer_registry'
 // const devToolsEnhancer =
 //   // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
 //     // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-//     // : 
+//     // :
 //     () => {
 //         return devTools({
 //           name: 'hkclient-ts',
@@ -34,7 +34,6 @@ function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   }
 
   return redux.applyMiddleware(...createMiddleware(clientOptions))
-
 }
 
 export default function configureServiceStore(
@@ -63,14 +62,17 @@ export default function configureServiceStore(
 
   if ((module as any).hot) {
     // Enable Webpack hot module replacement for reducers
+    // eslint-disable-next-line prettier/prettier
     (module as any).hot.accept(() => {
-        const nextServiceReducer = require('../reducers').default; // eslint-disable-line global-require
-        let nextAppReducer;
-        if (getAppReducer) {
-            nextAppReducer = getAppReducer(); // eslint-disable-line global-require
-        }
-        store.replaceReducer(createDevReducer(baseState, reducerRegistry.getReducers(), nextServiceReducer, nextAppReducer));
-    });
+      const nextServiceReducer = require('../reducers').default // eslint-disable-line global-require
+      let nextAppReducer
+      if (getAppReducer) {
+        nextAppReducer = getAppReducer() // eslint-disable-line global-require
+      }
+      store.replaceReducer(
+        createDevReducer(baseState, reducerRegistry.getReducers(), nextServiceReducer, nextAppReducer)
+      )
+    })
   }
 
   return store

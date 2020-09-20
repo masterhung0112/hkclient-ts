@@ -10,7 +10,6 @@ export default {
   DM_CHANNEL: 'D',
   GM_CHANNEL: 'G',
 
-
   /**
    * Data-related constraint
    */
@@ -29,12 +28,5 @@ export default {
   MAX_PASSWORD_LENGTH: 64,
   MAX_POSITION_LENGTH: 128,
 
-  RESERVED_USERNAMES: [
-    'valet',
-    'all',
-    'channel',
-    'here',
-    'hungknowbot',
-    'system',
-  ],
+  RESERVED_USERNAMES: ['valet', 'all', 'channel', 'here', 'hungknowbot', 'system'],
 }

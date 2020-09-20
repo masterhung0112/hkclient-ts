@@ -1,8 +1,8 @@
-import { UsersState } from './users';
-import { GeneralState } from './general';
-import { TeamsState } from './teams';
-import { Role } from './roles';
-import { ChannelsState } from './channels';
+import { UsersState } from './users'
+import { GeneralState } from './general'
+import { TeamsState } from './teams'
+import { Role } from './roles'
+import { ChannelsState } from './channels'
 
 export type GlobalState = {
   entities: {
@@ -12,9 +12,9 @@ export type GlobalState = {
     channels: ChannelsState
     roles: {
       roles: {
-          [x: string]: Role;
-      };
-      pending: Set<string>;
+        [x: string]: Role
+      }
+      pending: Set<string>
     }
   }
   // errors: Array<any>

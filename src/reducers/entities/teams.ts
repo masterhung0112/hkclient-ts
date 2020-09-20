@@ -1,24 +1,24 @@
-import { IDMappedObjects, RelationOneToOne } from 'types/utilities';
-import { GenericAction } from 'types/actions';
-import { UserTypes } from 'action-types';
-import { TeamMembership, Team } from 'types/teams';
-import { combineReducers } from 'redux';
+import { IDMappedObjects, RelationOneToOne } from 'types/utilities'
+import { GenericAction } from 'types/actions'
+import { UserTypes } from 'action-types'
+import { TeamMembership, Team } from 'types/teams'
+import { combineReducers } from 'redux'
 
 function currentTeamId(state = '', action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case TeamTypes.SELECT_TEAM:
     //     return action.data;
 
     case UserTypes.LOGOUT_SUCCESS:
-        return '';
-    
+      return ''
+
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function teams(state: IDMappedObjects<Team> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case TeamTypes.RECEIVED_TEAMS_LIST:
     // case SchemeTypes.RECEIVED_SCHEME_TEAMS:
     //     return Object.assign({}, state, teamListToMap(action.data));
@@ -60,30 +60,30 @@ function teams(state: IDMappedObjects<Team> = {}, action: GenericAction) {
     // }
 
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
 
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function myMembers(state: RelationOneToOne<Team, TeamMembership> = {}, action: GenericAction) {
-    switch (action.type) {
-        case UserTypes.LOGOUT_SUCCESS:
-            return {}
+  switch (action.type) {
+    case UserTypes.LOGOUT_SUCCESS:
+      return {}
 
-        default:
-            return state
-    }
+    default:
+      return state
+  }
 }
 
 export default combineReducers({
-    // the current selected team
-    currentTeamId,
+  // the current selected team
+  currentTeamId,
 
-    // object where every key is the team id and has and object with the team detail
-    teams,
+  // object where every key is the team id and has and object with the team detail
+  teams,
 
-    // object where every key is the team id and has and object with the team members detail
-    myMembers,
+  // object where every key is the team id and has and object with the team members detail
+  myMembers,
 })

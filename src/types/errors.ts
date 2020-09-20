@@ -16,6 +16,6 @@ export type HkError = {
     id: string
     defaultMessage: string
     values?: any
-  },
+  }
   message: string
 }

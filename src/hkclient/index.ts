@@ -1,3 +1,3 @@
 import HkClientClass from './hkclient'
 
-export const HkClient = new HkClientClass();
+export const HkClient = new HkClientClass()

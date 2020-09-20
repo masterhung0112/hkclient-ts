@@ -1,23 +1,23 @@
-import { UserTypes } from 'action-types';
-import { GenericAction } from 'types/actions';
-import { IDMappedObjects, RelationOneToMany, RelationOneToOne, UserIDMappedObjects } from 'types/utilities';
-import { Channel, ChannelMembership, ChannelStats } from 'types/channels';
-import { combineReducers } from 'redux';
-import { Team } from 'types/teams';
+import { UserTypes } from 'action-types'
+import { GenericAction } from 'types/actions'
+import { IDMappedObjects, RelationOneToMany, RelationOneToOne, UserIDMappedObjects } from 'types/utilities'
+import { Channel, ChannelMembership, ChannelStats } from 'types/channels'
+import { combineReducers } from 'redux'
+import { Team } from 'types/teams'
 
 function currentChannelId(state = '', action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.SELECT_CHANNEL:
     //     return action.data;
     case UserTypes.LOGOUT_SUCCESS:
-        return '';
+      return ''
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function channels(state: IDMappedObjects<Channel> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_CHANNEL:
     //     if (state[action.data.id] && action.data.type === General.DM_CHANNEL) {
     //         action.data.display_name = action.data.display_name || state[action.data.id].display_name;
@@ -168,14 +168,14 @@ function channels(state: IDMappedObjects<Channel> = {}, action: GenericAction) {
     // }
 
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function channelsInTeam(state: RelationOneToMany<Team, Channel> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_CHANNEL: {
     //     const nextSet = new Set(state[action.data.team_id]);
     //     nextSet.add(action.data.id);
@@ -203,14 +203,14 @@ function channelsInTeam(state: RelationOneToMany<Team, Channel> = {}, action: Ge
     //     return channelListToSet(state, values);
     // }
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function myMembers(state: RelationOneToOne<Channel, ChannelMembership> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_MY_CHANNEL_MEMBER: {
     //     const channelMember = action.data;
     //     return {
@@ -382,14 +382,17 @@ function myMembers(state: RelationOneToOne<Channel, ChannelMembership> = {}, act
     // }
 
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
     default:
-        return state;
-    }
+      return state
+  }
 }
 
-function membersInChannel(state: RelationOneToOne<Channel, UserIDMappedObjects<ChannelMembership>> = {}, action: GenericAction) {
-    switch (action.type) {
+function membersInChannel(
+  state: RelationOneToOne<Channel, UserIDMappedObjects<ChannelMembership>> = {},
+  action: GenericAction
+) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_MY_CHANNEL_MEMBER:
     // case ChannelTypes.RECEIVED_CHANNEL_MEMBER: {
     //     const member = action.data;
@@ -448,14 +451,14 @@ function membersInChannel(state: RelationOneToOne<Channel, UserIDMappedObjects<C
     //     return updateChannelMemberSchemeRoles(state, action);
     // }
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function stats(state: RelationOneToOne<Channel, ChannelStats> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_CHANNEL_STATS: {
     //     const nextState = {...state};
     //     const stat = action.data;
@@ -532,14 +535,14 @@ function stats(state: RelationOneToOne<Channel, ChannelStats> = {}, action: Gene
     //     return state;
     // }
     case UserTypes.LOGOUT_SUCCESS:
-        return {};
+      return {}
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function groupsAssociatedToChannel(state: any = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case GroupTypes.RECEIVED_ALL_GROUPS_ASSOCIATED_TO_CHANNELS_IN_TEAM: {
     //     const {groupsByChannelId} = action.data;
     //     const nextState = {...state};
@@ -606,44 +609,44 @@ function groupsAssociatedToChannel(state: any = {}, action: GenericAction) {
     //     return nextState;
     // }
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 function updateChannelMemberSchemeRoles(state: any, action: GenericAction) {
-    const {channelId, userId, isSchemeUser, isSchemeAdmin} = action.data;
-    const channel = state[channelId];
-    if (channel) {
-        const member = channel[userId];
-        if (member) {
-            return {
-                ...state,
-                [channelId]: {
-                    ...state[channelId],
-                    [userId]: {
-                        ...state[channelId][userId],
-                        scheme_user: isSchemeUser,
-                        scheme_admin: isSchemeAdmin,
-                    },
-                },
-            };
-        }
+  const { channelId, userId, isSchemeUser, isSchemeAdmin } = action.data
+  const channel = state[channelId]
+  if (channel) {
+    const member = channel[userId]
+    if (member) {
+      return {
+        ...state,
+        [channelId]: {
+          ...state[channelId],
+          [userId]: {
+            ...state[channelId][userId],
+            scheme_user: isSchemeUser,
+            scheme_admin: isSchemeAdmin,
+          },
+        },
+      }
     }
-    return state;
+  }
+  return state
 }
 
 function totalCount(state = 0, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_TOTAL_CHANNEL_COUNT: {
     //     return action.data;
     // }
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 export function manuallyUnread(state: RelationOneToOne<Channel, boolean> = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.REMOVE_MANUALLY_UNREAD: {
     //     if (state[action.data.channelId]) {
     //         const newState = {...state};
@@ -662,12 +665,12 @@ export function manuallyUnread(state: RelationOneToOne<Channel, boolean> = {}, a
     //     return {...state, [action.data.channelId]: true};
     // }
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 export function channelModerations(state: any = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_CHANNEL_MODERATIONS: {
     //     const {channelId, moderations} = action.data;
     //     return {
@@ -676,12 +679,12 @@ export function channelModerations(state: any = {}, action: GenericAction) {
     //     };
     // }
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 export function channelMemberCountsByGroup(state: any = {}, action: GenericAction) {
-    switch (action.type) {
+  switch (action.type) {
     // case ChannelTypes.RECEIVED_CHANNEL_MEMBER_COUNTS_BY_GROUP: {
     //     const {channelId, memberCounts} = action.data;
     //     const memberCountsByGroup: ChannelMemberCountsByGroup = {};
@@ -695,40 +698,39 @@ export function channelMemberCountsByGroup(state: any = {}, action: GenericActio
     //     };
     // }
     default:
-        return state;
-    }
+      return state
+  }
 }
 
 export default combineReducers({
+  // the current selected channel
+  currentChannelId,
 
-    // the current selected channel
-    currentChannelId,
+  // object where every key is the channel id and has and object with the channel detail
+  channels,
 
-    // object where every key is the channel id and has and object with the channel detail
-    channels,
+  // object where every key is a team id and has set of channel ids that are on the team
+  channelsInTeam,
 
-    // object where every key is a team id and has set of channel ids that are on the team
-    channelsInTeam,
+  // object where every key is the channel id and has an object with the channel members detail
+  myMembers,
 
-    // object where every key is the channel id and has an object with the channel members detail
-    myMembers,
+  // object where every key is the channel id with an object where key is a user id and has an object with the channel members detail
+  membersInChannel,
 
-    // object where every key is the channel id with an object where key is a user id and has an object with the channel members detail
-    membersInChannel,
+  // object where every key is the channel id and has an object with the channel stats
+  stats,
 
-    // object where every key is the channel id and has an object with the channel stats
-    stats,
+  groupsAssociatedToChannel,
 
-    groupsAssociatedToChannel,
+  totalCount,
 
-    totalCount,
+  // object where every key is the channel id, if present means a user requested to mark that channel as unread.
+  manuallyUnread,
 
-    // object where every key is the channel id, if present means a user requested to mark that channel as unread.
-    manuallyUnread,
+  // object where every key is the channel id and has an object with the channel moderations
+  channelModerations,
 
-    // object where every key is the channel id and has an object with the channel moderations
-    channelModerations,
-
-    // object where every key is the channel id containing map of <group_id: ChannelMemberCountByGroup>
-    channelMemberCountsByGroup,
+  // object where every key is the channel id containing map of <group_id: ChannelMemberCountByGroup>
+  channelMemberCountsByGroup,
 })

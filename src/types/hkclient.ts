@@ -1,22 +1,22 @@
-export type logLevel = 'ERROR' | 'WARNING' | 'INFO';
+export type logLevel = 'ERROR' | 'WARNING' | 'INFO'
 
 type ErrorOffline = {
-    message: string;
-    url: string;
-};
+  message: string
+  url: string
+}
 type ErrorInvalidResponse = {
-    intl: {
-        id: string;
-        defaultMessage: string;
-    };
-};
+  intl: {
+    id: string
+    defaultMessage: string
+  }
+}
 export type ErrorApi = {
-    message: string;
-    server_error_id: string;
-    status_code: number;
-    url: string;
-};
-export type HkClientError = ErrorOffline | ErrorInvalidResponse | ErrorApi;
+  message: string
+  server_error_id: string
+  status_code: number
+  url: string
+}
+export type HkClientError = ErrorOffline | ErrorInvalidResponse | ErrorApi
 
 export type ClientResponse<T> = {
   response: Response

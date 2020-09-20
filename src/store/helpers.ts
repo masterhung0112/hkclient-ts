@@ -5,7 +5,7 @@ import { General } from '../constants'
 
 export const offlineConfig = {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  effect: (effect: Function, action: Action) => {
+  effect: async (effect: any, action: Action): Promise<any> => {
     if (typeof effect !== 'function') {
       throw new Error('Offline Action: effect must be a function.')
     } else if (!('meta' in action && action.meta && action.meta.offline.commit)) {

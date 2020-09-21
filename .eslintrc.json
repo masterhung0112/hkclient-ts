@@ -41,7 +41,8 @@
                 "trailingComma": "es5",
                 "semi": false,
                 "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
-                "no-unused-vars": ["error"]
+                "no-unused-vars": ["error"],
+                "endOfLine":"auto"
             }
         ]
     }

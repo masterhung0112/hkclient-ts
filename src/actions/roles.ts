@@ -5,14 +5,14 @@ import { bindClientFunc } from './helpers'
 import { HkClient } from 'hkclient'
 import { RoleTypes } from 'action-types'
 
-export function setPendingRoles(roles: Array<string>) {
+export function setPendingRoles(roles: Array<string>): ActionFunc {
   return async (dispatch: DispatchFunc) => {
     dispatch({ type: RoleTypes.SET_PENDING_ROLES, data: roles })
-    return { data: roles }
+    return [{ data: roles }]
   }
 }
 
-export function getRolesByNames(rolesNames: Array<string>) {
+export function getRolesByNames(rolesNames: Array<string>): ActionFunc {
   return bindClientFunc({
     clientFunc: HkClient.getRolesByNames,
     onRequest: RoleTypes.ROLES_BY_NAMES_REQUEST,
@@ -38,13 +38,13 @@ export function loadRolesIfNeeded(roles: Iterable<string>): ActionFunc {
     if (!state.entities.general.serverVersion) {
       dispatch(setPendingRoles(Array.from(pendingRoles)))
       setTimeout(() => dispatch(loadRolesIfNeeded([])), 500)
-      return { data: [] }
+      return [{ data: [] }]
     }
     if (!hasNewPermissions(state)) {
       if (state.entities.roles.pending) {
         await dispatch(setPendingRoles([]))
       }
-      return { data: [] }
+      return [{ data: [] }]
     }
     const loadedRoles = getRoles(state)
     const newRoles = new Set<string>()
@@ -61,6 +61,6 @@ export function loadRolesIfNeeded(roles: Iterable<string>): ActionFunc {
     if (newRoles.size > 0) {
       return getRolesByNames(Array.from(newRoles))(dispatch, getState)
     }
-    return { data: state.entities.roles.roles }
+    return [{ data: state.entities.roles.roles }]
   }
 }

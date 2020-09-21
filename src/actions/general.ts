@@ -15,7 +15,7 @@ export function getClientConfig(): ActionFunc {
       data = await HkClient.getClientConfigOld()
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
-      return { error }
+      return [{ error }]
     }
 
     // HkClient.setEnableLogging(data.EnableDeveloper === 'true');
@@ -23,6 +23,6 @@ export function getClientConfig(): ActionFunc {
 
     dispatch(batchActions([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }]))
 
-    return { data }
+    return [{ data }]
   }
 }

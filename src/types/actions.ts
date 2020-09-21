@@ -33,14 +33,11 @@ export type ActionResult = {
   data?: any
 }
 
-export type ActionResultType = ActionResult | ActionResult[]
+export type ActionResultType = ActionResult[]
 
-export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResult>
+export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResultType>
 
-export type ActionFunc = (
-  dispatch: DispatchFunc,
-  getState: GetStateFunc
-) => Promise<ActionResultType | ActionResultType[]>
+export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResultType>
 
 export type Action = GenericAction | Thunk | BatchAction | ActionFunc
 
@@ -80,7 +77,7 @@ declare module 'redux' {
    * Useful for react-redux or any other library which could use this type.
    */
   export interface Dispatch<A extends Action = AnyAction> {
-    <TReturnType = any>(actionFunc: ActionFunc): TReturnType
+    <TReturnType = ActionResultType>(actionFunc: ActionFunc): TReturnType
   }
 
   function bindActionCreators<A, M extends ExtActionCreatorsMapObject<any>>(

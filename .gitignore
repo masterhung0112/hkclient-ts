@@ -12,7 +12,6 @@
 /store
 /utils
 /types
-/test
 
 # browser bundle
 /lib
@@ -29,3 +28,6 @@ node_modules/
 npm-debug.log
 .npminstall
 .yarninstall
+*.d.ts.map
+*.js.map
+*.d.ts

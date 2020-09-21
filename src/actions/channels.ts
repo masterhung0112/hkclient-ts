@@ -34,7 +34,7 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(batchActions([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)]))
-      return { error }
+      return [{ error }]
     }
 
     const { currentUserId } = state.entities.users
@@ -72,7 +72,7 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
       dispatch(loadRolesIfNeeded(roles))
     }
 
-    return { data: { channels, members: channelMembers } }
+    return [{ data: { channels, members: channelMembers } }]
   }
 }
 
@@ -92,7 +92,7 @@ export function getChannelByNameAndTeamName(teamName: string, channelName: strin
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(batchActions([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)]))
-      return { error }
+      return [{ error }]
     }
 
     dispatch({
@@ -100,6 +100,6 @@ export function getChannelByNameAndTeamName(teamName: string, channelName: strin
       data,
     })
 
-    return { data }
+    return [{ data }]
   }
 }

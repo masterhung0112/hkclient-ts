@@ -48,7 +48,7 @@ export function loadMe(): ActionFunc {
       HkClient.userRoles = user.roles
     }
 
-    return { data: true }
+    return [{ data: true }]
   }
 }
 
@@ -60,11 +60,11 @@ export function getMe(): ActionFunc {
     })
     const me = await getMeFunc(dispatch, getState)
 
-    if ('error' in me) {
+    if (me && 'error' in me[0]) {
       return me
     }
-    if ('data' in me) {
-      dispatch(loadRolesIfNeeded(me.data.roles.split(' ')))
+    if (me && 'data' in me[0]) {
+      dispatch(loadRolesIfNeeded(me[0].data.roles.split(' ')))
     }
     return me
   }
@@ -95,7 +95,7 @@ export function createUser(user: UserProfile, token: string, inviteId: string, r
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
-      return { error }
+      return [{ error }]
     }
 
     const profiles: {
@@ -105,7 +105,7 @@ export function createUser(user: UserProfile, token: string, inviteId: string, r
     }
     dispatch({ type: UserTypes.RECEIVED_PROFILES, data: profiles })
 
-    return { data: created }
+    return [{ data: created }]
   }
 }
 
@@ -128,7 +128,7 @@ export function loginById(id: string, password: string, mfaToken = ''): ActionFu
           logError(error),
         ])
       )
-      return { error }
+      return [{ error }]
     }
 
     return completeLogin(data)(dispatch, getState)
@@ -190,7 +190,7 @@ function completeLogin(data: UserProfile): ActionFunc {
       await Promise.all(promises)
     } catch (error) {
       dispatch(batchActions([{ type: UserTypes.LOGIN_FAILURE, error }, logError(error)]))
-      return { error }
+      return [{ error }]
     }
 
     dispatch(
@@ -218,6 +218,6 @@ function completeLogin(data: UserProfile): ActionFunc {
       dispatch(loadRolesIfNeeded(roles))
     }
 
-    return { data: true }
+    return [{ data: true }]
   }
 }

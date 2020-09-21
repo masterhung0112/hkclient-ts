@@ -72,7 +72,7 @@ export function bindClientFunc({
         actions.push(requestFailure(onFailure, error))
       }
       dispatch(batchActions(actions))
-      return { error }
+      return [{ error }]
     }
 
     if (Array.isArray(onSuccess)) {
@@ -83,7 +83,7 @@ export function bindClientFunc({
       dispatcher(onSuccess, data, dispatch)
     }
 
-    return { data }
+    return [{ data }]
   }
 }
 

@@ -7,7 +7,7 @@ import { ErrorTypes } from 'action-types'
 export function logError(error: ServerError, displayable = false): ActionFunc {
   return async (dispatch: DispatchFunc) => {
     if (error.server_error_id === 'api.context.session_expired.app_error') {
-      return { data: true }
+      return [{ data: true }]
     }
 
     const serializedError = serializeError(error)
@@ -34,7 +34,7 @@ export function logError(error: ServerError, displayable = false): ActionFunc {
     // EventEmitter.emit(ErrorTypes.LOG_ERROR, error);
     dispatch(getLogErrorAction(serializedError, displayable))
 
-    return { data: true }
+    return [{ data: true }]
   }
 }
 

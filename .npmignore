@@ -14,4 +14,4 @@ babel.config.js
 .eslintignore
 .eslintrc.json
 cloudbuild.yaml
-.github
+/.github

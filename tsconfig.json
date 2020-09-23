@@ -19,7 +19,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./lib",
     "alwaysStrict": true,
     "removeComments": true,
     "noEmit": false,

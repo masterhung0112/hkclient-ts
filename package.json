@@ -7,6 +7,7 @@
     "build": "cross-env NODE_ENV=production ttsc && cross-env NODE_ENV=production rollup -c",
     "build:rollup": "cross-env NODE_ENV=production rollup -c",
     "prepare": "npm run build",
+    "run:ci": "npm run check-types && npm run eslint:check && npm run test-ci",
     "eslint:check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
     "eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
     "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts/dest",

@@ -1,6 +1,6 @@
 import assert from 'assert'
 import reducerRegistry from 'store/reducer_registry'
-import configureStore from 'test/test_store'
+import configureStore from 'testlib/test_store'
 
 describe('ReducerRegistry', () => {
   let store

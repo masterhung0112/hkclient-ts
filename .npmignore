@@ -1,5 +1,4 @@
 node_modules/
-/test
 Makefile
 .eslintrc.json
 .gitattributes
@@ -9,7 +8,6 @@ Makefile
 .tmp
 .circleci
 jest.config.js
-babel.config.js
 .editorconfig
 .eslintignore
 .eslintrc.json

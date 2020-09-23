@@ -1,5 +1,5 @@
-import TestHelper from 'test/test_helper'
-import configureStore from 'test/test_store'
+import TestHelper from 'testlib/test_helper'
+import configureStore from 'testlib/test_store'
 import { HkClient } from 'hkclient'
 import * as Actions from 'actions/users'
 import nock from 'nock'

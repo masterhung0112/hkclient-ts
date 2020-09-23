@@ -34,4 +34,6 @@ npm-debug.log
 *.js.map
 *.d.ts
 
+hungknow.hkclient.js
+
 # /package-lock.json

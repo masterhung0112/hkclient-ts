@@ -15,11 +15,6 @@
     "test": "cross-env NODE_ENV='development' jest",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu TZ=Etc/UTC jest --ci --maxWorkers=8"
   },
-  "main": "lib/index.js",
-  "files": [
-    "lib/",
-    "src/"
-  ],
   "devDependencies": {
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-typescript": "^7.10.4",

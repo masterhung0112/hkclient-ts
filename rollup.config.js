@@ -21,7 +21,7 @@ module.exports = inputs.map((input) => ({
   output: [
     {
       format: 'cjs',
-      file: `${buildFolder}/hungknow.${input}.js`,
+      file: `${buildFolder}/${input}.js`,
       sourcemap: true,
       exports: 'named',
     },

@@ -15,6 +15,7 @@
     "test": "cross-env NODE_ENV='development' jest",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu TZ=Etc/UTC jest --ci --maxWorkers=8"
   },
+  "main": "dist/index.js",
   "files": [
     "dist/",
     "index.d.ts"

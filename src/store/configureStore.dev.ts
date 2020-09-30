@@ -9,6 +9,7 @@ import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import serviceReducer from '../reducers'
 import reducerRegistry from './reducer_registry'
+import reduxBatch from './reduxBatch'
 
 // const windowAny = window as any
 
@@ -53,7 +54,7 @@ export default function configureServiceStore(
   const store = redux.createStore(
     enhanceReducer(createDevReducer(baseState, serviceReducer, appReducer)),
     baseState,
-    redux.compose(bindMiddlware(middleware, clientOptions), enhanceStore)
+    redux.compose(reduxBatch, bindMiddlware(middleware, clientOptions), reduxBatch, enhanceStore)
   )
 
   reducerRegistry.setChangeListener((reducers: any) => {

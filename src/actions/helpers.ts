@@ -1,10 +1,8 @@
-import { DispatchFunc, GetStateFunc, ActionFunc, GenericAction, batchActions, Action } from 'types/actions'
+import { DispatchFunc, GetStateFunc, ActionFunc, GenericAction, Action } from 'types/actions'
 import { HkClient } from 'hkclient'
 import { UserTypes } from 'action-types'
 import { HkClientError } from 'types/hkclient'
 import { logError } from './errors'
-import { GlobalState } from 'types/store'
-import { Store } from 'redux'
 const HTTP_UNAUTHORIZED = 401
 
 type ActionType = string
@@ -71,7 +69,7 @@ export function bindClientFunc({
       if (onFailure) {
         actions.push(requestFailure(onFailure, error))
       }
-      dispatch(batchActions(actions))
+      dispatch(actions)
       return [{ error }]
     }
 

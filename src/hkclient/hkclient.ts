@@ -216,6 +216,15 @@ export default class HkClient {
     )
   }
 
+  getTeamInviteInfo = (inviteId: string) => {
+    return this.doFetch<{
+      display_name: string
+      description: string
+      name: string
+      id: string
+    }>(`${this.getTeamsRoute()}/invite/${inviteId}`, { method: 'get' })
+  }
+
   /********
    * Client Helpers
    */

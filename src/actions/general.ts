@@ -1,4 +1,4 @@
-import { ActionFunc, DispatchFunc, GetStateFunc, batchActions } from 'types/actions'
+import { ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
 import { HkClient } from 'hkclient'
 import { forceLogoutIfNecessary } from './helpers'
 import { GeneralTypes } from 'action-types'
@@ -20,7 +20,7 @@ export function getClientConfig(): ActionFunc {
 
     // HkClient.setEnableLogging(data.EnableDeveloper === 'true');
     // HkClient.setDiagnosticId(data.DiagnosticId);
-    dispatch(batchActions([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }]))
+    dispatch([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }])
 
     return [{ data }]
   }

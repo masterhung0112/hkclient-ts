@@ -19,7 +19,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./lib",
     "alwaysStrict": true,
     "removeComments": true,
     "noEmit": false,
@@ -53,8 +53,8 @@
       "hkclient/*": [
         "src/hkclient/*"
       ],
-      "test/*": [
-        "src/test/*"
+      "testlib/*": [
+        "src/testlib/*"
       ],
       "action-types": [
         "src/action-types"

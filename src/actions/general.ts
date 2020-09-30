@@ -20,7 +20,6 @@ export function getClientConfig(): ActionFunc {
 
     // HkClient.setEnableLogging(data.EnableDeveloper === 'true');
     // HkClient.setDiagnosticId(data.DiagnosticId);
-
     dispatch(batchActions([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }]))
 
     return [{ data }]

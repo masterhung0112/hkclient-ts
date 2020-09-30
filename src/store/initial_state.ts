@@ -36,7 +36,7 @@ const state: GlobalState = {
     },
     roles: {
       roles: {},
-      pending: new Set(),
+      pending: [],
     },
   },
   // errors: [],

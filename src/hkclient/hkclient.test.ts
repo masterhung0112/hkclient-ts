@@ -1,7 +1,7 @@
 import { ClientError, HEADER_X_VERSION_ID } from './hkclient'
 import assert from 'assert'
 import nock from 'nock'
-import TestHelper from 'test/test_helper'
+import TestHelper from 'testlib/test_helper'
 
 describe('HkClient', () => {
   beforeAll(() => {

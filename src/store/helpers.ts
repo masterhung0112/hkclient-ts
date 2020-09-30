@@ -1,6 +1,6 @@
 import { Reducer, combineReducers } from 'redux'
 import reducerRegistry from './reducer_registry'
-import { Action, enableBatching } from 'types/actions'
+import { Action } from 'types/actions'
 import { General } from '../constants'
 
 export const offlineConfig = {
@@ -38,5 +38,5 @@ export function createReducer(baseState: Record<string, any>, ...reducers: Reduc
     return baseReducer(state, action as any)
   }
 
-  return enableBatching(offlineReducer)
+  return offlineReducer
 }

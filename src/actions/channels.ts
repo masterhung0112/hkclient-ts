@@ -1,4 +1,4 @@
-import { ActionFunc, DispatchFunc, GetStateFunc, batchActions, Action } from 'types/actions'
+import { ActionFunc, DispatchFunc, GetStateFunc, Action } from 'types/actions'
 import { isMinimumServerVersion } from 'utils/helpers'
 import { forceLogoutIfNecessary, bindClientFunc } from './helpers'
 import { logError } from './errors'
@@ -33,35 +33,33 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
       channelMembers = await memberRequest
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
-      dispatch(batchActions([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)]))
+      dispatch([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)])
       return [{ error }]
     }
 
     const { currentUserId } = state.entities.users
     const { currentChannelId } = state.entities.channels
 
-    dispatch(
-      batchActions([
-        {
-          type: ChannelTypes.RECEIVED_CHANNELS,
-          teamId,
-          data: channels,
-          currentChannelId,
-        },
-        {
-          type: ChannelTypes.CHANNELS_SUCCESS,
-        },
-        {
-          type: ChannelTypes.RECEIVED_MY_CHANNEL_MEMBERS,
-          data: channelMembers,
-          sync: !shouldFetchArchived,
-          channels,
-          remove: getChannelsIdForTeam(state, teamId),
-          currentUserId,
-          currentChannelId,
-        },
-      ])
-    )
+    dispatch([
+      {
+        type: ChannelTypes.RECEIVED_CHANNELS,
+        teamId,
+        data: channels,
+        currentChannelId,
+      },
+      {
+        type: ChannelTypes.CHANNELS_SUCCESS,
+      },
+      {
+        type: ChannelTypes.RECEIVED_MY_CHANNEL_MEMBERS,
+        data: channelMembers,
+        sync: !shouldFetchArchived,
+        channels,
+        remove: getChannelsIdForTeam(state, teamId),
+        currentUserId,
+        currentChannelId,
+      },
+    ])
     const roles = new Set<string>()
     for (const member of channelMembers) {
       for (const role of member.roles.split(' ')) {
@@ -91,7 +89,7 @@ export function getChannelByNameAndTeamName(teamName: string, channelName: strin
       data = await HkClient.getChannelByNameAndTeamName(teamName, channelName, includeDeleted)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
-      dispatch(batchActions([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)]))
+      dispatch([{ type: ChannelTypes.CHANNELS_FAILURE, error }, logError(error)])
       return [{ error }]
     }
 

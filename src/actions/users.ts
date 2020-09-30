@@ -1,4 +1,4 @@
-import { ActionFunc, batchActions, DispatchFunc, GetStateFunc } from 'types/actions'
+import { ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
 import { HkClient } from 'hkclient'
 import { getConfig } from 'selectors/entities/general'
 import { UserTypes } from 'action-types'
@@ -119,15 +119,13 @@ export function loginById(id: string, password: string, mfaToken = ''): ActionFu
     try {
       data = await HkClient.loginById(id, password, mfaToken, deviceId)
     } catch (error) {
-      dispatch(
-        batchActions([
-          {
-            type: UserTypes.LOGIN_FAILURE,
-            error,
-          },
-          logError(error),
-        ])
-      )
+      dispatch([
+        {
+          type: UserTypes.LOGIN_FAILURE,
+          error,
+        },
+        logError(error),
+      ])
       return [{ error }]
     }
 
@@ -189,22 +187,20 @@ function completeLogin(data: UserProfile): ActionFunc {
     try {
       await Promise.all(promises)
     } catch (error) {
-      dispatch(batchActions([{ type: UserTypes.LOGIN_FAILURE, error }, logError(error)]))
+      dispatch([{ type: UserTypes.LOGIN_FAILURE, error }, logError(error)])
       return [{ error }]
     }
 
-    dispatch(
-      batchActions([
-        //TODO: Open
-        // {
-        //     type: TeamTypes.RECEIVED_MY_TEAM_MEMBERS,
-        //     data: teamMembers,
-        // },
-        {
-          type: UserTypes.LOGIN_SUCCESS,
-        },
-      ])
-    )
+    dispatch([
+      //TODO: Open
+      // {
+      //     type: TeamTypes.RECEIVED_MY_TEAM_MEMBERS,
+      //     data: teamMembers,
+      // },
+      {
+        type: UserTypes.LOGIN_SUCCESS,
+      },
+    ])
     const roles = new Set<string>()
     for (const role of data.roles.split(' ')) {
       roles.add(role)

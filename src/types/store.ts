@@ -14,7 +14,7 @@ export type GlobalState = {
       roles: {
         [x: string]: Role
       }
-      pending: Set<string>
+      pending: string[]
     }
   }
   // errors: Array<any>

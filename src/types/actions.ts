@@ -1,5 +1,5 @@
 import { GlobalState } from './store'
-import { Reducer, Dispatch, ActionCreator } from 'redux'
+import { Reducer, Dispatch, ActionCreator, AnyAction } from 'redux'
 
 export type GetStateFunc = () => GlobalState
 export type GenericAction = {
@@ -35,7 +35,11 @@ export type ActionResult = {
 
 export type ActionResultType = ActionResult[]
 
-export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResultType>
+// export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResultType>
+export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFunc> {
+  <TReturnType = ActionResultType>(actionFunc: A): Promise<TReturnType>
+  <TReturnType = ActionResultType>(actionFuncs: A[]): Promise<TReturnType>
+}
 
 export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResultType>
 
@@ -45,20 +49,20 @@ export type ActionCreatorClient<T extends (...args: any[]) => any> = (
   ...args: Parameters<T>
 ) => ReturnType<ReturnType<T>>
 
-export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
-  return function batchingReducer(state, action) {
-    if (action && 'meta' in action && action.meta.batch) {
-      return action.payload.reduce(batchingReducer, state)
-    }
-    return reduce(state, action)
-  }
-}
+// export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
+//   return function batchingReducer(state, action) {
+//     if (action && 'meta' in action && action.meta.batch) {
+//       return action.payload.reduce(batchingReducer, state)
+//     }
+//     return reduce(state, action)
+//   }
+// }
 
-export const BATCH = 'BATCHING_REDUCER.BATCH'
+// export const BATCH = 'BATCHING_REDUCER.BATCH'
 
-export function batchActions(actions: Action[], type = BATCH) {
-  return { type, meta: { batch: true }, payload: actions }
-}
+// export function batchActions(actions: Action[], type = BATCH) {
+//   return { type, meta: { batch: true }, payload: actions }
+// }
 
 export interface ExtActionCreator<A = ActionFunc> {
   (...args: any[]): A
@@ -78,6 +82,9 @@ declare module 'redux' {
    */
   export interface Dispatch<A extends Action = AnyAction> {
     <TReturnType = ActionResultType>(actionFunc: ActionFunc): TReturnType
+    <TReturnType = ActionResultType>(actionFuncs: ActionFunc[]): TReturnType
+    <TReturnType = ActionResultType>(actions: AnyAction[]): TReturnType
+    <TReturnType = ActionResultType>(actions: (AnyAction | ActionFunc)[]): TReturnType
   }
 
   function bindActionCreators<A, M extends ExtActionCreatorsMapObject<any>>(

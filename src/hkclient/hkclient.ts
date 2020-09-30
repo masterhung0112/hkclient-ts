@@ -24,7 +24,7 @@ export default class HkClient {
   userRolesVal?: string
 
   serverVersionVal = ''
-  urlVal = ''
+  urlVal = 'http://localhost:8065'
   urlVersion = '/api/v1'
   defaultHeaders: { [x: string]: string } = {}
   token = ''

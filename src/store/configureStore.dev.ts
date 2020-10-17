@@ -1,11 +1,11 @@
 import * as redux from 'redux'
-import { createStore as createStoreRedux } from 'redux-dynamic-modules-core'
+import { createStore as createStoreRedux, IModule } from 'redux-dynamic-modules-core'
 import { offlineConfig, createReducer } from './helpers'
 import { Reducer, Action } from 'redux'
 import { GlobalState } from 'types/store'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
 import initialState from './initial_state'
-import { createOffline, offline } from '@redux-offline/redux-offline'
+import { offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import serviceReducer from '../reducers'
@@ -14,6 +14,7 @@ import reduxBatch from './reduxBatch'
 import { getReduxOfflineExtension } from './offlineExtension'
 import { getSagaExtension } from './saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
+import { EntitiesModule } from 'modules/reducerModule'
 
 // const windowAny = window as any
 
@@ -72,6 +73,7 @@ export default function configureServiceStore<S>(
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers,
     },
+    EntitiesModule,
     ...loadedModules
   )
 

@@ -35,7 +35,7 @@ export default async function testConfigureStore(loadedModule: IModule<any>[] = 
 
   // const store = configureStore(preloadedState, {}, offlineConfig, () => ({}), { enableBuffer: false })
 
-  const store = configureStore(preloadedState, offlineConfig, [EntitiesModule, ...loadedModule])
+  const store = configureStore(preloadedState, offlineConfig, [...loadedModule])
 
     const wait = () => new Promise((resolve) => setTimeout(resolve, 300)) //eslint-disable-line
   await wait()

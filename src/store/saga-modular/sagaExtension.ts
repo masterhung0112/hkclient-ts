@@ -1,8 +1,8 @@
 import { default as createSagaMiddleware, SagaMiddleware } from 'redux-saga'
-import { IExtension, IItemManager, getRefCountedManager, IModuleManager } from 'redux-dynamic-modules-core'
-import { ISagaRegistration, ISagaModule, ISagaItemManager } from './Contracts'
-import { getSagaManager } from './SagaManager'
-import { sagaEquals } from './SagaComparer'
+import { IExtension, getRefCountedManager, IModuleManager } from 'redux-dynamic-modules-core'
+import { ISagaRegistration, ISagaModule, ISagaItemManager } from './contracts'
+import { getSagaManager } from './sagaManager'
+import { sagaEquals } from './sagaComparer'
 
 export type SagaExtensionContext = {
   moduleManager?: IModuleManager

@@ -68,6 +68,12 @@
       "actions/*": [
         "src/actions/*"
       ],
+      "hkreducers": [
+        "src/reducers"
+      ],
+      "hkreducers/*": [
+        "src/reducers/*"
+      ],
       "hkconstants": [
         "src/constants"
       ],
@@ -79,6 +85,18 @@
       ],
       "selectors/*": [
         "src/selectors/*"
+      ],
+      "saga-modular": [
+        "src/store/saga-modular"
+      ],
+      "saga-modular/*": [
+        "src/store/saga-modular/*"
+      ],
+      "hksagas": [
+        "src/sagas"
+      ],
+      "hksagas/*": [
+        "src/sagas/*"
       ],
       "*": [
         "src/*",

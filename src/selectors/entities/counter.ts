@@ -1,6 +1,6 @@
 import { CountAwareState } from '../../state'
-import { COUNT_MODULE_NAME } from './constants'
+import { CounterConstants } from 'constants/counter'
 
 export const countSelector = (state: CountAwareState): number => {
-  return state[COUNT_MODULE_NAME].count
+  return state[CounterConstants.COUNT_MODULE_NAME].count
 }

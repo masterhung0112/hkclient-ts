@@ -1,4 +1,4 @@
-import { ISagaRegistration, ISagaWithArguments } from './Contracts'
+import { ISagaRegistration, ISagaWithArguments } from './contracts'
 export function sagaEquals(a: ISagaRegistration<any>, b: ISagaRegistration<any>): boolean {
   if (typeof a === 'function' && typeof b === 'function') {
     return a === b

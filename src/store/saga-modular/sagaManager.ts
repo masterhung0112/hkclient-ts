@@ -1,6 +1,6 @@
-import { ISagaItemManager, ISagaRegistration, ISagaWithArguments } from './Contracts'
+import { ISagaItemManager, ISagaRegistration, ISagaWithArguments } from './contracts'
 import { SagaMiddleware, Task } from 'redux-saga'
-import { sagaEquals } from './SagaComparer'
+import { sagaEquals } from './sagaComparer'
 import { getMap } from 'redux-dynamic-modules-core'
 
 /**

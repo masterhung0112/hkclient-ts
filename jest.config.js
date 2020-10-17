@@ -29,6 +29,12 @@ module.exports = async () => {
       '^reducers/(.*)$': '<rootDir>/src/reducers/$1',
       '^selectors$': '<rootDir>/src/selectors',
       '^selectors/(.*)$': '<rootDir>/src/selectors/$1',
+      '^modules$': '<rootDir>/src/modules',
+      '^modules/(.*)$': '<rootDir>/src/modules/$1',
+      '^saga-modular$': '<rootDir>/src/store/saga-modular',
+      '^saga-modular/(.*)$': '<rootDir>/src/store/saga-modular/$1',
+      '^hksagas$': '<rootDir>/src/sagas',
+      '^hksagas/(.*)$': '<rootDir>/src/sagas/$1',
     },
   }
 }

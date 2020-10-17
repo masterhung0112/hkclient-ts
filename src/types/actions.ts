@@ -1,5 +1,5 @@
 import { GlobalState } from './store'
-import { Reducer, Dispatch, ActionCreator, AnyAction } from 'redux'
+import { UsersAwareState } from './users'
 
 export type GetStateFunc = () => GlobalState
 export type GenericAction = {

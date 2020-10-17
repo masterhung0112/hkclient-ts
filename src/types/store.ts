@@ -1,12 +1,11 @@
-import { UsersAwareState, UsersState } from './users'
 import { GeneralState } from './general'
 import { TeamsState } from './teams'
 import { Role } from './roles'
 import { ChannelsState } from './channels'
+import { UsersAwareState } from './users'
 
 export type EntitiesState = {
   general: GeneralState
-  users: UsersState
   teams: TeamsState
   channels: ChannelsState
   roles: {
@@ -17,7 +16,7 @@ export type EntitiesState = {
   }
 }
 
-export interface GlobalState {
+export interface GlobalState extends UsersAwareState {
   entities: EntitiesState
   // errors: Array<any>
 }

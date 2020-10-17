@@ -3,5 +3,6 @@ import Preferences from './preferences'
 import Permissions from './permissions'
 export * from './counter'
 export * from './users'
+import RequestStatus from './request_status'
 
-export { General, Preferences, Permissions }
+export { General, Preferences, Permissions, RequestStatus }

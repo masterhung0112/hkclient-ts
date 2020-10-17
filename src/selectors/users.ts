@@ -1,3 +1,3 @@
-import { getCurrentUser, getCurrentUserId, getUsers } from './common'
+import { getCurrentUser, getCurrentUserId, getUserProfiles } from './common'
 
-export { getCurrentUser, getCurrentUserId, getUsers }
+export { getCurrentUser, getCurrentUserId, getUserProfiles }

@@ -1,6 +1,6 @@
 import { GlobalState } from 'types/store'
 
-const state: GlobalState = {
+const state: Partial<GlobalState> = {
   entities: {
     general: {
       // appState: false,
@@ -9,12 +9,6 @@ const state: GlobalState = {
       license: {},
       deviceToken: '',
       serverVersion: '',
-    },
-    users: {
-      currentUserId: '',
-      profiles: {},
-      statuses: {},
-      profilesInChannel: {},
     },
     teams: {
       currentTeamId: '',

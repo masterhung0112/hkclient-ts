@@ -85,6 +85,11 @@ export default function configureServiceStore<S>(
   //   store.replaceReducer(enhanceReducer(createDevReducer(baseState, reducers)))
   // })
 
+  // launch store persistor
+  if (baseOfflineConfig.persist) {
+    baseOfflineConfig.persist(store, baseOfflineConfig.persistOptions, baseOfflineConfig.persistCallback)
+  }
+
   // if ((module as any).hot) {
   //   // Enable Webpack hot module replacement for reducers
   //   // eslint-disable-next-line prettier/prettier

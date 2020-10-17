@@ -3,12 +3,13 @@ import { HkClient } from 'hkclient'
 import { UserTypes } from 'action-types'
 import { HkClientError } from 'types/hkclient'
 import { logError } from './errors'
+import { getCurrentUserId } from 'selectors/users'
 const HTTP_UNAUTHORIZED = 401
 
 type ActionType = string
 
 export function forceLogoutIfNecessary(err: HkClientError, dispatch: DispatchFunc, getState: GetStateFunc) {
-  const { currentUserId } = getState().entities.users
+  const currentUserId = getCurrentUserId(getState())
 
   if (
     'status_code' in err &&

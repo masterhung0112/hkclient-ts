@@ -29,4 +29,5 @@ export default {
   MAX_POSITION_LENGTH: 128,
 
   RESERVED_USERNAMES: ['valet', 'all', 'channel', 'here', 'hungknowbot', 'system'],
+  STORE_REHYDRATION_COMPLETE: 'store_hydation_complete',
 }

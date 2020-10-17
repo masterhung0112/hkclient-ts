@@ -1,5 +1,1 @@
-export const UsersConstants = {
-  USERS_MODULE_NAME: 'users' as const,
-}
-
-export default UsersConstants
+export const USERS_MODULE_NAME = 'users'

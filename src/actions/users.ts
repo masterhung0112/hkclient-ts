@@ -8,6 +8,7 @@ import { loadRolesIfNeeded } from './roles'
 import { UserProfile } from 'types/users'
 import { logError } from './errors'
 import { TeamMembership } from 'types/teams'
+import { getCurrentUser, getCurrentUserId, getUserProfiles } from 'selectors/users'
 
 export function loadMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -38,8 +39,8 @@ export function loadMe(): ActionFunc {
 
     await Promise.all(promises)
 
-    const { currentUserId } = getState().entities.users
-    const user = getState().entities.users.profiles[currentUserId]
+    const currentUserId = getCurrentUserId(getState())
+    const user = getCurrentUser(getState())
     if (currentUserId) {
       HkClient.userId = currentUserId
     }

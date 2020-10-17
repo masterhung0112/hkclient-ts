@@ -8,9 +8,9 @@ import { getTeammateNameDisplaySetting } from './preferences'
 import { completeDirectChannelInfo, sortChannelsByDisplayName } from 'utils/channel_utils'
 import { General, Permissions } from '../../constants'
 import { getMyTeams } from './teams'
-import { getCurrentUser } from './users'
+import { getCurrentUser } from '../users'
 import { hasNewPermissions } from './general'
-import { getMyChannelMemberships } from './common'
+import { getMyChannelMemberships, usersSelector } from '../common'
 import { haveITeamPermission } from './roles'
 
 export function getAllChannels(state: GlobalState): IDMappedObjects<Channel> {
@@ -58,7 +58,7 @@ export const getDirectChannelsSet: (state: GlobalState) => Set<string> = createS
 export const getAllDirectChannels: (state: GlobalState) => Array<Channel> = createSelector(
   getAllChannels,
   getDirectChannelsSet,
-  (state: GlobalState): UsersState => state.entities.users,
+  (state: GlobalState): UsersState => usersSelector(state),
   getTeammateNameDisplaySetting,
   (
     channels: IDMappedObjects<Channel>,

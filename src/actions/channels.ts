@@ -7,6 +7,7 @@ import { HkClient } from 'hkclient'
 import { ChannelTypes } from 'action-types'
 import { getChannelsIdForTeam } from 'utils/channel_utils'
 import { getServerVersion } from 'selectors/entities/general'
+import { getCurrentUserId } from 'selectors/users'
 
 export function selectChannel(channelId: string): Action {
   return {
@@ -37,7 +38,7 @@ export function fetchMyChannelsAndMembers(teamId: string): ActionFunc {
       return [{ error }]
     }
 
-    const { currentUserId } = state.entities.users
+    const currentUserId = getCurrentUserId(state)
     const { currentChannelId } = state.entities.channels
 
     dispatch([

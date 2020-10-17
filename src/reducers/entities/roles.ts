@@ -6,7 +6,7 @@ function roles(state: Record<string, Role> = {}, action: GenericAction) {
   return state
 }
 
-function pending(state: Set<string> = new Set(), action: GenericAction) {
+function pending(state: string[] = [], action: GenericAction) {
   return state
 }
 

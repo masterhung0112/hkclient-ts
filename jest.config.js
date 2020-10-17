@@ -20,6 +20,7 @@ module.exports = async () => {
       '^hkconstants/(.*)$': '<rootDir>/src/constants/$1',
       '^utils$': '<rootDir>/src/utils',
       '^utils/(.*)$': '<rootDir>/src/utils/$1',
+      '^testlib$': '<rootDir>/src/testlib',
       '^testlib/(.*)$': '<rootDir>/src/testlib/$1',
       '^action-types$': '<rootDir>/src/action-types',
       '^action-types/(.*)$': '<rootDir>/src/action-types/$1',
@@ -29,6 +30,14 @@ module.exports = async () => {
       '^reducers/(.*)$': '<rootDir>/src/reducers/$1',
       '^selectors$': '<rootDir>/src/selectors',
       '^selectors/(.*)$': '<rootDir>/src/selectors/$1',
+      '^hkmodules$': '<rootDir>/src/modules',
+      '^hkmodules/(.*)$': '<rootDir>/src/modules/$1',
+      '^saga-modular$': '<rootDir>/src/redux/saga-modular',
+      '^saga-modular/(.*)$': '<rootDir>/src/redux/saga-modular/$1',
+      '^hksagas$': '<rootDir>/src/sagas',
+      '^hksagas/(.*)$': '<rootDir>/src/sagas/$1',
+      '^hkreducers$': '<rootDir>/src/reducers',
+      '^hkreducers/(.*)$': '<rootDir>/src/reducers/$1',
     },
   }
 }

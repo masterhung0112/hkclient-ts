@@ -1,5 +1,5 @@
 import { ServerError } from 'types/errors'
-import { ActionFunc, DispatchFunc } from 'types/actions'
+import { Action, ActionFunc, DispatchFunc } from 'types/actions'
 import { serializeError, ErrorObject } from 'serialize-error'
 import { HkClient } from 'hkclient'
 import { ErrorTypes } from 'action-types'
@@ -38,7 +38,7 @@ export function logError(error: ServerError, displayable = false): ActionFunc {
   }
 }
 
-export function getLogErrorAction(error: ErrorObject, displayable = false) {
+export function getLogErrorAction(error: ErrorObject, displayable = false): Action {
   return {
     type: ErrorTypes.LOG_ERROR,
     displayable,

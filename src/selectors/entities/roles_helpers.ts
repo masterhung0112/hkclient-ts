@@ -1,7 +1,7 @@
 import { GlobalState } from 'types/store'
 import { createSelector } from 'reselect'
-import { getCurrentUser } from './users'
-import { UserProfile } from 'types/users'
+import { getCurrentUser } from '../users'
+import { UserProfile, UsersAwareState } from 'types/users'
 
 export type PermissionsOptions = {
   channel?: string
@@ -13,7 +13,7 @@ export function getRoles(state: GlobalState) {
   return state.entities.roles.roles
 }
 
-export const getMySystemRoles: (state: GlobalState) => Set<string> = createSelector(
+export const getMySystemRoles: (state: UsersAwareState) => Set<string> = createSelector(
   getCurrentUser,
   (user: UserProfile) => {
     if (user) {

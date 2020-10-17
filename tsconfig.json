@@ -4,7 +4,8 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "lib",
   ],
   "compilerOptions": {
     "target": "es5",
@@ -53,6 +54,9 @@
       "hkclient/*": [
         "src/hkclient/*"
       ],
+      "testlib": [
+        "src/testlib"
+      ],
       "testlib/*": [
         "src/testlib/*"
       ],
@@ -68,6 +72,12 @@
       "actions/*": [
         "src/actions/*"
       ],
+      "hkreducers": [
+        "src/reducers"
+      ],
+      "hkreducers/*": [
+        "src/reducers/*"
+      ],
       "hkconstants": [
         "src/constants"
       ],
@@ -79,6 +89,24 @@
       ],
       "selectors/*": [
         "src/selectors/*"
+      ],
+      "saga-modular": [
+        "src/redux/saga-modular"
+      ],
+      "saga-modular/*": [
+        "src/redux/saga-modular/*"
+      ],
+      "hksagas": [
+        "src/sagas"
+      ],
+      "hksagas/*": [
+        "src/sagas/*"
+      ],
+      "hkmodules": [
+        "src/modules"
+      ],
+      "hkmodules/*": [
+        "src/modules/*"
       ],
       "*": [
         "src/*",

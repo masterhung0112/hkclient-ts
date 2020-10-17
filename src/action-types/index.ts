@@ -5,5 +5,6 @@ import PreferenceTypes from './preferences'
 import RoleTypes from './roles'
 import ChannelTypes from './channels'
 import TeamTypes from './teams'
+import CounterTypes from './counter'
 
-export { GeneralTypes, UserTypes, PreferenceTypes, ErrorTypes, RoleTypes, ChannelTypes, TeamTypes }
+export { CounterTypes, GeneralTypes, UserTypes, PreferenceTypes, ErrorTypes, RoleTypes, ChannelTypes, TeamTypes }

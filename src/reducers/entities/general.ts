@@ -6,7 +6,6 @@ import { UserTypes, GeneralTypes } from 'action-types'
 function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
   switch (action.type) {
     case '__NEXT_REDUX_WRAPPER_HYDRATE__':
-      console.log('@@ wrapper config hydrate', action.payload.entities.general.config.EnableSignInWithEmail)
       return { ...state, ...action.payload.entities.general.config }
 
     case GeneralTypes.CLIENT_CONFIG_RECEIVED:

@@ -1,7 +1,8 @@
 import { IDMappedObjects, RelationOneToOne, RelationOneToMany } from './utilities'
 import { Channel } from './channels'
+import { USERS_MODULE_NAME } from 'hkconstants/users'
 
-export type UserProfile = {
+export type UserProfile = Readonly<{
   id: string
   create_at: number
   update_at: number
@@ -33,11 +34,15 @@ export type UserProfile = {
   bot_last_icon_update: number
   terms_of_service_id: string
   terms_of_service_create_at: number
-}
+}>
 
-export type UsersState = {
+export type UsersState = Readonly<{
   currentUserId: string
   profiles: IDMappedObjects<UserProfile>
   profilesInChannel: RelationOneToMany<Channel, UserProfile>
   statuses: RelationOneToOne<UserProfile, string>
+}>
+
+export interface UsersAwareState {
+  [USERS_MODULE_NAME]: UsersState
 }

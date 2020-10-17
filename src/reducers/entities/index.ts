@@ -9,7 +9,7 @@ import { combineReducers } from 'redux'
 
 export default combineReducers({
   general,
-  users,
+  // users,
   roles,
   teams,
   channels,

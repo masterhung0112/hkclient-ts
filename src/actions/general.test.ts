@@ -3,10 +3,10 @@ import configureStore from 'testlib/test_store'
 import { HkClient } from 'hkclient'
 import * as Actions from 'actions/general'
 import nock from 'nock'
-import assert from 'assert'
+import { IModuleStore } from 'redux-dynamic-modules-core'
 
 describe('general actions', () => {
-  let store
+  let store: IModuleStore<any>
   beforeAll(async () => {
     await TestHelper.initBasic(HkClient)
   })
@@ -30,9 +30,9 @@ describe('general actions', () => {
     const clientConfig = store.getState().entities.general.config
 
     // Check a few basic fields since they may change over time
-    assert.ok(clientConfig.Version)
-    assert.ok(clientConfig.BuildNumber)
-    assert.ok(clientConfig.BuildDate)
-    assert.ok(clientConfig.BuildHash)
+    expect(clientConfig.Version).toBeTruthy()
+    expect(clientConfig.BuildNumber).toBeTruthy()
+    expect(clientConfig.BuildDate).toBeTruthy()
+    expect(clientConfig.BuildHash).toBeTruthy()
   })
 })

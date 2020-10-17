@@ -90,11 +90,17 @@
       "selectors/*": [
         "src/selectors/*"
       ],
+      "redux-dynamic-modules-core": [
+        "src/redux/redux-dynamic-modules-core"
+      ],
+      "redux-dynamic-modules-core/*": [
+        "src/redux/redux-dynamic-modules-core/*"
+      ],
       "saga-modular": [
-        "src/store/saga-modular"
+        "src/redux/saga-modular"
       ],
       "saga-modular/*": [
-        "src/store/saga-modular/*"
+        "src/redux/saga-modular/*"
       ],
       "hksagas": [
         "src/sagas"

@@ -9,7 +9,7 @@ const config: <S>(
   loadedModules: IModule<any>[],
   advancedCombineReducers?: (reducers: ReducersMapObject<S, any>) => Reducer<S>
 ) => IModuleStore<S> =
-  process.env.NODE_ENV === 'production'
-    ? require('./configureStore.dev').default
-    : require('./configureStore.dev').default
+  // process.env.NODE_ENV === 'production'
+  //   ? require('./configureStore.dev').default
+  require('./configureStore.dev').default
 export default config

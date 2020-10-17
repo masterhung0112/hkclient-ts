@@ -10,7 +10,7 @@ import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import reduxBatch from './reduxBatch'
 import { getReduxOfflineExtension } from './offlineExtension'
-import { getSagaExtension } from './saga-modular'
+import { getSagaExtension } from 'saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
 import { EntitiesModule } from 'hkmodules/reducerModule'
 
@@ -56,20 +56,26 @@ export default function configureServiceStore<S>(
 
   // const composeEnhancers = loadReduxDevtools ? devToolsEnhancer() : redux.compose
 
-  let advancedComposeEnhancers = undefined
-  const loadReduxDevtools = process.env.NODE_ENV !== 'test'
-  if (loadReduxDevtools) {
-    const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
-    advancedComposeEnhancers = composeWithDevTools({ maxAge: 500 })
-  }
+  // let advancedComposeEnhancers = undefined
+  // const loadReduxDevtools = process.env.NODE_ENV !== 'test'
+  // if (loadReduxDevtools) {
+  //   const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
+  //   advancedComposeEnhancers = composeWithDevTools({ maxAge: 500 })
+  // }
 
+  const enhancerMe = function (...args) {
+    console.log('call me with compose')
+    return redux.compose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
+  }
+  console.log('call me ##')
   const store = createStoreRedux(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
+      afterEnhancers: [reduxBatch],
       extensions: [getThunkExtension(), getSagaExtension({})],
       advancedCombineReducers: advancedCombineReducers,
-      advancedComposeEnhancers,
+      advancedComposeEnhancers: enhancerMe as any,
     },
     EntitiesModule,
     ...loadedModules

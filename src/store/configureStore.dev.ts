@@ -64,15 +64,12 @@ export default function configureServiceStore<S>(
   // }
 
   const enhancerMe = function (...args) {
-    console.log('call me with compose')
     return redux.compose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
   }
-  console.log('call me ##')
   const store = createStoreRedux(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
-      afterEnhancers: [reduxBatch],
       extensions: [getThunkExtension(), getSagaExtension({})],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers: enhancerMe as any,

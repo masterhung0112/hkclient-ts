@@ -10,8 +10,8 @@
     "run:ci": "npm run check-types && npm run eslint:check && npm run test-ci",
     "eslint:check": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts",
     "eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern node_modules --quiet src/**/*.ts src/**/*.test.ts --fix",
-    "dev": "ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts/lib",
-    "dev:watch": "ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts/lib",
+    "dev": "cross-env NODE_ENV=development ttsc --outDir ../hungknow-webapp/node_modules/hkclient-ts/lib",
+    "dev:watch": "cross-env NODE_ENV=development ttsc --watch --outDir ../hungknow-webapp/node_modules/hkclient-ts/lib",
     "check-types": "ttsc",
     "test": "cross-env NODE_ENV='development' jest",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu TZ=Etc/UTC jest --ci --maxWorkers=8"
@@ -52,6 +52,7 @@
     "redux-action-buffer": "^1.2.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-dynamic-middlewares": "^2.0.0",
+    "redux-dynamic-modules-core": "^5.2.3",
     "redux-dynamic-modules-thunk": "^5.2.3",
     "redux-persist": "4.9.1",
     "redux-persist-node-storage": "^2.0.0",

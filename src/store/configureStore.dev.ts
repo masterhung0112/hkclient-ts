@@ -1,15 +1,19 @@
 import * as redux from 'redux'
+import { createStore as createStoreRedux } from 'redux-dynamic-modules-core'
 import { offlineConfig, createReducer } from './helpers'
 import { Reducer, Action } from 'redux'
 import { GlobalState } from 'types/store'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
 import initialState from './initial_state'
-import { createOffline } from '@redux-offline/redux-offline'
+import { createOffline, offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import serviceReducer from '../reducers'
 import reducerRegistry from './reducer_registry'
 import reduxBatch from './reduxBatch'
+import { getReduxOfflineExtension } from './offlineExtension'
+import { getSagaExtension } from './saga-modular'
+import { getThunkExtension } from 'redux-dynamic-modules-thunk'
 
 // const windowAny = window as any
 
@@ -37,44 +41,64 @@ function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   return redux.applyMiddleware(...createMiddleware(clientOptions))
 }
 
-export default function configureServiceStore(
-  preloadedState: any,
-  appReducer: any,
+export default function configureServiceStore<S>(
+  preloadedState: S,
+  // appReducer: any,
   userOfflineConfig: any,
-  getAppReducer: any,
-  clientOptions: any
+  // getAppReducer: any,
+  // clientOptions: any,
+  loadedModules: IModule<any>[],
+  advancedCombineReducers?: (reducers: redux.ReducersMapObject<S, any>) => Reducer<S>
 ) {
   const baseOfflineConfig = Object.assign({}, defaultOfflineConfig, offlineConfig, userOfflineConfig)
   const baseState = Object.assign({}, initialState, preloadedState)
 
-  const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
+  // const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
 
   // const composeEnhancers = loadReduxDevtools ? devToolsEnhancer() : redux.compose
 
-  const store = redux.createStore(
-    enhanceReducer(createDevReducer(baseState, serviceReducer, appReducer)),
-    baseState,
-    redux.compose(reduxBatch, bindMiddlware(middleware, clientOptions), reduxBatch, enhanceStore)
+  let advancedComposeEnhancers = undefined
+  const loadReduxDevtools = process.env.NODE_ENV !== 'test'
+  if (loadReduxDevtools) {
+    const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
+    advancedComposeEnhancers = composeWithDevTools({ maxAge: 500 })
+  }
+
+  const store = createStoreRedux(
+    {
+      initialState: baseState,
+      enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>],
+      extensions: [getThunkExtension(), getSagaExtension({})],
+      advancedCombineReducers: advancedCombineReducers,
+      advancedComposeEnhancers,
+    },
+    ...loadedModules
   )
 
-  reducerRegistry.setChangeListener((reducers: any) => {
-    store.replaceReducer(enhanceReducer(createDevReducer(baseState, reducers)))
-  })
+  //   {
+  //   enhanceReducer(createDevReducer(baseState, serviceReducer, appReducer)),
+  //   baseState,
+  //   redux.compose(reduxBatch, bindMiddlware(middleware, clientOptions), reduxBatch, enhanceStore)
+  // )
 
-  if ((module as any).hot) {
-    // Enable Webpack hot module replacement for reducers
-    // eslint-disable-next-line prettier/prettier
-    (module as any).hot.accept(() => {
-      const nextServiceReducer = require('../reducers').default // eslint-disable-line global-require
-      let nextAppReducer
-      if (getAppReducer) {
-        nextAppReducer = getAppReducer() // eslint-disable-line global-require
-      }
-      store.replaceReducer(
-        createDevReducer(baseState, reducerRegistry.getReducers(), nextServiceReducer, nextAppReducer)
-      )
-    })
-  }
+  // reducerRegistry.setChangeListener((reducers: any) => {
+  //   store.replaceReducer(enhanceReducer(createDevReducer(baseState, reducers)))
+  // })
+
+  // if ((module as any).hot) {
+  //   // Enable Webpack hot module replacement for reducers
+  //   // eslint-disable-next-line prettier/prettier
+  //   (module as any).hot.accept(() => {
+  //     const nextServiceReducer = require('../reducers').default // eslint-disable-line global-require
+  //     let nextAppReducer
+  //     if (getAppReducer) {
+  //       nextAppReducer = getAppReducer() // eslint-disable-line global-require
+  //     }
+  //     store.replaceReducer(
+  //       createDevReducer(baseState, reducerRegistry.getReducers(), nextServiceReducer, nextAppReducer)
+  //     )
+  //   })
+  // }
 
   return store
 }

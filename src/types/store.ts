@@ -4,18 +4,20 @@ import { TeamsState } from './teams'
 import { Role } from './roles'
 import { ChannelsState } from './channels'
 
-export type GlobalState = {
-  entities: {
-    general: GeneralState
-    users: UsersState
-    teams: TeamsState
-    channels: ChannelsState
+export type EntitiesState = {
+  general: GeneralState
+  users: UsersState
+  teams: TeamsState
+  channels: ChannelsState
+  roles: {
     roles: {
-      roles: {
-        [x: string]: Role
-      }
-      pending: string[]
+      [x: string]: Role
     }
+    pending: string[]
   }
+}
+
+export type GlobalState = {
+  entities: EntitiesState
   // errors: Array<any>
 }

@@ -12,7 +12,7 @@ describe('Actions.Users', () => {
   })
 
   beforeEach(async () => {
-    store = await configureStore()
+    store = await configureStore([])
   })
 
   afterAll(async () => {

@@ -4,7 +4,7 @@ import { HkClient } from 'hkclient'
 import * as Actions from 'actions/users'
 import nock from 'nock'
 import assert from 'assert'
-import { UsersModule } from 'modules/users'
+import { UsersModule } from 'hkmodules/users'
 
 describe('Actions.Users', () => {
   let store

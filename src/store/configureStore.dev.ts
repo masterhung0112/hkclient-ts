@@ -12,7 +12,7 @@ import reduxBatch from './reduxBatch'
 import { getReduxOfflineExtension } from './offlineExtension'
 import { getSagaExtension } from './saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
-import { EntitiesModule } from 'modules/reducerModule'
+import { EntitiesModule } from 'hkmodules/reducerModule'
 
 // const windowAny = window as any
 
@@ -66,7 +66,7 @@ export default function configureServiceStore<S>(
   const store = createStoreRedux(
     {
       initialState: baseState,
-      enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>],
+      enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
       extensions: [getThunkExtension(), getSagaExtension({})],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers,

@@ -102,6 +102,12 @@
       "hksagas/*": [
         "src/sagas/*"
       ],
+      "hkmodules": [
+        "src/modules"
+      ],
+      "hkmodules/*": [
+        "src/modules/*"
+      ],
       "*": [
         "src/*",
         "node_modules/*"

@@ -1,7 +1,4 @@
-import { Reducer, combineReducers } from 'redux'
-import reducerRegistry from './reducer_registry'
 import { Action } from 'types/actions'
-import { General } from '../constants'
 
 export const offlineConfig = {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -23,20 +20,20 @@ export const offlineConfig = {
   },
 }
 
-export function createReducer(baseState: Record<string, any>, ...reducers: Reducer[]) {
-  reducerRegistry.setReducers(Object.assign({}, ...reducers))
-  const baseReducer = combineReducers(reducerRegistry.getReducers())
+// export function createReducer(baseState: Record<string, any>, ...reducers: Reducer[]) {
+//   // reducerRegistry.setReducers(Object.assign({}, ...reducers))
+//   const baseReducer = combineReducers(reducers)
 
-  // Root reducer wrapper that listens for reset events.
-  // Returns whatever is passed for the data property
-  // as the new state.
-  function offlineReducer(state = {}, action: Action) {
-    if ('type' in action && 'data' in action && action.type === General.OFFLINE_STORE_RESET) {
-      return baseReducer(action.data || baseState, action)
-    }
+//   // Root reducer wrapper that listens for reset events.
+//   // Returns whatever is passed for the data property
+//   // as the new state.
+//   function offlineReducer(state = {}, action: Action) {
+//     if ('type' in action && 'data' in action && action.type === General.OFFLINE_STORE_RESET) {
+//       return baseReducer(action.data || baseState, action)
+//     }
 
-    return baseReducer(state, action as any)
-  }
+//     return baseReducer(state, action as any)
+//   }
 
-  return offlineReducer
-}
+//   return offlineReducer
+// }

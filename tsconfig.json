@@ -4,7 +4,8 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "lib",
   ],
   "compilerOptions": {
     "target": "es5",
@@ -52,6 +53,9 @@
       ],
       "hkclient/*": [
         "src/hkclient/*"
+      ],
+      "testlib": [
+        "src/testlib"
       ],
       "testlib/*": [
         "src/testlib/*"

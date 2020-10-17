@@ -20,6 +20,7 @@ module.exports = async () => {
       '^hkconstants/(.*)$': '<rootDir>/src/constants/$1',
       '^utils$': '<rootDir>/src/utils',
       '^utils/(.*)$': '<rootDir>/src/utils/$1',
+      '^testlib$': '<rootDir>/src/testlib',
       '^testlib/(.*)$': '<rootDir>/src/testlib/$1',
       '^action-types$': '<rootDir>/src/action-types',
       '^action-types/(.*)$': '<rootDir>/src/action-types/$1',
@@ -35,6 +36,8 @@ module.exports = async () => {
       '^saga-modular/(.*)$': '<rootDir>/src/store/saga-modular/$1',
       '^hksagas$': '<rootDir>/src/sagas',
       '^hksagas/(.*)$': '<rootDir>/src/sagas/$1',
+      '^hkreducers$': '<rootDir>/src/reducers',
+      '^hkreducers/(.*)$': '<rootDir>/src/reducers/$1',
     },
   }
 }

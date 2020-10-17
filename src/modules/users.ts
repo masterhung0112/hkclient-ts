@@ -1,13 +1,11 @@
-import { CountAwareState } from 'types/counter'
-import { countReducer } from 'hkreducers/entities/counter'
-import { countWatcher } from 'hksagas/counter'
-import { ISagaModule } from 'saga-modular/contracts'
-import { CounterConstants } from 'constants/counter'
+import userReducer from 'hkreducers/entities/users'
+import { UsersConstants } from 'hkconstants/users'
+import { UsersAwareState } from 'types/users'
+import { IModule } from 'redux-dynamic-modules-core'
 
-export const UsersModule: ISagaModule<CountAwareState> = {
-  id: CounterConstants.COUNT_MODULE_NAME,
+export const UsersModule: IModule<UsersAwareState> = {
+  id: UsersConstants.USERS_MODULE_NAME,
   reducerMap: {
-    [CounterConstants.COUNT_MODULE_NAME]: countReducer,
+    [UsersConstants.USERS_MODULE_NAME]: userReducer,
   },
-  sagas: [countWatcher],
 }

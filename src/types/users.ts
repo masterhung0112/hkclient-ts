@@ -1,6 +1,6 @@
 import { IDMappedObjects, RelationOneToOne, RelationOneToMany } from './utilities'
 import { Channel } from './channels'
-import UsersConstants from 'constants/users'
+import UsersConstants from 'hkconstants/users'
 
 export type UserProfile = Readonly<{
   id: string

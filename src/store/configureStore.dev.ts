@@ -1,6 +1,6 @@
 import * as redux from 'redux'
 import { createStore as createStoreRedux, IModule } from 'redux-dynamic-modules-core'
-import { offlineConfig, createReducer } from './helpers'
+import { offlineConfig } from './helpers'
 import { Reducer, Action } from 'redux'
 import { GlobalState } from 'types/store'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
@@ -8,8 +8,6 @@ import initialState from './initial_state'
 import { offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
-import serviceReducer from '../reducers'
-import reducerRegistry from './reducer_registry'
 import reduxBatch from './reduxBatch'
 import { getReduxOfflineExtension } from './offlineExtension'
 import { getSagaExtension } from './saga-modular'
@@ -105,9 +103,9 @@ export default function configureServiceStore<S>(
   return store
 }
 
-function createDevReducer(baseState: any, ...reducers: any) {
-  return enableFreezing(createReducer(baseState, ...reducers))
-}
+// function createDevReducer(baseState: any, ...reducers: any) {
+//   return enableFreezing(createReducer(baseState, ...reducers))
+// }
 
 function enableFreezing(reducer: Reducer) {
   return (state: GlobalState, action: Action) => {

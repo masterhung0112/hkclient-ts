@@ -4,6 +4,7 @@ import { HkClient } from 'hkclient'
 import * as Actions from 'actions/users'
 import nock from 'nock'
 import assert from 'assert'
+import { UsersModule } from 'modules/users'
 
 describe('Actions.Users', () => {
   let store
@@ -12,7 +13,7 @@ describe('Actions.Users', () => {
   })
 
   beforeEach(async () => {
-    store = await configureStore([])
+    store = await configureStore([UsersModule])
   })
 
   afterAll(async () => {

@@ -54,25 +54,24 @@ export default function configureServiceStore<S>(
 
   // const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
 
-  // const composeEnhancers = loadReduxDevtools ? devToolsEnhancer() : redux.compose
+  const storeEnhancerForReduxBatch = function (...args) {
+    const loadReduxDevtools = process.env.NODE_ENV !== 'test'
+    let customCompose = redux.compose
 
-  // let advancedComposeEnhancers = undefined
-  // const loadReduxDevtools = process.env.NODE_ENV !== 'test'
-  // if (loadReduxDevtools) {
-  //   const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
-  //   advancedComposeEnhancers = composeWithDevTools({ maxAge: 500 })
-  // }
-
-  const enhancerMe = function (...args) {
-    return redux.compose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
+    if (loadReduxDevtools) {
+      const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
+      customCompose = composeWithDevTools({ maxAge: 500 })
+    }
+    return customCompose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
   }
+
   const store = createStoreRedux(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
       extensions: [getThunkExtension(), getSagaExtension({})],
       advancedCombineReducers: advancedCombineReducers,
-      advancedComposeEnhancers: enhancerMe as any,
+      advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
     },
     EntitiesModule,
     ...loadedModules

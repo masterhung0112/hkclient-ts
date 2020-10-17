@@ -5,6 +5,7 @@ import * as Actions from 'actions/users'
 import nock from 'nock'
 import assert from 'assert'
 import { UsersModule } from 'hkmodules/users'
+import { getCurrentUserId, getUserProfiles } from 'selectors/users'
 
 describe('Actions.Users', () => {
   let store
@@ -26,7 +27,8 @@ describe('Actions.Users', () => {
     await Actions.getMe()(store.dispatch, store.getState)
 
     const state = store.getState()
-    const { profiles, currentUserId } = state.entities.users
+    const profiles = getUserProfiles(state)
+    const currentUserId = getCurrentUserId(state)
 
     assert.ok(profiles[currentUserId])
     assert.equal(profiles[currentUserId].id, currentUserId)
@@ -42,7 +44,7 @@ describe('Actions.Users', () => {
     await Actions.getUserByUsername(user.username)(store.dispatch, store.getState)
 
     const state = store.getState()
-    const { profiles } = state.entities.users
+    const profiles = getUserProfiles(state)
 
     assert.ok(profiles[user.id])
     assert.equal(profiles[user.id].username, user.username)
@@ -58,7 +60,7 @@ describe('Actions.Users', () => {
     await Actions.getUserByEmail(user.email)(store.dispatch, store.getState)
 
     const state = store.getState()
-    const { profiles } = state.entities.users
+    const profiles = getUserProfiles(state)
 
     assert.ok(profiles[user.id])
     assert.equal(profiles[user.id].email, user.email)

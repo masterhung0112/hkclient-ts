@@ -19,19 +19,18 @@ export function getSagaExtension<C extends SagaExtensionContext>(
 ): IExtension {
   let sagaMonitor = undefined
 
-  //@ts-ignore
   if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
     sagaMonitor = (window as any)['__SAGA_MONITOR_EXTENSION__'] || undefined
   }
 
   // Setup the saga middleware
-  let sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>({
+  const sagaMiddleware: SagaMiddleware<C> = createSagaMiddleware<any>({
     context: sagaContext,
     sagaMonitor,
     onError,
   })
 
-  let _sagaManager: ISagaItemManager<ISagaRegistration<any>> = getRefCountedManager(
+  const _sagaManager: ISagaItemManager<ISagaRegistration<any>> = getRefCountedManager(
     getSagaManager(sagaMiddleware),
     sagaEquals
   )

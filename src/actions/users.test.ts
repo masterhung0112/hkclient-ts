@@ -6,6 +6,8 @@ import nock from 'nock'
 import assert from 'assert'
 import { UsersModule } from 'hkmodules/users'
 import { getCurrentUserId, getUserProfiles } from 'selectors/users'
+import { SagaStore } from 'types/store'
+import { allSagasDone } from 'hkredux'
 
 describe('Actions.Users', () => {
   let store
@@ -24,7 +26,8 @@ describe('Actions.Users', () => {
   it('getMe', async () => {
     nock(HkClient.baseRoute).get('/users/me').reply(200, TestHelper.basicUser)
 
-    await Actions.getMe()(store.dispatch, store.getState)
+    store.dispatch(Actions.getMe())
+    await allSagasDone((store as SagaStore).getSagaTasks())
 
     const state = store.getState()
     const profiles = getUserProfiles(state)
@@ -41,13 +44,18 @@ describe('Actions.Users', () => {
 
     nock(HkClient.baseRoute).get(`/users/username/${user.username}`).reply(200, user)
 
-    await Actions.getUserByUsername(user.username)(store.dispatch, store.getState)
+    store.dispatch(Actions.getUserByUsername(user.username))
 
-    const state = store.getState()
-    const profiles = getUserProfiles(state)
+    // Wait for all saga done
+    const tasks = (store as SagaStore).getSagaTasks()
+    expect(tasks).toBeTruthy()
+    expect(tasks.length).toEqual(1)
+    await allSagasDone(tasks)
 
-    assert.ok(profiles[user.id])
-    assert.equal(profiles[user.id].username, user.username)
+    const profiles = getUserProfiles(store.getState())
+
+    expect(profiles[user.id]).toBeTruthy()
+    expect(profiles[user.id].username).toEqual(user.username)
   })
 
   it('getUserByEmail', async () => {
@@ -57,7 +65,9 @@ describe('Actions.Users', () => {
 
     nock(HkClient.baseRoute).get(`/users/email/${user.email}`).reply(200, user)
 
-    await Actions.getUserByEmail(user.email)(store.dispatch, store.getState)
+    // await Actions.getUserByEmail(user.email)(store.dispatch, store.getState)
+    store.dispatch(Actions.getUserByEmail(user.email))
+    await allSagasDone((store as SagaStore).getSagaTasks())
 
     const state = store.getState()
     const profiles = getUserProfiles(state)

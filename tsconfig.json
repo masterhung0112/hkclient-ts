@@ -90,11 +90,17 @@
       "selectors/*": [
         "src/selectors/*"
       ],
+      "hkredux": [
+        "src/hkredux"
+      ],
+      "hkredux/*": [
+        "src/hkredux/*"
+      ],
       "saga-modular": [
-        "src/redux/saga-modular"
+        "src/hkredux/saga-modular"
       ],
       "saga-modular/*": [
-        "src/redux/saga-modular/*"
+        "src/hkredux/saga-modular/*"
       ],
       "hksagas": [
         "src/sagas"

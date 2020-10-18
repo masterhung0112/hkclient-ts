@@ -1,6 +1,13 @@
 import keyMirror from 'utils/key_mirror'
 
 export default keyMirror({
+  // Saga
+  LOAD_ME: null,
+  GET_ME: null,
+  GET_USER_BY_USERNAME: null,
+  GET_USER_BY_EMAIL: null,
+
+  // Reducers
   LOGOUT_SUCCESS: null,
   RECEIVED_ME: null,
   RECEIVED_PROFILE: null,

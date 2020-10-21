@@ -38,6 +38,8 @@ module.exports = async () => {
       '^hksagas/(.*)$': '<rootDir>/src/sagas/$1',
       '^hkreducers$': '<rootDir>/src/reducers',
       '^hkreducers/(.*)$': '<rootDir>/src/reducers/$1',
+      '^hkredux$': '<rootDir>/src/hkredux',
+      '^hkredux/(.*)$': '<rootDir>/src/hkredux/$1',
     },
   }
 }

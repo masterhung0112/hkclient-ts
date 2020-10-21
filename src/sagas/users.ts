@@ -8,6 +8,7 @@ import { Action, ActionResultType } from 'types/actions'
 import { loadRolesIfNeeded } from 'actions/roles'
 import { bindClientSaga } from 'actions/helpers'
 import { AnyAction } from 'redux'
+import { withPromise } from 'hkredux'
 
 export function* loadMe(): Generator<Action, ActionResultType, any> {
   //   const config = yield select(getConfig)
@@ -48,11 +49,10 @@ export function* loadMe(): Generator<Action, ActionResultType, any> {
 }
 
 export function* fetchMe(): Generator<Action, ActionResultType, any> {
-  const getMeFunc = bindClientSaga({
+  const me = yield* bindClientSaga({
     clientFunc: HkClient.getMe,
     onSuccess: UserTypes.RECEIVED_ME,
-  })
-  const me = yield call(getMeFunc)
+  })()
 
   if (me && 'error' in me[0]) {
     return me
@@ -64,28 +64,24 @@ export function* fetchMe(): Generator<Action, ActionResultType, any> {
 }
 
 export function* fetchUserByUsername({ username }: AnyAction): Generator<Action, ActionResultType, any> {
-  return yield call(
-    bindClientSaga({
-      clientFunc: HkClient.getUserByUsername,
-      onSuccess: UserTypes.RECEIVED_PROFILE,
-      params: [username],
-    })
-  )
+  return yield* bindClientSaga({
+    clientFunc: HkClient.getUserByUsername,
+    onSuccess: UserTypes.RECEIVED_PROFILE,
+    params: [username],
+  })()
 }
 
 export function* fetchUserByEmail({ email }: AnyAction): Generator<Action, ActionResultType, any> {
-  return yield call(
-    bindClientSaga({
-      clientFunc: HkClient.getUserByEmail,
-      onSuccess: UserTypes.RECEIVED_PROFILE,
-      params: [email],
-    })
-  )
+  return yield* bindClientSaga({
+    clientFunc: HkClient.getUserByEmail,
+    onSuccess: UserTypes.RECEIVED_PROFILE,
+    params: [email],
+  })()
 }
 
-export function* watchUsers(): Generator {
-  yield takeEvery(UserTypes.LOAD_ME, loadMe)
-  yield takeEvery(UserTypes.GET_ME, fetchMe)
-  yield takeEvery(UserTypes.GET_USER_BY_USERNAME, fetchUserByUsername)
-  yield takeEvery(UserTypes.GET_USER_BY_EMAIL, fetchUserByEmail)
+export function* watchUsers(): Generator<Action, void, any> {
+  yield takeEvery(UserTypes.LOAD_ME, withPromise(loadMe))
+  yield takeEvery(UserTypes.GET_ME, withPromise(fetchMe))
+  yield takeEvery(UserTypes.GET_USER_BY_USERNAME, withPromise(fetchUserByUsername))
+  yield takeEvery(UserTypes.GET_USER_BY_EMAIL, withPromise(fetchUserByEmail))
 }

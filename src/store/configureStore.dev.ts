@@ -13,6 +13,7 @@ import { getReduxOfflineExtension } from './offlineExtension'
 import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
 import { EntitiesModule } from 'hkmodules/reducerModule'
+import { getSagaPromiseExtension } from 'hkredux'
 
 // const windowAny = window as any
 
@@ -70,7 +71,7 @@ export default function configureServiceStore<S>(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
-      extensions: [getThunkExtension(), getSagaExtension(sagaContext)],
+      extensions: [getSagaPromiseExtension(), getThunkExtension(), getSagaExtension(sagaContext)],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
     },

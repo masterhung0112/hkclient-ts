@@ -2,12 +2,13 @@ import nock from 'nock'
 import HkClient from 'hkclient/hkclient'
 import { generateId } from 'utils/helpers'
 import { General } from '../constants'
+import { UserProfile } from 'types/users'
 
 export const DEFAULT_SERVER = 'http://localhost:8065'
 const PASSWORD = 'password1'
 
 class TestHelper {
-  basicClient = null
+  basicClient: HkClient
   basicUser = null
 
   createClient = () => {
@@ -60,18 +61,37 @@ class TestHelper {
     return 'success' + this.generateId() + '@simulator.amazonses.com'
   }
 
-  fakeUser = () => {
+  fakeUser = (): UserProfile => {
+    const now = Date.now()
     return {
-      email: this.fakeEmail(),
-      allow_marketing: true,
-      password: PASSWORD,
-      locale: General.DEFAULT_LOCALE,
+      id: this.generateId(),
+      create_at: now,
+      update_at: now,
+      delete_at: 0,
       username: this.generateId(),
+      password: PASSWORD,
+      auth_data: '',
+      auth_service: '',
+      email: this.fakeEmail(),
+      email_verified: true,
+      nickname: this.generateId(),
       first_name: this.generateId(),
       last_name: this.generateId(),
-      create_at: Date.now(),
-      delete_at: 0,
+      position: '',
       roles: 'system_user',
+      allow_marketing: true,
+      last_password_update: now,
+      last_picture_update: now,
+      failed_attempts: 0,
+      locale: General.DEFAULT_LOCALE,
+      mfa_active: false,
+      mfa_secret: '',
+      last_activity_at: now,
+      is_bot: false,
+      bot_description: '',
+      bot_last_icon_update: now,
+      terms_of_service_id: '',
+      terms_of_service_create_at: now,
     }
   }
 

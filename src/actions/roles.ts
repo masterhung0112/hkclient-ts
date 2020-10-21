@@ -1,9 +1,10 @@
 import { ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
-import { hasNewPermissions } from 'selectors/entities/general'
+import { hasNewPermissions } from 'selectors/general'
 import { getRoles } from 'selectors/entities/roles_helpers'
 import { bindClientFunc } from './helpers'
 import { HkClient } from 'hkclient'
 import { RoleTypes } from 'action-types'
+import { GeneralSelectors } from 'selectors'
 
 export function setPendingRoles(roles: Array<string>): ActionFunc {
   return async (dispatch: DispatchFunc) => {
@@ -35,7 +36,7 @@ export function loadRolesIfNeeded(roles: Iterable<string>): ActionFunc {
     for (const role of roles) {
       pendingRoles.add(role)
     }
-    if (!state.entities.general.serverVersion) {
+    if (!GeneralSelectors.getServerVersion(state)) {
       dispatch(setPendingRoles(Array.from(pendingRoles)))
       setTimeout(() => dispatch(loadRolesIfNeeded([])), 500)
       return [{ data: [] }]

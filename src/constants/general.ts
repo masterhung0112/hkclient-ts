@@ -1,4 +1,5 @@
 export default {
+  GENERAL_MODULE_NAME: 'general' as const,
   OFFLINE_STORE_RESET: 'offline_store_reset',
   DEFAULT_LOCALE: 'en',
   TEAMMATE_NAME_DISPLAY: {

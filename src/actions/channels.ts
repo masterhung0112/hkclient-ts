@@ -6,7 +6,7 @@ import { loadRolesIfNeeded } from './roles'
 import { HkClient } from 'hkclient'
 import { ChannelTypes } from 'action-types'
 import { getChannelsIdForTeam } from 'utils/channel_utils'
-import { getServerVersion } from 'selectors/entities/general'
+import { getServerVersion } from 'selectors/general'
 import { getCurrentUserId } from 'selectors/users'
 
 export function selectChannel(channelId: string): Action {

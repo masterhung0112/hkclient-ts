@@ -9,26 +9,10 @@ import { offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import reduxBatch from './reduxBatch'
-import { getReduxOfflineExtension } from './offlineExtension'
 import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
 import { EntitiesModule } from 'hkmodules/reducerModule'
 import { getSagaPromiseExtension } from 'hkredux'
-
-// const windowAny = window as any
-
-// const devToolsEnhancer =
-//   // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-//     // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-//     // :
-//     () => {
-//         return devTools({
-//           name: 'hkclient-ts',
-//           hostname: 'localhost',
-//           port: 5678,
-//           realtime: true,
-//         })
-//       }
 
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   const loadReduxDevtools = process.env.NODE_ENV !== 'test'
@@ -65,7 +49,7 @@ export default function configureServiceStore<S>(
     }
     return customCompose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
   }
-  
+
   const sagaContext: SagaExtensionContext = {}
   const store = createStoreRedux(
     {

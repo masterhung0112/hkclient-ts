@@ -9,7 +9,7 @@ import { completeDirectChannelInfo, sortChannelsByDisplayName } from 'utils/chan
 import { General, Permissions } from '../../constants'
 import { getMyTeams } from './teams'
 import { getCurrentUser } from '../users'
-import { hasNewPermissions } from './general'
+import { hasNewPermissions } from '../general'
 import { getMyChannelMemberships, usersSelector } from '../common'
 import { haveITeamPermission } from './roles'
 

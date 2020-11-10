@@ -1,12 +1,15 @@
 import { Action, ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
 import { HkClient } from 'hkclient'
-import { getConfig } from 'selectors/entities/general'
+import { getConfig } from 'selectors/general'
 import { UserTypes } from 'action-types'
 import { bindClientFunc, forceLogoutIfNecessary } from './helpers'
 import { getMyPreferences } from './preferences'
 import { loadRolesIfNeeded } from './roles'
 import { UserProfile } from 'types/users'
 import { logError } from './errors'
+import { getCurrentUser, getCurrentUserId } from 'selectors/users'
+import { General } from 'hkconstants'
+import { GeneralSelectors } from 'selectors'
 
 export function loadMe(): Action {
   return {
@@ -137,7 +140,7 @@ export function loginById(id: string, password: string, mfaToken = ''): ActionFu
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     dispatch({ type: UserTypes.LOGIN_REQUEST, data: null })
 
-    const deviceId = getState().entities.general.deviceToken
+    const deviceId = GeneralSelectors.getDeviceToken(getState())
     let data
 
     try {

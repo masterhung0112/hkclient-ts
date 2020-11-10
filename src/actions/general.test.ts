@@ -4,6 +4,9 @@ import { HkClient } from 'hkclient'
 import * as Actions from 'actions/general'
 import nock from 'nock'
 import { IModuleStore } from 'redux-dynamic-modules-core'
+import { GeneralSelectors } from 'selectors'
+import { ClientConfig } from 'types/config'
+import { GeneralModule } from 'hkmodules/general'
 
 describe('general actions', () => {
   let store: IModuleStore<any>
@@ -12,7 +15,7 @@ describe('general actions', () => {
   })
 
   beforeEach(async () => {
-    store = await configureStore([])
+    store = await configureStore([GeneralModule])
   })
 
   afterAll(async () => {
@@ -23,16 +26,15 @@ describe('general actions', () => {
     nock(HkClient.baseRoute)
       .get('/config/client')
       .query(true)
-      .reply(200, { Version: '4.0.0', BuildNumber: '3', BuildDate: 'Yesterday', BuildHash: '1234' })
+      .reply(200, { SiteURL: 'hungknowtest', DiagnosticId: '123' } as Partial<ClientConfig>)
 
     await Actions.getClientConfig()(store.dispatch, store.getState)
 
-    const clientConfig = store.getState().entities.general.config
+    const clientConfig = GeneralSelectors.getConfig(store.getState())
 
     // Check a few basic fields since they may change over time
-    expect(clientConfig.Version).toBeTruthy()
-    expect(clientConfig.BuildNumber).toBeTruthy()
-    expect(clientConfig.BuildDate).toBeTruthy()
-    expect(clientConfig.BuildHash).toBeTruthy()
+    expect(clientConfig.SiteURL).toBeTruthy()
+    expect(clientConfig.DiagnosticId).toBeTruthy()
+    expect(clientConfig.CustomDescriptionText).toBeFalsy()
   })
 })

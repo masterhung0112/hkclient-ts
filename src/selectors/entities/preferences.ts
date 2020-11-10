@@ -1,6 +1,6 @@
 import { GlobalState } from 'types/store'
 import { createSelector } from 'reselect'
-import { getConfig, getLicense } from './general'
+import { getConfig, getLicense } from '../general'
 import { getMyPreferences } from 'actions/preferences'
 import { General, Preferences } from '../../constants'
 import { getPreferenceKey } from 'utils/preferences_utils'

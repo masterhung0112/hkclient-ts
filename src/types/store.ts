@@ -3,6 +3,12 @@ import { TeamsState } from './teams'
 import { Role } from './roles'
 import { ChannelsState } from './channels'
 import { UsersAwareState } from './users'
+import { Store } from 'redux'
+import { Task } from 'redux-saga'
+
+export interface SagaStore extends Store {
+  getSagaTasks?: () => Task[]
+}
 
 export type EntitiesState = {
   teams: TeamsState

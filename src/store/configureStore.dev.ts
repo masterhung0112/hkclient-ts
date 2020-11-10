@@ -2,32 +2,17 @@ import * as redux from 'redux'
 import { createStore as createStoreRedux, IModule } from 'redux-dynamic-modules-core'
 import { offlineConfig } from './helpers'
 import { Reducer, Action } from 'redux'
-import { GlobalState } from 'types/store'
+import { GlobalState, SagaStore } from 'types/store'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
 import initialState from './initial_state'
 import { offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import reduxBatch from './reduxBatch'
-import { getReduxOfflineExtension } from './offlineExtension'
-import { getSagaExtension } from 'saga-modular'
+import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
 import { getThunkExtension } from 'redux-dynamic-modules-thunk'
 import { EntitiesModule } from 'hkmodules/reducerModule'
-
-// const windowAny = window as any
-
-// const devToolsEnhancer =
-//   // typeof windowAny !== 'undefined' && windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-//     // ? windowAny.__REDUX_DEVTOOLS_EXTENSION__ // eslint-disable-line no-underscore-dangle
-//     // :
-//     () => {
-//         return devTools({
-//           name: 'hkclient-ts',
-//           hostname: 'localhost',
-//           port: 5678,
-//           realtime: true,
-//         })
-//       }
+import { getSagaPromiseExtension } from 'hkredux'
 
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   const loadReduxDevtools = process.env.NODE_ENV !== 'test'
@@ -65,11 +50,12 @@ export default function configureServiceStore<S>(
     return customCompose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
   }
 
+  const sagaContext: SagaExtensionContext = {}
   const store = createStoreRedux(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
-      extensions: [getThunkExtension(), getSagaExtension({})],
+      extensions: [getSagaPromiseExtension(), getThunkExtension(), getSagaExtension(sagaContext)],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
     },
@@ -86,6 +72,9 @@ export default function configureServiceStore<S>(
   // reducerRegistry.setChangeListener((reducers: any) => {
   //   store.replaceReducer(enhanceReducer(createDevReducer(baseState, reducers)))
   // })
+
+  const sagaStore = store as SagaStore
+  sagaStore.getSagaTasks = sagaContext.sagaManager?.getTasks
 
   // launch store persistor
   if (baseOfflineConfig.persist) {

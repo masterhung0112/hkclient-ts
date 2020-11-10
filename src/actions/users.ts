@@ -1,4 +1,4 @@
-import { ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
+import { Action, ActionFunc, DispatchFunc, GetStateFunc } from 'types/actions'
 import { HkClient } from 'hkclient'
 import { getConfig } from 'selectors/general'
 import { UserTypes } from 'action-types'
@@ -11,81 +11,106 @@ import { getCurrentUser, getCurrentUserId } from 'selectors/users'
 import { General } from 'hkconstants'
 import { GeneralSelectors } from 'selectors'
 
-export function loadMe(): ActionFunc {
-  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    const state = getState()
-    const config = getConfig(state)
+export function loadMe(): Action {
+  return {
+    type: UserTypes.GET_ME,
+  }
+}
+// export function loadMe(): ActionFunc {
+//   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+//     const state = getState()
+//     const config = getConfig(state)
 
-    //TODO: Open this
-    // const deviceId = state.entities.general.deviceToken;
-    // if (deviceId) {
-    //     HkClient.attachDevice(deviceId);
-    // }
+//     //TODO: Open this
+//     // const deviceId = state.entities.general.deviceToken;
+//     // if (deviceId) {
+//     //     HkClient.attachDevice(deviceId);
+//     // }
 
-    const promises = [
-      dispatch(getMe()),
-      dispatch(getMyPreferences()),
-      // dispatch(getMyTeams()),
-      // dispatch(getMyTeamMembers()),
-      // dispatch(getMyTeamUnreads()),
-    ]
+//     const promises = [
+//       dispatch(getMe()),
+//       dispatch(getMyPreferences()),
+//       // dispatch(getMyTeams()),
+//       // dispatch(getMyTeamMembers()),
+//       // dispatch(getMyTeamUnreads()),
+//     ]
 
-    // Sometimes the server version is set in one or the other
-    //TODO: Open this
-    // const serverVersion = HkClient.serverVersion || getState().entities.general.serverVersion;
-    // dispatch(setServerVersion(serverVersion));
-    // if (!isMinimumServerVersion(serverVersion, 4, 7) && config.EnableCustomEmoji === 'true') {
-    // dispatch(getAllCustomEmojis());
-    // }
+//     // Sometimes the server version is set in one or the other
+//     //TODO: Open this
+//     // const serverVersion = HkClient.serverVersion || getState().entities.general.serverVersion;
+//     // dispatch(setServerVersion(serverVersion));
+//     // if (!isMinimumServerVersion(serverVersion, 4, 7) && config.EnableCustomEmoji === 'true') {
+//     // dispatch(getAllCustomEmojis());
+//     // }
 
-    await Promise.all(promises)
+//     await Promise.all(promises)
 
-    const currentUserId = getCurrentUserId(getState())
-    const user = getCurrentUser(getState())
-    if (currentUserId) {
-      HkClient.userId = currentUserId
-    }
+//     const currentUserId = getCurrentUserId(getState())
+//     const user = getCurrentUser(getState())
+//     if (currentUserId) {
+//       HkClient.userId = currentUserId
+//     }
 
-    if (user) {
-      HkClient.userRoles = user.roles
-    }
+//     if (user) {
+//       HkClient.userRoles = user.roles
+//     }
 
-    return [{ data: true }]
+//     return [{ data: true }]
+//   }
+// }
+
+export function getMe(): Action {
+  return {
+    type: UserTypes.GET_ME,
   }
 }
 
-export function getMe(): ActionFunc {
-  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    const getMeFunc = bindClientFunc({
-      clientFunc: HkClient.getMe,
-      onSuccess: UserTypes.RECEIVED_ME,
-    })
-    const me = await getMeFunc(dispatch, getState)
+// export function getMe(): ActionFunc {
+//   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
+//     const getMeFunc = bindClientFunc({
+//       clientFunc: HkClient.getMe,
+//       onSuccess: UserTypes.RECEIVED_ME,
+//     })
+//     const me = await getMeFunc(dispatch, getState)
 
-    if (me && 'error' in me[0]) {
-      return me
-    }
-    if (me && 'data' in me[0]) {
-      dispatch(loadRolesIfNeeded(me[0].data.roles.split(' ')))
-    }
-    return me
+//     if (me && 'error' in me[0]) {
+//       return me
+//     }
+//     if (me && 'data' in me[0]) {
+//       dispatch(loadRolesIfNeeded(me[0].data.roles.split(' ')))
+//     }
+//     return me
+//   }
+// }
+
+// export function getUserByUsername(username: string): ActionFunc {
+//   return bindClientFunc({
+//     clientFunc: HkClient.getUserByUsername,
+//     onSuccess: UserTypes.RECEIVED_PROFILE,
+//     params: [username],
+//   })
+// }
+
+export function getUserByUsername(username: string): Action {
+  return {
+    type: UserTypes.GET_USER_BY_USERNAME,
+    username,
   }
 }
 
-export function getUserByUsername(username: string): ActionFunc {
-  return bindClientFunc({
-    clientFunc: HkClient.getUserByUsername,
-    onSuccess: UserTypes.RECEIVED_PROFILE,
-    params: [username],
-  })
-}
+// export function getUserByEmail(email: string): ActionFunc {
+//   return bindClientFunc({
+//     clientFunc: HkClient.getUserByEmail,
+//     onSuccess: UserTypes.RECEIVED_PROFILE,
+//     params: [email],
+//   })
+// }
 
-export function getUserByEmail(email: string): ActionFunc {
-  return bindClientFunc({
-    clientFunc: HkClient.getUserByEmail,
-    onSuccess: UserTypes.RECEIVED_PROFILE,
-    params: [email],
-  })
+export function getUserByEmail(email: string): Action {
+  return {
+    type: UserTypes.GET_USER_BY_EMAIL,
+    email,
+  }
 }
 
 export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {

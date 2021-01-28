@@ -10,17 +10,18 @@ export function setUrl(url: string): boolean {
 
 export function getClientConfig(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
-    let data
-    try {
-      data = await HkClient.getClientConfigOld()
-    } catch (error) {
-      forceLogoutIfNecessary(error, dispatch, getState)
-      return [{ error }]
-    }
+    console.log('in getClientConfig')
+    const data = {}
+    // try {
+    //   data = await HkClient.getClientConfigOld()
+    // } catch (error) {
+    //   forceLogoutIfNecessary(error, dispatch, getState)
+    //   return [{ error }]
+    // }
 
     // HkClient.setEnableLogging(data.EnableDeveloper === 'true');
     // HkClient.setDiagnosticId(data.DiagnosticId);
-    dispatch([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }])
+    // dispatch([{ type: GeneralTypes.CLIENT_CONFIG_RECEIVED, data }])
 
     return [{ data }]
   }

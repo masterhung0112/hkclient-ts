@@ -55,7 +55,8 @@ export default function configureServiceStore<S>(
     {
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
-      extensions: [getSagaPromiseExtension(), getThunkExtension(), getSagaExtension(sagaContext)],
+      //getSagaPromiseExtension(),
+      extensions: [getThunkExtension(), getSagaExtension(sagaContext)],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
     },

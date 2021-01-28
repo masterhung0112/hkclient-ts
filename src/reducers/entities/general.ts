@@ -6,10 +6,10 @@ import { UserTypes, GeneralTypes } from 'action-types'
 function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
   switch (action.type) {
     case '__NEXT_REDUX_WRAPPER_HYDRATE__':
-      return { ...state, ...action.payload.entities.general.config }
+      return { ...state, ...action.payload.general.config }
 
     case GeneralTypes.CLIENT_CONFIG_RECEIVED:
-      return Object.assign({}, state, action.data)
+      return Object.assign({}, state, action.payload)
     // case UserTypes.LOGIN: // Used by the mobile app
     // case GeneralTypes.SET_CONFIG_AND_LICENSE:
     //     return Object.assign({}, state, action.data.config);
@@ -19,7 +19,6 @@ function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
     default:
       return state
   }
-  return state
 }
 
 function license(state: ClientLicense = {}, action: GenericAction) {

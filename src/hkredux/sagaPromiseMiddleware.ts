@@ -24,7 +24,18 @@ const createExposedPromise = () => {
 
 const sagaPromiseMiddleware = (store) => (next) => (action) => {
   const [promise, deferred] = createExposedPromise()
-  next({ ...action, [DEFERRED]: deferred })
+  // console.log('call action', typeof action, typeof action === 'function' ? 'nothing' : action)
+
+  if (typeof action === 'function') {
+    next(action)
+  } else {
+    if (Array.isArray(action)) {
+      // console.log('is array in saga promise')
+      next(action.map((a) => ({ ...a, [DEFERRED]: deferred })))
+    } else {
+      next({ ...action, [DEFERRED]: deferred })
+    }
+  }
   return promise
 }
 export default sagaPromiseMiddleware
@@ -40,16 +51,23 @@ export function withPromise(saga: Saga): Saga {
     let error = undefined
     let data = undefined
     try {
+      // console.log('call saga')
       data = yield call(saga, ...action)
     } catch (err) {
       error = err
-      deferred.reject(error)
+      if (deferred) {
+        deferred.reject(error)
+      }
     } finally {
       if (yield cancelled()) {
-        deferred.reject(new Error('cancelled'))
+        if (deferred) {
+          deferred.reject(new Error('cancelled'))
+        }
       }
     }
 
-    deferred.resolve(data)
+    if (deferred) {
+      deferred.resolve(data)
+    }
   }
 }

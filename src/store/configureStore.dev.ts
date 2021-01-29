@@ -10,7 +10,7 @@ import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
 import reduxBatch from './reduxBatch'
 import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
-import { getThunkExtension } from 'redux-dynamic-modules-thunk'
+import { getThunkExtension } from 'hkredux/thunkMiddleware'
 import { EntitiesModule } from 'hkmodules/reducerModule'
 import { getSagaPromiseExtension } from 'hkredux'
 
@@ -56,7 +56,7 @@ export default function configureServiceStore<S>(
       initialState: baseState,
       enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
       //getSagaPromiseExtension(),
-      extensions: [getThunkExtension(), getSagaExtension(sagaContext)],
+      extensions: [getSagaPromiseExtension(), getThunkExtension(), getSagaExtension(sagaContext)],
       advancedCombineReducers: advancedCombineReducers,
       advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
     },

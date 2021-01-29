@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production ttsc",
+    "build:dev": "cross-env NODE_ENV=development ttsc",
     "build:rollup": "cross-env NODE_ENV=production rollup -c",
     "prepare": "npm run build",
     "run:ci": "npm run check-types && npm run eslint:check && npm run test-ci",

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production ttsc",
     "build:dev": "cross-env NODE_ENV=development ttsc",
+    "build:dev:watch": "cross-env NODE_ENV=development ttsc --watch",
     "build:rollup": "cross-env NODE_ENV=production rollup -c",
     "prepare": "npm run build",
     "run:ci": "npm run check-types && npm run eslint:check && npm run test-ci",
@@ -53,7 +54,6 @@
     "redux-action-buffer": "^1.2.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-dynamic-modules-core": "^5.2.3",
-    "redux-dynamic-modules-thunk": "^5.2.3",
     "redux-persist": "4.9.1",
     "redux-persist-node-storage": "^2.0.0",
     "redux-saga": "^1.1.3",

@@ -9,7 +9,7 @@ function config(state: Partial<ClientConfig> = {}, action: GenericAction) {
       return { ...state, ...action.payload.general.config }
 
     case GeneralTypes.CLIENT_CONFIG_RECEIVED:
-      return Object.assign({}, state, action.payload)
+      return Object.assign({}, state, action.data)
     // case UserTypes.LOGIN: // Used by the mobile app
     // case GeneralTypes.SET_CONFIG_AND_LICENSE:
     //     return Object.assign({}, state, action.data.config);

@@ -1,7 +1,6 @@
 import { IExtension } from 'redux-dynamic-modules-core'
 import { Saga, SagaIterator } from 'redux-saga'
 import { call, cancelled } from 'redux-saga/effects'
-import { Action } from 'types/actions'
 
 export const DEFERRED = Symbol('DEFERRED')
 
@@ -30,7 +29,6 @@ const sagaPromiseMiddleware = (store) => (next) => (action) => {
     next(action)
   } else {
     if (Array.isArray(action)) {
-      // console.log('is array in saga promise')
       next(action.map((a) => ({ ...a, [DEFERRED]: deferred })))
     } else {
       next({ ...action, [DEFERRED]: deferred })
@@ -46,13 +44,12 @@ export function getSagaPromiseExtension(): IExtension {
   }
 }
 
-export function withPromise(saga: Saga): Saga {
+export function withPromise(saga: Saga, ...sagaArgs: any): Saga {
   return function* ({ [DEFERRED]: deferred, ...action }): SagaIterator {
     let error = undefined
     let data = undefined
     try {
-      // console.log('call saga')
-      data = yield call(saga, ...action)
+      data = yield call(saga, ...sagaArgs, action)
     } catch (err) {
       error = err
       if (deferred) {

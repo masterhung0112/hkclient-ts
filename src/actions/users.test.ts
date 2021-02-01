@@ -6,8 +6,6 @@ import nock from 'nock'
 import assert from 'assert'
 import { getUsersModuleDependencies, UsersModule } from 'hkmodules/users'
 import { getCurrentUserId, getUserProfiles } from 'selectors/users'
-import { SagaStore } from 'types/store'
-import { allSagasDone } from 'hkredux'
 
 describe('Actions.Users', () => {
   let store

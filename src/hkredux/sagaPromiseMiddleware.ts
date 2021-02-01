@@ -1,7 +1,6 @@
 import { IExtension } from 'redux-dynamic-modules-core'
 import { Saga, SagaIterator } from 'redux-saga'
 import { call, cancelled } from 'redux-saga/effects'
-import { Action } from 'types/actions'
 
 export const DEFERRED = Symbol('DEFERRED')
 
@@ -24,7 +23,17 @@ const createExposedPromise = () => {
 
 const sagaPromiseMiddleware = (store) => (next) => (action) => {
   const [promise, deferred] = createExposedPromise()
-  next({ ...action, [DEFERRED]: deferred })
+  // console.log('call action', typeof action, typeof action === 'function' ? 'nothing' : action)
+
+  if (typeof action === 'function') {
+    next(action)
+  } else {
+    if (Array.isArray(action)) {
+      next(action.map((a) => ({ ...a, [DEFERRED]: deferred })))
+    } else {
+      next({ ...action, [DEFERRED]: deferred })
+    }
+  }
   return promise
 }
 export default sagaPromiseMiddleware
@@ -35,21 +44,27 @@ export function getSagaPromiseExtension(): IExtension {
   }
 }
 
-export function withPromise(saga: Saga): Saga {
+export function withPromise(saga: Saga, ...sagaArgs: any): Saga {
   return function* ({ [DEFERRED]: deferred, ...action }): SagaIterator {
     let error = undefined
     let data = undefined
     try {
-      data = yield call(saga, ...action)
+      data = yield call(saga, ...sagaArgs, action)
     } catch (err) {
       error = err
-      deferred.reject(error)
+      if (deferred) {
+        deferred.reject(error)
+      }
     } finally {
       if (yield cancelled()) {
-        deferred.reject(new Error('cancelled'))
+        if (deferred) {
+          deferred.reject(new Error('cancelled'))
+        }
       }
     }
 
-    deferred.resolve(data)
+    if (deferred) {
+      deferred.resolve(data)
+    }
   }
 }

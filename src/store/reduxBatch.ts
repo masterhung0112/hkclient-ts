@@ -50,7 +50,13 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
     let inDispatch = false
 
     function dispatchRecurse(action: A[] | A) {
-      return Array.isArray(action) ? action.map((subAction) => dispatchRecurse(subAction)) : store.dispatch(action)
+      // console.log('is Array', Array.isArray(action), action)
+      return Array.isArray(action)
+        ? action.map((subAction) => {
+            // console.log('subAction', subAction)
+            return dispatchRecurse(subAction)
+          })
+        : store.dispatch(action)
     }
 
     function dispatch(action: A[] | A) {

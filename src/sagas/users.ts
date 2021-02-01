@@ -48,7 +48,7 @@ export function* loadMe(): Generator<Action, ActionResultType, any> {
   return [{ data: true }]
 }
 
-export function* fetchMe(): Generator<Action, ActionResultType, any> {
+export function* getMeSaga(): Generator<Action, ActionResultType, any> {
   const me = yield* bindClientSaga({
     clientFunc: HkClient.getMe,
     onSuccess: UserTypes.RECEIVED_ME,
@@ -81,7 +81,7 @@ export function* fetchUserByEmail({ email }: AnyAction): Generator<Action, Actio
 
 export function* watchUsers(): Generator<Action, void, any> {
   yield takeEvery(UserTypes.LOAD_ME, withPromise(loadMe))
-  yield takeEvery(UserTypes.GET_ME, withPromise(fetchMe))
+  yield takeEvery(UserTypes.GET_ME, withPromise(getMeSaga))
   yield takeEvery(UserTypes.GET_USER_BY_USERNAME, withPromise(fetchUserByUsername))
   yield takeEvery(UserTypes.GET_USER_BY_EMAIL, withPromise(fetchUserByEmail))
 }

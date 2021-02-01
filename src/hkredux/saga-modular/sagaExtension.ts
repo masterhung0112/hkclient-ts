@@ -17,10 +17,10 @@ export function getSagaExtension<C extends SagaExtensionContext>(
   sagaContext?: C,
   onError?: (error: Error) => void
 ): IExtension {
-  let sagaMonitor = undefined
+  const sagaMonitor = undefined
 
   if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
-    sagaMonitor = (window as any)['__SAGA_MONITOR_EXTENSION__'] || undefined
+    // sagaMonitor = (window as any)['__SAGA_MONITOR_EXTENSION__'] || undefined
   }
 
   // Setup the saga middleware

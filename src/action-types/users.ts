@@ -1,6 +1,6 @@
 import keyMirror from 'utils/key_mirror'
 
-export default keyMirror({
+export const UserTypes = keyMirror({
   // Saga
   LOAD_ME: null,
   GET_ME: null,
@@ -17,3 +17,5 @@ export default keyMirror({
   LOGIN_SUCCESS: null,
   LOGIN_FAILURE: null,
 })
+
+export default UserTypes

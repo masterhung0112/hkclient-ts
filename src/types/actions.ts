@@ -1,5 +1,4 @@
 import { GlobalState } from './store'
-import { UsersAwareState } from './users'
 
 export type GetStateFunc = () => GlobalState
 export type GenericAction = {

@@ -6,5 +6,16 @@ import RoleTypes from './roles'
 import ChannelTypes from './channels'
 import TeamTypes from './teams'
 import CounterTypes from './counter'
+import ChineseChessTypes from './chineseChess'
 
-export { CounterTypes, GeneralTypes, UserTypes, PreferenceTypes, ErrorTypes, RoleTypes, ChannelTypes, TeamTypes }
+export {
+  CounterTypes,
+  GeneralTypes,
+  UserTypes,
+  PreferenceTypes,
+  ErrorTypes,
+  RoleTypes,
+  ChannelTypes,
+  TeamTypes,
+  ChineseChessTypes,
+}

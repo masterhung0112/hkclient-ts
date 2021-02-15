@@ -7,21 +7,41 @@ export type ChineseChessPlayer = {
   opponentId?: string
 }
 
+export type PieceCoordinateId = {
+  x: number
+  y: number
+}
+
+export type PieceCoordinate = {
+  id: string
+  x: number
+  y: number
+  piece?: string
+  hidden?: boolean
+  redHighlighted?: boolean
+  blackHighlighted?: boolean
+}
+
+export type PieceMove = {
+  oldCoordinateId: string
+  newCoordinateId: string
+}
+
 // export default class CChessPlayer {
 //   faction: string
 //   avatars: any[]
-//   selectedAvatar: string | null
+//   selectedPiece: string | null
 //   opponent: CChessPlayer
 
 //   constructor({ faction, opponent }: { faction: string, opponent: CChessPlayer } = {}) {
 //     this.faction = faction
 //     this.avatars = []
-//     this.selectedAvatar = null
+//     this.selectedPiece = null
 
 //     this.opponent = opponent
 //   }
 
-//   set addAvatar(avatar: string) {
+//   set addPiece(avatar: string) {
 //     this.avatars.push(avatar)
 //     avatar.player = this
 //   }
@@ -33,35 +53,35 @@ export type ChineseChessPlayer = {
 //     }
 //   }
 
-//   set addAvatars(allPieces: string[]) {
+//   set addPieces(allPieces: string[]) {
 //     allPieces.forEach((avatar) => {
-//       this.addAvatar(avatar)
+//       this.addPiece(avatar)
 //     })
 //   }
 
-//   set setSelectedAvatar(avatar: string) {
+//   set setSelectedPiece(avatar: string) {
 //     matrix.extinguish()
 //     this.opponent.avatars.filter((avatar) => avatar.isHaloed()).map((avatar) => avatar.active())
 
 //     if (avatar === null) {
-//       this.selectedAvatar = avatar
-//     } else if (this.selectedAvatar === avatar) {
-//       this.selectedAvatar = null
+//       this.selectedPiece = avatar
+//     } else if (this.selectedPiece === avatar) {
+//       this.selectedPiece = null
 //     } else if (this.avatars.indexOf(avatar) !== -1) {
-//       this.selectedAvatar = avatar
+//       this.selectedPiece = avatar
 
-//       this.selectedAvatar.getMoveOptions.map((coord) => {
+//       this.selectedPiece.getMoveOptions.map((coord) => {
 //         coord[`${this.faction}Highlighted`]()
 //       })
 
-//       this.selectedAvatar.getKillOptions.map((coord) => {
+//       this.selectedPiece.getKillOptions.map((coord) => {
 //         coord.avatar.haloed()
 //       })
 //     }
 //   }
 
-//   get getSelectedAvatar() {
-//     return this.selectedAvatar
+//   get getSelectedPiece() {
+//     return this.selectedPiece
 //   }
 // }
 
@@ -69,7 +89,10 @@ export type ChineseChessState = Readonly<{
   player1Id: string
   player2Id: string
   activePlayerId: string
+  player1SelectedPieceId: PieceCoordinateId
+  player2SelectedPieceId: PieceCoordinateId
   players: EntityState<ChineseChessPlayer>
+  currentBoard: EntityState<PieceCoordinate>
 }>
 
 export interface ChineseChessStateAwareState {

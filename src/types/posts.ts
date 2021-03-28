@@ -1,10 +1,15 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import { Posts } from 'hkconstants/posts'
 import { CustomEmoji } from './emojis'
 import { FileInfo } from './files'
 import { Reaction } from './reactions'
 import { $ID, RelationOneToOne, RelationOneToMany, IDMappedObjects, Dictionary } from './utilities'
+
+export interface PostsAwareState {
+  [Posts.POSTS_MODULE_NAME]: PostsState
+}
 
 export type PostType =
   | 'system_add_remove'

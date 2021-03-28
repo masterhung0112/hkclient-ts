@@ -86,3 +86,7 @@ export type TeamInviteWithError = {
   email: string
   error: ServerError
 }
+
+export interface TeamsAwareState {
+  [TEAMS_MODULE_NAME]: TeamsState
+}

@@ -32,6 +32,7 @@ export const PostTypes = {
 }
 
 export const Posts = {
+  POSTS_MODULE_NAME: 'posts' as const,
   POST_CHUNK_SIZE: 60,
   POST_DELETED: 'DELETED',
   SYSTEM_MESSAGE_PREFIX: 'system_',

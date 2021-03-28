@@ -1,6 +1,6 @@
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
-import { HkClient } from 'hkclient'
+import { HkClient } from 'client'
 import * as Actions from 'actions/general'
 import nock from 'nock'
 import { IModuleStore } from 'redux-dynamic-modules-core'

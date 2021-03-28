@@ -1,5 +1,5 @@
 import nock from 'nock'
-import HkClient from 'hkclient/hkclient'
+import HkClient from 'client/client4'
 import { generateId } from 'utils/helpers'
 import { General } from '../constants'
 import { UserProfile } from 'types/users'

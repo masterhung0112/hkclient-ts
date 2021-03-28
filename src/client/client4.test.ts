@@ -1,4 +1,4 @@
-import { ClientError, HEADER_X_VERSION_ID } from './hkclient'
+import { ClientError, HEADER_X_VERSION_ID } from './client4'
 import assert from 'assert'
 import nock from 'nock'
 import TestHelper from 'testlib/test_helper'

@@ -1,13 +1,42 @@
-import { ServerError } from 'types/errors'
-import { Action, ActionFunc, DispatchFunc } from 'types/actions'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import { ErrorTypes } from 'action_types'
 import { serializeError, ErrorObject } from 'serialize-error'
-import { HkClient } from 'hkclient'
-import { ErrorTypes } from 'action-types'
+import { Client4 } from 'client'
+import EventEmitter from 'utils/event_emitter'
+import { DispatchFunc, ActionFunc } from 'types/actions'
+import { ServerError } from 'types/errors'
+
+export function dismissErrorObject(index: number) {
+  return {
+    type: ErrorTypes.DISMISS_ERROR,
+    index,
+    data: null,
+  }
+}
+
+export function dismissError(index: number): ActionFunc {
+  return async (dispatch: DispatchFunc) => {
+    dispatch(dismissErrorObject(index))
+
+    return { data: true }
+  }
+}
+
+export function getLogErrorAction(error: ErrorObject, displayable = false) {
+  return {
+    type: ErrorTypes.LOG_ERROR,
+    displayable,
+    error,
+    data: null,
+  }
+}
 
 export function logError(error: ServerError, displayable = false): ActionFunc {
   return async (dispatch: DispatchFunc) => {
     if (error.server_error_id === 'api.context.session_expired.app_error') {
-      return [{ data: true }]
+      return { data: true }
     }
 
     const serializedError = serializeError(error)
@@ -23,26 +52,24 @@ export function logError(error: ServerError, displayable = false): ActionFunc {
     if (sendToServer) {
       try {
         const stringifiedSerializedError = JSON.stringify(serializedError).toString()
-        await HkClient.logClientError(stringifiedSerializedError)
+        await Client4.logClientError(stringifiedSerializedError)
       } catch (err) {
         // avoid crashing the app if an error sending
         // the error occurs.
       }
     }
 
-    //TODO: Open this
-    // EventEmitter.emit(ErrorTypes.LOG_ERROR, error);
+    EventEmitter.emit(ErrorTypes.LOG_ERROR, error)
     dispatch(getLogErrorAction(serializedError, displayable))
 
-    return [{ data: true }]
+    return { data: true }
   }
 }
 
-export function getLogErrorAction(error: ErrorObject, displayable = false): Action {
-  return {
-    type: ErrorTypes.LOG_ERROR,
-    displayable,
-    error,
-    data: null,
+export function clearErrors(): ActionFunc {
+  return async (dispatch: DispatchFunc) => {
+    dispatch({ type: ErrorTypes.CLEAR_ERRORS, data: null })
+
+    return { data: true }
   }
 }

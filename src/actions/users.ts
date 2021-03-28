@@ -1,7 +1,10 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
 import { Action, ActionFunc, ActionResult, batchActions, DispatchFunc, GetStateFunc } from 'types/actions'
 import { UserProfile, UserStatus, GetFilteredUsersStatsOpts, UsersStats, UserCustomStatus } from 'types/users'
 import { TeamMembership } from 'types/teams'
-import { HkClient4 } from 'HkClient4'
+import { Client4 } from 'client'
 import { General } from '../constants'
 import { UserTypes, TeamTypes, AdminTypes } from 'action_types'
 import { getAllCustomEmojis } from './emojis'
@@ -35,7 +38,7 @@ export function checkMfa(loginId: string): ActionFunc {
   return async (dispatch: DispatchFunc) => {
     dispatch({ type: UserTypes.CHECK_MFA_REQUEST, data: null })
     try {
-      const data = await HkClient4.checkUserMfa(loginId)
+      const data = await Client4.checkUserMfa(loginId)
       dispatch({ type: UserTypes.CHECK_MFA_SUCCESS, data: null })
       return { data: data.mfa_required }
     } catch (error) {
@@ -47,7 +50,7 @@ export function checkMfa(loginId: string): ActionFunc {
 
 export function generateMfaSecret(userId: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.generateMfaSecret,
+    clientFunc: Client4.generateMfaSecret,
     params: [userId],
   })
 }
@@ -57,7 +60,7 @@ export function createUser(user: UserProfile, token: string, inviteId: string, r
     let created
 
     try {
-      created = await HkClient4.createUser(user, token, inviteId, redirect)
+      created = await Client4.createUser(user, token, inviteId, redirect)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -83,7 +86,7 @@ export function login(loginId: string, password: string, mfaToken = '', ldapOnly
     let data
 
     try {
-      data = await HkClient4.login(loginId, password, mfaToken, deviceId, ldapOnly)
+      data = await Client4.login(loginId, password, mfaToken, deviceId, ldapOnly)
     } catch (error) {
       dispatch(
         batchActions([
@@ -109,7 +112,7 @@ export function loginById(id: string, password: string, mfaToken = ''): ActionFu
     let data
 
     try {
-      data = await HkClient4.loginById(id, password, mfaToken, deviceId)
+      data = await Client4.loginById(id, password, mfaToken, deviceId)
     } catch (error) {
       dispatch(
         batchActions([
@@ -134,13 +137,13 @@ function completeLogin(data: UserProfile): ActionFunc {
       data,
     })
 
-    HkClient4.setUserId(data.id)
-    HkClient4.setUserRoles(data.roles)
+    Client4.setUserId(data.id)
+    Client4.setUserRoles(data.roles)
     let teamMembers
 
     try {
-      const membersRequest: Promise<TeamMembership[]> = HkClient4.getMyTeamMembers()
-      const unreadsRequest = HkClient4.getMyTeamUnreads()
+      const membersRequest: Promise<TeamMembership[]> = Client4.getMyTeamMembers()
+      const unreadsRequest = Client4.getMyTeamUnreads()
 
       teamMembers = await membersRequest
       const teamUnreads = await unreadsRequest
@@ -160,7 +163,7 @@ function completeLogin(data: UserProfile): ActionFunc {
 
     const promises = [dispatch(getMyPreferences()), dispatch(getMyTeams()), dispatch(getClientConfig())]
 
-    const serverVersion = HkClient4.getServerVersion()
+    const serverVersion = Client4.getServerVersion()
     dispatch(setServerVersion(serverVersion))
     if (!isMinimumServerVersion(serverVersion, 4, 7) && getConfig(getState()).EnableCustomEmoji === 'true') {
       dispatch(getAllCustomEmojis())
@@ -208,7 +211,7 @@ export function loadMe(): ActionFunc {
 
     const deviceId = state.entities.general.deviceToken
     if (deviceId) {
-      HkClient4.attachDevice(deviceId)
+      Client4.attachDevice(deviceId)
     }
 
     const promises = [
@@ -220,7 +223,7 @@ export function loadMe(): ActionFunc {
     ]
 
     // Sometimes the server version is set in one or the other
-    const serverVersion = HkClient4.getServerVersion() || getState().entities.general.serverVersion
+    const serverVersion = Client4.getServerVersion() || getState().entities.general.serverVersion
     dispatch(setServerVersion(serverVersion))
     if (!isMinimumServerVersion(serverVersion, 4, 7) && config.EnableCustomEmoji === 'true') {
       dispatch(getAllCustomEmojis())
@@ -231,11 +234,11 @@ export function loadMe(): ActionFunc {
     const { currentUserId } = getState().entities.users
     const user = getState().entities.users.profiles[currentUserId]
     if (currentUserId) {
-      HkClient4.setUserId(currentUserId)
+      Client4.setUserId(currentUserId)
     }
 
     if (user) {
-      HkClient4.setUserRoles(user.roles)
+      Client4.setUserRoles(user.roles)
     }
 
     return { data: true }
@@ -247,7 +250,7 @@ export function logout(): ActionFunc {
     dispatch({ type: UserTypes.LOGOUT_REQUEST, data: null })
 
     try {
-      await HkClient4.logout()
+      await Client4.logout()
     } catch (error) {
       // nothing to do here
     }
@@ -260,7 +263,7 @@ export function logout(): ActionFunc {
 
 export function getTotalUsersStats(): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getTotalUsersStats,
+    clientFunc: Client4.getTotalUsersStats,
     onSuccess: UserTypes.RECEIVED_USER_STATS,
   })
 }
@@ -269,7 +272,7 @@ export function getFilteredUsersStats(options: GetFilteredUsersStatsOpts = {}): 
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let stats: UsersStats
     try {
-      stats = await HkClient4.getFilteredUsersStats(options)
+      stats = await Client4.getFilteredUsersStats(options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -291,7 +294,7 @@ export function getProfiles(page = 0, perPage: number = General.PROFILE_CHUNK_SI
     let profiles: UserProfile[]
 
     try {
-      profiles = await HkClient4.getProfiles(page, perPage, options)
+      profiles = await Client4.getProfiles(page, perPage, options)
       removeUserFromList(currentUserId, profiles)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
@@ -356,7 +359,7 @@ export function getProfilesByIds(userIds: string[], options?: any): ActionFunc {
     let profiles: UserProfile[]
 
     try {
-      profiles = await HkClient4.getProfilesByIds(userIds, options)
+      profiles = await Client4.getProfilesByIds(userIds, options)
       removeUserFromList(currentUserId, profiles)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
@@ -379,7 +382,7 @@ export function getProfilesByUsernames(usernames: string[]): ActionFunc {
     let profiles
 
     try {
-      profiles = await HkClient4.getProfilesByUsernames(usernames)
+      profiles = await Client4.getProfilesByUsernames(usernames)
       removeUserFromList(currentUserId, profiles)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
@@ -408,7 +411,7 @@ export function getProfilesInTeam(
     let profiles
 
     try {
-      profiles = await HkClient4.getProfilesInTeam(teamId, page, perPage, sort, options)
+      profiles = await Client4.getProfilesInTeam(teamId, page, perPage, sort, options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -442,7 +445,7 @@ export function getProfilesNotInTeam(
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let profiles
     try {
-      profiles = await HkClient4.getProfilesNotInTeam(teamId, groupConstrained, page, perPage)
+      profiles = await Client4.getProfilesNotInTeam(teamId, groupConstrained, page, perPage)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -479,7 +482,7 @@ export function getProfilesWithoutTeam(
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let profiles = null
     try {
-      profiles = await HkClient4.getProfilesWithoutTeam(page, perPage, options)
+      profiles = await Client4.getProfilesWithoutTeam(page, perPage, options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -515,7 +518,7 @@ export function getProfilesInChannel(
     let profiles
 
     try {
-      profiles = await HkClient4.getProfilesInChannel(channelId, page, perPage, sort, options)
+      profiles = await Client4.getProfilesInChannel(channelId, page, perPage, sort, options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -546,7 +549,7 @@ export function getProfilesInGroupChannels(channelsIds: string[]): ActionFunc {
     let channelProfiles
 
     try {
-      channelProfiles = await HkClient4.getProfilesInGroupChannels(
+      channelProfiles = await Client4.getProfilesInGroupChannels(
         channelsIds.slice(0, General.MAX_GROUP_CHANNELS_FOR_PROFILES)
       )
     } catch (error) {
@@ -592,7 +595,7 @@ export function getProfilesNotInChannel(
     let profiles
 
     try {
-      profiles = await HkClient4.getProfilesNotInChannel(teamId, channelId, groupConstrained, page, perPage)
+      profiles = await Client4.getProfilesNotInChannel(teamId, channelId, groupConstrained, page, perPage)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -624,7 +627,7 @@ export function getProfilesNotInChannel(
 export function getMe(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const getMeFunc = bindClientFunc({
-      clientFunc: HkClient4.getMe,
+      clientFunc: Client4.getMe,
       onSuccess: UserTypes.RECEIVED_ME,
     })
     const me = await getMeFunc(dispatch, getState)
@@ -643,7 +646,7 @@ export function updateMyTermsOfServiceStatus(termsOfServiceId: string, accepted:
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const response: ActionResult = await dispatch(
       bindClientFunc({
-        clientFunc: HkClient4.updateMyTermsOfServiceStatus,
+        clientFunc: Client4.updateMyTermsOfServiceStatus,
         params: [termsOfServiceId, accepted],
       })
     )
@@ -681,7 +684,7 @@ export function getProfilesInGroup(
     let profiles
 
     try {
-      profiles = await HkClient4.getProfilesInGroup(groupId, page, perPage)
+      profiles = await Client4.getProfilesInGroup(groupId, page, perPage)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -708,34 +711,34 @@ export function getProfilesInGroup(
 
 export function getTermsOfService(): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getTermsOfService,
+    clientFunc: Client4.getTermsOfService,
   })
 }
 
 export function promoteGuestToUser(userId: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.promoteGuestToUser,
+    clientFunc: Client4.promoteGuestToUser,
     params: [userId],
   })
 }
 
 export function demoteUserToGuest(userId: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.demoteUserToGuest,
+    clientFunc: Client4.demoteUserToGuest,
     params: [userId],
   })
 }
 
 export function createTermsOfService(text: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.createTermsOfService,
+    clientFunc: Client4.createTermsOfService,
     params: [text],
   })
 }
 
 export function getUser(id: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getUser,
+    clientFunc: Client4.getUser,
     onSuccess: UserTypes.RECEIVED_PROFILE,
     params: [id],
   })
@@ -743,7 +746,7 @@ export function getUser(id: string): ActionFunc {
 
 export function getUserByUsername(username: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getUserByUsername,
+    clientFunc: Client4.getUserByUsername,
     onSuccess: UserTypes.RECEIVED_PROFILE,
     params: [username],
   })
@@ -751,7 +754,7 @@ export function getUserByUsername(username: string): ActionFunc {
 
 export function getUserByEmail(email: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getUserByEmail,
+    clientFunc: Client4.getUserByEmail,
     onSuccess: UserTypes.RECEIVED_PROFILE,
     params: [email],
   })
@@ -781,7 +784,7 @@ export function getStatusesByIdsBatchedDebounced(id: string) {
 
 export function getStatusesByIds(userIds: string[]): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getStatusesByIds,
+    clientFunc: Client4.getStatusesByIds,
     onSuccess: UserTypes.RECEIVED_STATUSES,
     params: [userIds],
   })
@@ -789,7 +792,7 @@ export function getStatusesByIds(userIds: string[]): ActionFunc {
 
 export function getStatus(userId: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getStatus,
+    clientFunc: Client4.getStatus,
     onSuccess: UserTypes.RECEIVED_STATUS,
     params: [userId],
   })
@@ -798,7 +801,7 @@ export function getStatus(userId: string): ActionFunc {
 export function setStatus(status: UserStatus): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.updateStatus(status)
+      await Client4.updateStatus(status)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -816,27 +819,27 @@ export function setStatus(status: UserStatus): ActionFunc {
 
 export function setCustomStatus(customStatus: UserCustomStatus): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.updateCustomStatus,
+    clientFunc: Client4.updateCustomStatus,
     params: [customStatus],
   })
 }
 
 export function unsetCustomStatus(): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.unsetCustomStatus,
+    clientFunc: Client4.unsetCustomStatus,
   })
 }
 
 export function removeRecentCustomStatus(customStatus: UserCustomStatus): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.removeRecentCustomStatus,
+    clientFunc: Client4.removeRecentCustomStatus,
     params: [customStatus],
   })
 }
 
 export function getSessions(userId: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getSessions,
+    clientFunc: Client4.getSessions,
     onSuccess: UserTypes.RECEIVED_SESSIONS,
     params: [userId],
   })
@@ -845,7 +848,7 @@ export function getSessions(userId: string): ActionFunc {
 export function revokeSession(userId: string, sessionId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.revokeSession(userId, sessionId)
+      await Client4.revokeSession(userId, sessionId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -865,7 +868,7 @@ export function revokeSession(userId: string, sessionId: string): ActionFunc {
 export function revokeAllSessionsForUser(userId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.revokeAllSessionsForUser(userId)
+      await Client4.revokeAllSessionsForUser(userId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -888,7 +891,7 @@ export function revokeAllSessionsForUser(userId: string): ActionFunc {
 export function revokeSessionsForAllUsers(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.revokeSessionsForAllUsers()
+      await Client4.revokeSessionsForAllUsers()
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -940,7 +943,7 @@ export function loadProfilesForDirect(): ActionFunc {
 
 export function getUserAudits(userId: string, page = 0, perPage: number = General.AUDITS_CHUNK_SIZE): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getUserAudits,
+    clientFunc: Client4.getUserAudits,
     onSuccess: UserTypes.RECEIVED_AUDITS,
     params: [userId, page, perPage],
   })
@@ -963,7 +966,7 @@ export function autocompleteUsers(
 
     let data
     try {
-      data = await HkClient4.autocompleteUsers(term, teamId, channelId, options)
+      data = await Client4.autocompleteUsers(term, teamId, channelId, options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(batchActions([{ type: UserTypes.AUTOCOMPLETE_USERS_FAILURE, error }, logError(error)]))
@@ -1018,7 +1021,7 @@ export function searchProfiles(term: string, options: any = {}): ActionFunc {
 
     let profiles
     try {
-      profiles = await HkClient4.searchUsers(term, options)
+      profiles = await Client4.searchUsers(term, options)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1117,7 +1120,7 @@ export function updateMe(user: UserProfile): ActionFunc {
 
     let data
     try {
-      data = await HkClient4.patchMe(user)
+      data = await Client4.patchMe(user)
     } catch (error) {
       dispatch(batchActions([{ type: UserTypes.UPDATE_ME_FAILURE, error }, logError(error)]))
       return { error }
@@ -1134,7 +1137,7 @@ export function patchUser(user: UserProfile): ActionFunc {
   return async (dispatch: DispatchFunc) => {
     let data: UserProfile
     try {
-      data = await HkClient4.patchUser(user)
+      data = await Client4.patchUser(user)
     } catch (error) {
       dispatch(logError(error))
       return { error }
@@ -1149,7 +1152,7 @@ export function patchUser(user: UserProfile): ActionFunc {
 export function updateUserRoles(userId: string, roles: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.updateUserRoles(userId, roles)
+      await Client4.updateUserRoles(userId, roles)
     } catch (error) {
       return { error }
     }
@@ -1166,7 +1169,7 @@ export function updateUserRoles(userId: string, roles: string): ActionFunc {
 export function updateUserMfa(userId: string, activate: boolean, code = ''): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.updateUserMfa(userId, activate, code)
+      await Client4.updateUserMfa(userId, activate, code)
     } catch (error) {
       dispatch(logError(error))
       return { error }
@@ -1184,7 +1187,7 @@ export function updateUserMfa(userId: string, activate: boolean, code = ''): Act
 export function updateUserPassword(userId: string, currentPassword: string, newPassword: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.updateUserPassword(userId, currentPassword, newPassword)
+      await Client4.updateUserPassword(userId, currentPassword, newPassword)
     } catch (error) {
       dispatch(logError(error))
       return { error }
@@ -1205,7 +1208,7 @@ export function updateUserPassword(userId: string, currentPassword: string, newP
 export function updateUserActive(userId: string, active: boolean): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.updateUserActive(userId, active)
+      await Client4.updateUserActive(userId, active)
     } catch (error) {
       dispatch(logError(error))
       return { error }
@@ -1223,28 +1226,28 @@ export function updateUserActive(userId: string, active: boolean): ActionFunc {
 
 export function verifyUserEmail(token: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.verifyUserEmail,
+    clientFunc: Client4.verifyUserEmail,
     params: [token],
   })
 }
 
 export function sendVerificationEmail(email: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.sendVerificationEmail,
+    clientFunc: Client4.sendVerificationEmail,
     params: [email],
   })
 }
 
 export function resetUserPassword(token: string, newPassword: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.resetUserPassword,
+    clientFunc: Client4.resetUserPassword,
     params: [token, newPassword],
   })
 }
 
 export function sendPasswordResetEmail(email: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.sendPasswordResetEmail,
+    clientFunc: Client4.sendPasswordResetEmail,
     params: [email],
   })
 }
@@ -1252,7 +1255,7 @@ export function sendPasswordResetEmail(email: string): ActionFunc {
 export function setDefaultProfileImage(userId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.setDefaultProfileImage(userId)
+      await Client4.setDefaultProfileImage(userId)
     } catch (error) {
       dispatch(logError(error))
       return { error }
@@ -1270,17 +1273,14 @@ export function setDefaultProfileImage(userId: string): ActionFunc {
 export function uploadProfileImage(userId: string, imageData: any): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.uploadProfileImage(userId, imageData)
+      await Client4.uploadProfileImage(userId, imageData)
     } catch (error) {
       return { error }
     }
 
     const profile = getState().entities.users.profiles[userId]
     if (profile) {
-      dispatch({
-        type: UserTypes.RECEIVED_PROFILE,
-        data: { ...profile, last_picture_update: new Date().getTime() },
-      })
+      dispatch({ type: UserTypes.RECEIVED_PROFILE, data: { ...profile, last_picture_update: new Date().getTime() } })
     }
 
     return { data: true }
@@ -1289,14 +1289,14 @@ export function uploadProfileImage(userId: string, imageData: any): ActionFunc {
 
 export function switchEmailToOAuth(service: string, email: string, password: string, mfaCode = ''): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.switchEmailToOAuth,
+    clientFunc: Client4.switchEmailToOAuth,
     params: [service, email, password, mfaCode],
   })
 }
 
 export function switchOAuthToEmail(currentService: string, email: string, password: string): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.switchOAuthToEmail,
+    clientFunc: Client4.switchOAuthToEmail,
     params: [currentService, email, password],
   })
 }
@@ -1309,7 +1309,7 @@ export function switchEmailToLdap(
   mfaCode = ''
 ): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.switchEmailToLdap,
+    clientFunc: Client4.switchEmailToLdap,
     params: [email, emailPassword, ldapId, ldapPassword, mfaCode],
   })
 }
@@ -1321,7 +1321,7 @@ export function switchLdapToEmail(
   mfaCode = ''
 ): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.switchLdapToEmail,
+    clientFunc: Client4.switchLdapToEmail,
     params: [ldapPassword, email, emailPassword, mfaCode],
   })
 }
@@ -1331,7 +1331,7 @@ export function createUserAccessToken(userId: string, description: string): Acti
     let data
 
     try {
-      data = await HkClient4.createUserAccessToken(userId, description)
+      data = await Client4.createUserAccessToken(userId, description)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1363,7 +1363,7 @@ export function getUserAccessToken(tokenId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let data
     try {
-      data = await HkClient4.getUserAccessToken(tokenId)
+      data = await Client4.getUserAccessToken(tokenId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1396,7 +1396,7 @@ export function getUserAccessTokens(page = 0, perPage: number = General.PROFILE_
     let data
 
     try {
-      data = await HkClient4.getUserAccessTokens(page, perPage)
+      data = await Client4.getUserAccessTokens(page, perPage)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1424,7 +1424,7 @@ export function getUserAccessTokensForUser(
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let data
     try {
-      data = await HkClient4.getUserAccessTokensForUser(userId, page, perPage)
+      data = await Client4.getUserAccessTokensForUser(userId, page, perPage)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1456,7 +1456,7 @@ export function getUserAccessTokensForUser(
 export function revokeUserAccessToken(tokenId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.revokeUserAccessToken(tokenId)
+      await Client4.revokeUserAccessToken(tokenId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1475,7 +1475,7 @@ export function revokeUserAccessToken(tokenId: string): ActionFunc {
 export function disableUserAccessToken(tokenId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.disableUserAccessToken(tokenId)
+      await Client4.disableUserAccessToken(tokenId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1494,7 +1494,7 @@ export function disableUserAccessToken(tokenId: string): ActionFunc {
 export function enableUserAccessToken(tokenId: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     try {
-      await HkClient4.enableUserAccessToken(tokenId)
+      await Client4.enableUserAccessToken(tokenId)
     } catch (error) {
       forceLogoutIfNecessary(error, dispatch, getState)
       dispatch(logError(error))
@@ -1512,7 +1512,7 @@ export function enableUserAccessToken(tokenId: string): ActionFunc {
 
 export function getKnownUsers(): ActionFunc {
   return bindClientFunc({
-    clientFunc: HkClient4.getKnownUsers,
+    clientFunc: Client4.getKnownUsers,
   })
 }
 

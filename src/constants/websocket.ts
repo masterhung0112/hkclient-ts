@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-const WebsocketEvents = {
+export const WebsocketEvents = {
   POSTED: 'posted',
   POST_EDITED: 'post_edited',
   POST_DELETED: 'post_deleted',

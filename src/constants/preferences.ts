@@ -1,6 +1,6 @@
 import { Theme } from 'types/preferences'
 
-const Preferences = {
+export const Preferences = {
   CATEGORY_CHANNEL_OPEN_TIME: 'channel_open_time',
   CATEGORY_CHANNEL_APPROXIMATE_VIEW_TIME: 'channel_approximate_view_time',
   CATEGORY_DIRECT_CHANNEL_SHOW: 'direct_channel_show',

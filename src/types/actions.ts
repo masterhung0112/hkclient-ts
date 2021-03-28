@@ -58,11 +58,11 @@ export type ActionCreatorClient<T extends (...args: any[]) => any> = (
 //   }
 // }
 
-// export const BATCH = 'BATCHING_REDUCER.BATCH'
+export const BATCH = 'BATCHING_REDUCER.BATCH'
 
-// export function batchActions(actions: Action[], type = BATCH) {
-//   return { type, meta: { batch: true }, payload: actions }
-// }
+export function batchActions(actions: Action[], type = BATCH) {
+  return { type, meta: { batch: true }, payload: actions }
+}
 
 export interface ExtActionCreator<A = ActionFunc> {
   (...args: any[]): A

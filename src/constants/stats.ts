@@ -3,7 +3,7 @@
 
 import keyMirror from 'utils/key_mirror'
 
-export default keyMirror({
+export const Stats = keyMirror({
   TOTAL_USERS: null,
   TOTAL_INACTIVE_USERS: null,
   TOTAL_PUBLIC_CHANNELS: null,

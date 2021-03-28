@@ -10,7 +10,7 @@ export interface cd extends Store {
   getSagaTasks?: () => Task[]
 }
 
-export type EntitiesState = {
+export interface EntitiesState extends UsersAwareState {
   teams: TeamsState
   channels: ChannelsState
   roles: {
@@ -21,7 +21,7 @@ export type EntitiesState = {
   }
 }
 
-export interface GlobalState extends UsersAwareState, GeneralAwareState {
+export interface GlobalState extends GeneralAwareState {
   entities: EntitiesState
   // errors: Array<any>
 }

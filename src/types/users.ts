@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import { USERS_MODULE_NAME } from 'hkconstants/users'
 import { Audit } from './audits'
 import { Channel } from './channels'
 import { Group } from './groups'
@@ -132,4 +133,8 @@ export type GetFilteredUsersStatsOpts = {
 
 export type AuthChangeResponse = {
   follow_link: string
+}
+
+export interface UsersAwareState {
+  [USERS_MODULE_NAME]: UsersState
 }

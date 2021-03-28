@@ -3,7 +3,7 @@
 
 import { Dictionary } from 'types/utilities'
 
-const Files: Dictionary<string[]> = {
+export const Files: Dictionary<string[]> = {
   AUDIO_TYPES: ['mp3', 'wav', 'wma', 'm4a', 'flac', 'aac', 'ogg'],
   CODE_TYPES: [
     'as',

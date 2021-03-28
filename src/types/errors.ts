@@ -4,18 +4,9 @@ export type ServerError = {
   intl?: {
     id: string
     defaultMessage: string
-    values?: unknown
+    values?: any
   }
   message: string
   status_code?: number
   url?: string
-}
-
-export type HkError = {
-  intl?: {
-    id: string
-    defaultMessage: string
-    values?: any
-  }
-  message: string
 }

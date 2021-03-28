@@ -33,7 +33,7 @@ export type ActionResult = {
   data?: any
 }
 
-export type ActionResultType = ActionResult[]
+export type ActionResultType = ActionResult
 
 // export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResultType>
 export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFunc> {

@@ -1,4 +1,7 @@
-import { IDMappedObjects, RelationOneToMany, RelationOneToOne, UserIDMappedObjects } from './utilities'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import { IDMappedObjects, UserIDMappedObjects, RelationOneToMany, RelationOneToOne, Dictionary } from './utilities'
 import { Team } from './teams'
 
 export type ChannelType = 'O' | 'P' | 'D' | 'G'
@@ -39,6 +42,18 @@ export type Channel = {
   status?: string
   fake?: boolean
   group_constrained: boolean
+  props?: Record<string, any>
+}
+
+export type ChannelWithTeamData = Channel & {
+  team_display_name: string
+  team_name: string
+  team_update_at: number
+}
+
+export type ChannelsWithTotalCount = {
+  channels: ChannelWithTeamData[]
+  total_count: number
 }
 
 export type ChannelMembership = {
@@ -55,27 +70,15 @@ export type ChannelMembership = {
   post_root_id?: string
 }
 
-export type ChannelModeration = {
-  name: string
-  roles: {
-    guests?: {
-      value: boolean
-      enabled: boolean
-    }
-    members: {
-      value: boolean
-      enabled: boolean
-    }
-  }
+export type ChannelUnread = {
+  channel_id: string
+  user_id: string
+  team_id: string
+  msg_count: number
+  mention_count: number
+  last_viewed_at: number
+  deltaMsgs: number
 }
-
-export type ChannelMemberCountByGroup = {
-  group_id: string
-  channel_member_count: number
-  channel_member_timezones_count: number
-}
-
-export type ChannelMemberCountsByGroup = Record<string, ChannelMemberCountByGroup>
 
 export type ChannelsState = {
   currentChannelId: string
@@ -87,6 +90,60 @@ export type ChannelsState = {
   groupsAssociatedToChannel: any
   totalCount: number
   manuallyUnread: RelationOneToOne<Channel, boolean>
-  channelModerations: RelationOneToOne<Channel, Array<ChannelModeration>>
+  channelModerations: RelationOneToOne<Channel, ChannelModeration[]>
   channelMemberCountsByGroup: RelationOneToOne<Channel, ChannelMemberCountsByGroup>
+  channelsInPolicy: Dictionary<Channel>
+}
+
+export type ChannelModeration = {
+  name: string
+  roles: {
+    guests?: {
+      value: boolean
+      enabled: boolean
+    }
+    members: {
+      value: boolean
+      enabled: boolean
+    }
+    admins: {
+      value: boolean
+      enabled: boolean
+    }
+  }
+}
+
+export type ChannelModerationPatch = {
+  name: string
+  roles: {
+    guests?: boolean
+    members?: boolean
+  }
+}
+
+export type ChannelMemberCountByGroup = {
+  group_id: string
+  channel_member_count: number
+  channel_member_timezones_count: number
+}
+
+export type ChannelMemberCountsByGroup = Record<string, ChannelMemberCountByGroup>
+
+export type ChannelViewResponse = {
+  status: string
+  last_viewed_at_times: RelationOneToOne<Channel, number>
+}
+
+export type ChannelSearchOpts = {
+  exclude_default_channels?: boolean
+  not_associated_to_group?: string
+  team_ids?: string[]
+  group_constrained?: boolean
+  exclude_group_constrained?: boolean
+  public?: boolean
+  private?: boolean
+  include_deleted?: boolean
+  deleted?: boolean
+  page?: number
+  per_page?: number
 }

@@ -6,7 +6,7 @@ import { UserProfile, UserStatus, GetFilteredUsersStatsOpts, UsersStats, UserCus
 import { TeamMembership } from 'types/teams'
 import { Client4 } from 'client'
 import { General } from '../constants'
-import { UserTypes, TeamTypes, AdminTypes } from 'action_types'
+import { UserTypes, TeamTypes, AdminTypes } from 'action-types'
 import { getAllCustomEmojis } from './emojis'
 import { getClientConfig, setServerVersion } from './general'
 import { getMyTeams, getMyTeamMembers, getMyTeamUnreads } from './teams'
@@ -560,6 +560,7 @@ export function getProfilesInGroupChannels(channelsIds: string[]): ActionFunc {
 
     const actions: Action[] = []
     for (const channelId in channelProfiles) {
+      // eslint-disable-next-line no-prototype-builtins
       if (channelProfiles.hasOwnProperty(channelId)) {
         const profiles = channelProfiles[channelId]
 

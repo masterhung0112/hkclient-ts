@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import { JobTypes } from 'action_types'
+import { JobTypes } from 'action-types'
 import { Client4 } from 'client'
 import { General } from '../constants'
 

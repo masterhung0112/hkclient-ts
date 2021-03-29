@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import { GroupTypes } from 'action_types'
+import { GroupTypes } from 'action-types'
 import { General, Groups } from '../constants'
 import { Client4 } from 'client'
 

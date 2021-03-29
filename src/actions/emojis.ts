@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import { Client4 } from 'client'
-import { EmojiTypes } from 'action_types'
+import { EmojiTypes } from 'action-types'
 import { General, Emoji } from '../constants'
 import { getProfilesByIds } from './users'
 import { getCustomEmojisByName as selectCustomEmojisByName } from 'selectors/entities/emojis'

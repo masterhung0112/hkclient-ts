@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { ThreadTypes, PostTypes, UserTypes } from 'action_types'
+import { ThreadTypes, PostTypes, UserTypes } from 'action-types'
 import { Client4 } from 'client'
 
 import ThreadConstants from 'constants/threads'

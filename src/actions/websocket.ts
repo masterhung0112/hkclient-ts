@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { UserTypes } from 'action_types'
+import { UserTypes } from 'action-types'
 
 import { getCurrentUserId, getUsers } from 'selectors/entities/users'
 

@@ -515,6 +515,7 @@ export const getLastPostPerChannel: (state: GlobalState) => RelationOneToOne<Cha
       }
 
       const postId = recentBlock.order[0]
+      // eslint-disable-next-line no-prototype-builtins
       if (allPosts.hasOwnProperty(postId)) {
         ret[channelId] = allPosts[postId]
       }

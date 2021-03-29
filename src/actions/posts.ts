@@ -3,7 +3,7 @@
 
 import { Client4, DEFAULT_LIMIT_AFTER, DEFAULT_LIMIT_BEFORE } from 'client'
 import { General, Preferences, Posts } from '../constants'
-import { PostTypes, ChannelTypes, FileTypes, IntegrationTypes } from 'action_types'
+import { PostTypes, ChannelTypes, FileTypes, IntegrationTypes } from 'action-types'
 
 import { getMyChannelMember as getMyChannelMemberSelector } from 'selectors/entities/channels'
 import { getCustomEmojisByName as selectCustomEmojisByName } from 'selectors/entities/emojis'
@@ -383,6 +383,7 @@ export function deletePost(post: ExtendedPost) {
         }
       })
     } else {
+      // eslint-disable-next-line prettier/prettier
       (async function deletePostWrapper() {
         try {
           dispatch({

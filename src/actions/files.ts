@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import { Client4 } from 'client'
-import { FileTypes } from 'action_types'
+import { FileTypes } from 'action-types'
 
 import { batchActions, DispatchFunc, GetStateFunc, ActionFunc, Action } from 'types/actions'
 

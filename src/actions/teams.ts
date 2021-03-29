@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import { Client4 } from 'client'
 import { General } from '../constants'
-import { ChannelTypes, TeamTypes, UserTypes } from 'action_types'
+import { ChannelTypes, TeamTypes, UserTypes } from 'action-types'
 import EventEmitter from 'utils/event_emitter'
 
 import { isCompatibleWithJoinViewTeamPermissions } from 'selectors/entities/general'

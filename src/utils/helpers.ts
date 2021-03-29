@@ -1,3 +1,6 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
 import * as reselect from 'reselect'
 import shallowEqual from 'shallow-equals'
 
@@ -10,7 +13,6 @@ export function memoizeResult<F extends Function>(func: F): F {
 
   // we reference arguments instead of spreading them for performance reasons
   return (function memoizedFunc() {
-    // eslint-disable-next-line prefer-rest-params
     if (!shallowEqual(lastArgs, arguments)) {
       //eslint-disable-line prefer-rest-params
       //eslint-disable-line prefer-rest-params

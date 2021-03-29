@@ -507,6 +507,7 @@ export const getMyChannels: (state: GlobalState) => Channel[] = createSelector(
     directChannels: Channel[],
     myMembers: RelationOneToOne<Channel, ChannelMembership>
   ): Channel[] => {
+    // eslint-disable-next-line no-prototype-builtins
     return [...channels, ...directChannels].filter((c) => myMembers.hasOwnProperty(c.id))
   }
 )
@@ -521,6 +522,7 @@ export const getOtherChannels: (state: GlobalState, archived?: boolean | null) =
     archived?: boolean | null
   ): Channel[] => {
     return channels.filter(
+      // eslint-disable-next-line no-prototype-builtins
       (c) => !myMembers.hasOwnProperty(c.id) && c.type === General.OPEN_CHANNEL && (archived ? true : c.delete_at === 0)
     )
   }

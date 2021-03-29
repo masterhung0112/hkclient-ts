@@ -24,7 +24,7 @@ export default function deepFreezeAndThrowOnMutation(object: any): any {
   }
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
+    if (object.hasOwnProperty(key)) {
       object.__defineGetter__(key, identity.bind(null, object[key])) // eslint-disable-line no-underscore-dangle
       object.__defineSetter__(key, throwOnImmutableMutation.bind(null, key)) // eslint-disable-line no-underscore-dangle
     }
@@ -34,7 +34,7 @@ export default function deepFreezeAndThrowOnMutation(object: any): any {
   Object.seal(object)
 
   for (const key in object) {
-    if (Object.prototype.hasOwnProperty.call(object, key)) {
+    if (object.hasOwnProperty(key)) {
       deepFreezeAndThrowOnMutation(object[key])
     }
   }

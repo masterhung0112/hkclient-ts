@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { ErrorTypes } from 'action_types'
+import { ErrorTypes } from 'action-types'
 import { serializeError, ErrorObject } from 'serialize-error'
 import { Client4 } from 'client'
 import EventEmitter from 'utils/event_emitter'

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import { Client4 } from 'client'
-import { UserTypes } from 'action_types'
+import { UserTypes } from 'action-types'
 
 import { Client4Error } from 'types/client4'
 import { batchActions, Action, ActionFunc, GenericAction, DispatchFunc, GetStateFunc } from 'types/actions'

@@ -2,7 +2,7 @@ import nock from 'nock'
 import HkClient from 'client/client4'
 import { generateId } from 'utils/helpers'
 import { General } from '../constants'
-import { UserProfile } from 'types/users'
+import { UserNotifyProps, UserProfile } from 'types/users'
 
 export const DEFAULT_SERVER = 'http://localhost:8065'
 const PASSWORD = 'password1'
@@ -92,6 +92,8 @@ class TestHelper {
       bot_last_icon_update: now,
       terms_of_service_id: '',
       terms_of_service_create_at: now,
+      notify_props: {} as UserNotifyProps,
+      props: {},
     }
   }
 

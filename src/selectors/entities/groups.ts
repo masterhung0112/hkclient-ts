@@ -62,6 +62,7 @@ export const getAssociatedGroupsByName: (
   const groupsByName: Dictionary<Group> = {}
 
   for (const id in groups) {
+    // eslint-disable-next-line no-prototype-builtins
     if (groups.hasOwnProperty(id)) {
       const group = groups[id]
       groupsByName[group.name] = group
@@ -211,6 +212,7 @@ export const getAllGroupsForReferenceByName: (state: GlobalState) => NameMappedO
     const groupsByName: Dictionary<Group> = {}
 
     for (const id in groups) {
+      // eslint-disable-next-line no-prototype-builtins
       if (groups.hasOwnProperty(id)) {
         const group = groups[id]
         groupsByName[group.name] = group

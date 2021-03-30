@@ -333,8 +333,8 @@ export function handlePendingPosts(state: string[] = [], action: GenericAction) 
 export function postsInChannel(
   state: Dictionary<PostOrderBlock[]> = {},
   action: GenericAction,
-  prevPosts: IDMappedObjects<Post>,
-  nextPosts: Dictionary<Post>
+  prevPosts: IDMappedObjects<Post> = {},
+  nextPosts: Dictionary<Post> = {}
 ) {
   switch (action.type) {
     case PostTypes.RECEIVED_NEW_POST: {
@@ -821,7 +821,7 @@ export function mergePostOrder(left: string[], right: string[], posts: Dictionar
 export function postsInThread(
   state: RelationOneToMany<Post, Post> = {},
   action: GenericAction,
-  prevPosts: Dictionary<Post>
+  prevPosts: Dictionary<Post> = {}
 ) {
   switch (action.type) {
     case PostTypes.RECEIVED_NEW_POST:

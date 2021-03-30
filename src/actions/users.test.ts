@@ -20,7 +20,7 @@ describe('Actions.Users', () => {
   })
 
   beforeEach(() => {
-    store = configureStore()
+    store = configureStore([])
   })
 
   afterAll(() => {

@@ -4,7 +4,7 @@ import { Client4 } from 'client'
 import * as Actions from 'actions/general'
 import nock from 'nock'
 import { IModuleStore } from 'redux-dynamic-modules-core'
-import { GeneralSelectors } from 'selectors'
+import * as GeneralSelectors from 'selectors/entities/general'
 import { ClientConfig } from 'types/config'
 import { GeneralModule } from 'hkmodules/general'
 

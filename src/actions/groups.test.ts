@@ -151,8 +151,14 @@ describe('Actions.Groups', () => {
 
     nock(Client4.getBaseRoute()).post(`/groups/${groupID}/channels/${channelID}/link`).reply(200, groupChannelResponse)
 
-    await Actions.linkGroupSyncable(groupID, teamID, Groups.SYNCABLE_TYPE_TEAM)(store.dispatch, store.getState)
-    await Actions.linkGroupSyncable(groupID, channelID, Groups.SYNCABLE_TYPE_CHANNEL)(store.dispatch, store.getState)
+    await Actions.linkGroupSyncable(groupID, teamID, Groups.SYNCABLE_TYPE_TEAM, {
+      auto_add: false,
+      scheme_admin: false,
+    })(store.dispatch, store.getState)
+    await Actions.linkGroupSyncable(groupID, channelID, Groups.SYNCABLE_TYPE_CHANNEL, {
+      auto_add: false,
+      scheme_admin: false,
+    })(store.dispatch, store.getState)
 
     const state = store.getState()
     const syncables = state.entities.groups.syncables
@@ -189,8 +195,18 @@ describe('Actions.Groups', () => {
 
     nock(Client4.getBaseRoute()).post(`/groups/${groupID}/channels/${channelID}/link`).reply(200, groupChannelResponse)
 
-    await Actions.linkGroupSyncable(groupID, teamID, Groups.SYNCABLE_TYPE_TEAM)(store.dispatch, store.getState)
-    await Actions.linkGroupSyncable(groupID, channelID, Groups.SYNCABLE_TYPE_CHANNEL)(store.dispatch, store.getState)
+    await Actions.linkGroupSyncable(
+      groupID,
+      teamID,
+      Groups.SYNCABLE_TYPE_TEAM,
+      {} as any
+    )(store.dispatch, store.getState)
+    await Actions.linkGroupSyncable(
+      groupID,
+      channelID,
+      Groups.SYNCABLE_TYPE_CHANNEL,
+      {} as any
+    )(store.dispatch, store.getState)
 
     let state = store.getState()
     let syncables = state.entities.groups.syncables
@@ -218,7 +234,7 @@ describe('Actions.Groups', () => {
   })
 
   it('getGroups', async () => {
-    const response1 = {
+    const response1: any = {
       groups: [
         {
           id: 'xh585kyz3tn55q6ipfo57btwnc',
@@ -376,7 +392,7 @@ describe('Actions.Groups', () => {
       .get(`/teams/${teamID}/groups?page=100&per_page=60&q=0&include_member_count=true&filter_allow_reference=false`)
       .reply(200, response)
 
-    await Actions.getGroupsAssociatedToTeam(teamID, 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsAssociatedToTeam(teamID, '', 0, 100)(store.dispatch, store.getState)
 
     const state = store.getState()
 
@@ -425,7 +441,7 @@ describe('Actions.Groups', () => {
       .get(`/groups?not_associated_to_team=${teamID}&page=100&per_page=60&q=0&include_member_count=true`)
       .reply(200, response)
 
-    await Actions.getGroupsNotAssociatedToTeam(teamID, 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsNotAssociatedToTeam(teamID, '', 0, 100)(store.dispatch, store.getState)
 
     const state = store.getState()
     const groupIDs = state.entities.teams.groupsAssociatedToTeam[teamID].ids
@@ -649,7 +665,7 @@ describe('Actions.Groups', () => {
       )
       .reply(200, response)
 
-    await Actions.getGroupsAssociatedToChannel(channelID, 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsAssociatedToChannel(channelID, '', 0, 100)(store.dispatch, store.getState)
 
     const state = store.getState()
 
@@ -698,7 +714,7 @@ describe('Actions.Groups', () => {
       .get(`/groups?not_associated_to_channel=${channelID}&page=100&per_page=60&q=0&include_member_count=true`)
       .reply(200, response)
 
-    await Actions.getGroupsNotAssociatedToChannel(channelID, 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsNotAssociatedToChannel(channelID, '', 0, 100)(store.dispatch, store.getState)
 
     const state = store.getState()
 
@@ -771,7 +787,7 @@ describe('Actions.Groups', () => {
   it('patchGroup', async () => {
     const groupID = '5rgoajywb3nfbdtyafbod47rya'
 
-    const groupPatch = {
+    const groupPatch: any = {
       allow_reference: true,
     }
 

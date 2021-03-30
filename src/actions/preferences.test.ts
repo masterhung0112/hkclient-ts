@@ -99,7 +99,7 @@ describe('Actions.Preferences', () => {
     ]
 
     nock(Client4.getUsersRoute()).put(`/${TestHelper.basicUser.id}/preferences`).reply(200, OK_RESPONSE)
-    await Actions.savePreferences(user.id, preferences)(store.dispatch, store.getState)
+    await Actions.savePreferences(user.id, preferences)(store.dispatch)
 
     const state = store.getState()
     const { myPreferences } = state.entities.preferences
@@ -189,7 +189,7 @@ describe('Actions.Preferences', () => {
         ...preference,
         value: 'false',
       },
-    ])(store.dispatch, store.getState)
+    ])(store.dispatch)
 
     nock(Client4.getUsersRoute()).put(`/${TestHelper.basicUser.id}/preferences`).reply(200, OK_RESPONSE)
     await Actions.makeDirectChannelVisibleIfNecessary(user2.id)(store.dispatch, store.getState)
@@ -221,7 +221,7 @@ describe('Actions.Preferences', () => {
     nock(Client4.getUsersRoute()).get('/me/preferences').reply(200, existingPreferences)
     await Actions.getMyPreferences()(store.dispatch, store.getState)
 
-    const newTheme = {
+    const newTheme: any = {
       type: 'Mattermost Dark',
     }
     nock(Client4.getUsersRoute()).put(`/${TestHelper.basicUser.id}/preferences`).reply(200, OK_RESPONSE)

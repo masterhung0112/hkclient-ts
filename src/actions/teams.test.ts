@@ -12,6 +12,7 @@ import { General, RequestStatus } from '../constants'
 import { GeneralTypes } from 'action-types'
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
+import { ActionResult } from 'types/actions'
 
 const OK_RESPONSE = { status: 'OK' }
 
@@ -350,18 +351,18 @@ describe('Actions.Teams', () => {
     nock(Client4.getTeamRoute(TestHelper.basicTeam.id))
       .post('/members')
       .reply(201, { user_id: user1.id, team_id: TestHelper.basicTeam.id })
-    const { data: member1 } = await Actions.addUserToTeam(TestHelper.basicTeam.id, user1.id)(
+    const { data: member1 } = (await Actions.addUserToTeam(TestHelper.basicTeam.id, user1.id)(
       store.dispatch,
       store.getState
-    )
+    )) as ActionResult
 
     nock(Client4.getTeamRoute(TestHelper.basicTeam.id))
       .post('/members')
       .reply(201, { user_id: user2.id, team_id: TestHelper.basicTeam.id })
-    const { data: member2 } = await Actions.addUserToTeam(TestHelper.basicTeam.id, user2.id)(
+    const { data: member2 } = (await Actions.addUserToTeam(TestHelper.basicTeam.id, user2.id)(
       store.dispatch,
       store.getState
-    )
+    )) as ActionResult
 
     nock(Client4.getBaseRoute())
       .get(`/teams/${TestHelper.basicTeam.id}/members`)
@@ -562,7 +563,7 @@ describe('Actions.Teams', () => {
       .reply(201, { user_id: user.id, team_id: TestHelper.basicTeam.id })
     await Actions.addUserToTeam(TestHelper.basicTeam.id, user.id)(store.dispatch, store.getState)
 
-    const roles = General.TEAM_USER_ROLE + ' ' + General.TEAM_ADMIN_ROLE
+    const roles = [General.TEAM_USER_ROLE, General.TEAM_ADMIN_ROLE]
 
     nock(Client4.getBaseRoute())
       .put(`/teams/${TestHelper.basicTeam.id}/members/${user.id}/roles`)
@@ -578,22 +579,25 @@ describe('Actions.Teams', () => {
 
   it('sendEmailInvitesToTeam', async () => {
     nock(Client4.getTeamRoute(TestHelper.basicTeam.id)).post('/invite/email').reply(200, OK_RESPONSE)
-    const { data } = await Actions.sendEmailInvitesToTeam(TestHelper.basicTeam.id, [
+    const { data } = (await Actions.sendEmailInvitesToTeam(TestHelper.basicTeam.id, [
       'fakeemail1@example.com',
       'fakeemail2@example.com',
-    ])(store.dispatch, store.getState)
+    ])(store.dispatch, store.getState)) as ActionResult
     assert.deepEqual(data, OK_RESPONSE)
   })
 
   it('checkIfTeamExists', async () => {
     nock(Client4.getBaseRoute()).get(`/teams/name/${TestHelper.basicTeam.name}/exists`).reply(200, { exists: true })
 
-    let { data: exists } = await Actions.checkIfTeamExists(TestHelper.basicTeam.name)(store.dispatch, store.getState)
+    let { data: exists } = (await Actions.checkIfTeamExists(TestHelper.basicTeam.name)(
+      store.dispatch,
+      store.getState
+    )) as ActionResult
 
     assert.ok(exists === true)
 
     nock(Client4.getBaseRoute()).get('/teams/name/junk/exists').reply(200, { exists: false })
-    const { data } = await Actions.checkIfTeamExists('junk')(store.dispatch, store.getState)
+    const { data } = (await Actions.checkIfTeamExists('junk')(store.dispatch, store.getState)) as ActionResult
     exists = data
 
     assert.ok(exists === false)
@@ -604,11 +608,11 @@ describe('Actions.Teams', () => {
     await login(TestHelper.basicUser.email, 'password1')(store.dispatch, store.getState)
 
     const team = TestHelper.basicTeam
-    const imageData = fs.createReadStream('test/assets/images/test.png')
+    const imageData: any = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getTeamRoute(team.id)).post('/image').reply(200, OK_RESPONSE)
 
-    const { data } = await Actions.setTeamIcon(team.id, imageData)(store.dispatch, store.getState)
+    const { data } = (await Actions.setTeamIcon(team.id, imageData)(store.dispatch, store.getState)) as ActionResult
     assert.deepEqual(data, OK_RESPONSE)
   })
 
@@ -620,7 +624,7 @@ describe('Actions.Teams', () => {
 
     nock(Client4.getTeamRoute(team.id)).delete('/image').reply(200, OK_RESPONSE)
 
-    const { data } = await Actions.removeTeamIcon(team.id)(store.dispatch, store.getState)
+    const { data } = (await Actions.removeTeamIcon(team.id)(store.dispatch, store.getState)) as ActionResult
     assert.deepEqual(data, OK_RESPONSE)
   })
 
@@ -657,12 +661,12 @@ describe('Actions.Teams', () => {
       )
       .reply(200, { users: [], total_count: 0 })
 
-    const { error } = await Actions.membersMinusGroupMembers(
+    const { error } = (await Actions.membersMinusGroupMembers(
       teamID,
       groupIDs,
       page,
       perPage
-    )(store.dispatch, store.getState)
+    )(store.dispatch, store.getState)) as ActionResult
 
     assert.equal(error, null)
   })
@@ -700,7 +704,7 @@ describe('Actions.Teams', () => {
       .post('/teams/search')
       .reply(200, { teams: [TestHelper.basicTeam, userTeam], total_count: 2 })
 
-    const response = await store.dispatch(Actions.searchTeams('test', { page: '', per_page: true }))
+    const response = await store.dispatch(Actions.searchTeams('test', { page: '', per_page: true } as any))
 
     const paginatedRequest = store.getState().requests.teams.getTeams
     if (paginatedRequest.status === RequestStatus.FAILURE) {

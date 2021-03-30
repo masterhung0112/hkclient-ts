@@ -84,7 +84,7 @@ describe('Actions.Roles', () => {
     const mock2 = nock(Client4.getRolesRoute())
       .post('/names', JSON.stringify(['test2']))
       .reply(200, [])
-    const fakeState = {
+    const fakeState: any = {
       entities: {
         general: {
           serverVersion: '4.3',
@@ -125,7 +125,7 @@ describe('Actions.Roles', () => {
       .put('/' + roleId + '/patch', JSON.stringify({ id: roleId, test: 'test' }))
       .reply(200, {})
 
-    await Actions.editRole({ id: roleId, test: 'test' })(store.dispatch, store.state)
+    await Actions.editRole({ id: roleId, test: 'test' } as any)(store.dispatch, store.state)
     assert(mock.isDone())
   })
 })

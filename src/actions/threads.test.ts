@@ -60,7 +60,7 @@ function mockUserThread({
     unread_mentions: 0,
   }
 
-  return [thread, { userId, otherUserId, channelId, postId, threadId }]
+  return [thread, { userId, otherUserId, channelId, postId, threadId }] as const
 }
 
 describe('Actions.Threads', () => {

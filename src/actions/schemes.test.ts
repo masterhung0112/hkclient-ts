@@ -30,7 +30,7 @@ describe('Actions.Schemes', () => {
 
     nock(Client4.getBaseRoute()).get('/schemes').query(true).reply(200, [mockScheme])
 
-    await Actions.getSchemes()(store.dispatch, store.getState)
+    await Actions.getSchemes('team')(store.dispatch, store.getState)
     const { schemes } = store.getState().entities.schemes
 
     assert.ok(Object.keys(schemes).length > 0)

@@ -57,7 +57,7 @@ describe('Actions.Search', () => {
       .get(`/${TestHelper.basicChannel.id}/members/me`)
       .reply(201, { user_id: TestHelper.basicUser.id, channel_id: TestHelper.basicChannel.id })
 
-    await Actions.searchPosts(TestHelper.basicTeam.id, search1)(dispatch, getState)
+    await Actions.searchPosts(TestHelper.basicTeam.id, search1, false, false)(dispatch, getState)
 
     let state = getState()
     let { recent, results } = state.entities.search
@@ -74,7 +74,7 @@ describe('Actions.Search', () => {
     // Search the next page and check the end of the search
     nock(Client4.getTeamsRoute()).post(`/${TestHelper.basicTeam.id}/posts/search`).reply(200, { order: [], posts: {} })
 
-    await Actions.searchPostsWithParams(TestHelper.basicTeam.id, { terms: search1, page: 1 })(dispatch, getState)
+    await Actions.searchPostsWithParams(TestHelper.basicTeam.id, { terms: search1, page: 1 } as any)(dispatch, getState)
     state = getState()
     current = state.entities.search.current[TestHelper.basicTeam.id]
     recent = state.entities.search.recent
@@ -150,7 +150,7 @@ describe('Actions.Search', () => {
       .get(`/${TestHelper.basicChannel.id}/members/me`)
       .reply(201, { user_id: TestHelper.basicUser.id, channel_id: TestHelper.basicChannel.id })
 
-    await Actions.searchFiles(TestHelper.basicTeam.id, search1)(dispatch, getState)
+    await Actions.searchFiles(TestHelper.basicTeam.id, search1, true, false)(dispatch, getState)
 
     let state = getState()
     let { recent, fileResults } = state.entities.search
@@ -169,7 +169,7 @@ describe('Actions.Search', () => {
       .post(`/${TestHelper.basicTeam.id}/files/search`)
       .reply(200, { order: [], file_infos: {} })
 
-    await Actions.searchFilesWithParams(TestHelper.basicTeam.id, { terms: search1, page: 1 })(dispatch, getState)
+    await Actions.searchFilesWithParams(TestHelper.basicTeam.id, { terms: search1, page: 1 } as any)(dispatch, getState)
     state = getState()
     current = state.entities.search.current[TestHelper.basicTeam.id]
     recent = state.entities.search.recent

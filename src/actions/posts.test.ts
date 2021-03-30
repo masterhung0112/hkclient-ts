@@ -15,11 +15,15 @@ import { PostTypes } from 'action-types'
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
 import { getPreferenceKey } from 'utils/preference_utils'
+import { IModuleStore } from 'redux-dynamic-modules-core'
+import { GlobalState } from 'types/store'
+import { Post } from 'types/posts'
+import { ActionResult } from 'types/actions'
 
 const OK_RESPONSE = { status: 'OK' }
 
 describe('Actions.Posts', () => {
-  let store
+  let store: IModuleStore<GlobalState>
   beforeAll(() => {
     TestHelper.initBasic(Client4)
   })
@@ -253,10 +257,10 @@ describe('Actions.Posts', () => {
   })
 
   it('removePost', async () => {
-    const post1 = { id: 'post1', channel_id: 'channel1', create_at: 1001, message: '' }
-    const post2 = { id: 'post2', channel_id: 'channel1', create_at: 1002, message: '', is_pinned: true }
-    const post3 = { id: 'post3', channel_id: 'channel1', root_id: 'post2', create_at: 1003, message: '' }
-    const post4 = { id: 'post4', channel_id: 'channel1', root_id: 'post1', create_at: 1004, message: '' }
+    const post1: any = { id: 'post1', channel_id: 'channel1', create_at: 1001, message: '' }
+    const post2: any = { id: 'post2', channel_id: 'channel1', create_at: 1002, message: '', is_pinned: true }
+    const post3: any = { id: 'post3', channel_id: 'channel1', root_id: 'post2', create_at: 1003, message: '' }
+    const post4: any = { id: 'post4', channel_id: 'channel1', root_id: 'post1', create_at: 1004, message: '' }
 
     store = configureStore([], {
       entities: {
@@ -268,7 +272,7 @@ describe('Actions.Posts', () => {
             post4,
           },
           postsInChannel: {
-            channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: false }],
+            channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: false }] as any,
           },
           postsInThread: {
             post1: ['post4'],
@@ -296,7 +300,7 @@ describe('Actions.Posts', () => {
       post4,
     })
     expect(state.entities.posts.postsInChannel).toEqual({
-      channel1: [{ order: ['post4', 'post1'], recent: false }],
+      channel1: [{ order: ['post4', 'post1'], recent: false }] as any,
     })
     expect(state.entities.posts.postsInThread).toEqual({
       post1: ['post4'],
@@ -360,7 +364,7 @@ describe('Actions.Posts', () => {
     const post = { id: TestHelper.generateId(), channel_id: channelId, message: '' }
     const comment = { id: TestHelper.generateId(), root_id: post.id, channel_id: channelId, message: '' }
 
-    store.dispatch(Actions.receivedPostsInChannel({ order: [post.id], posts: { [post.id]: post } }, channelId))
+    store.dispatch(Actions.receivedPostsInChannel({ order: [post.id], posts: { [post.id]: post } } as any, channelId))
 
     const postList = {
       order: [post.id],
@@ -427,7 +431,7 @@ describe('Actions.Posts', () => {
       post4,
     })
     expect(state.entities.posts.postsInChannel).toEqual({
-      channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: true, oldest: false }],
+      channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: true, oldest: false }] as any,
     })
     expect(state.entities.posts.postsInThread).toEqual({
       post0: ['post4'],
@@ -436,7 +440,7 @@ describe('Actions.Posts', () => {
   })
 
   it('getNeededAtMentionedUsernames', async () => {
-    const state = {
+    const state: any = {
       entities: {
         users: {
           profiles: {
@@ -449,32 +453,32 @@ describe('Actions.Posts', () => {
       },
     }
 
-    assert.deepEqual(Actions.getNeededAtMentionedUsernames(state, [{ message: 'aaa' }]), new Set())
+    assert.deepEqual(Actions.getNeededAtMentionedUsernames(state, [{ message: 'aaa' }] as any), new Set())
 
-    assert.deepEqual(Actions.getNeededAtMentionedUsernames(state, [{ message: '@aaa' }]), new Set())
+    assert.deepEqual(Actions.getNeededAtMentionedUsernames(state, [{ message: '@aaa' }] as any), new Set())
 
     assert.deepEqual(
-      Actions.getNeededAtMentionedUsernames(state, [{ message: '@aaa @bbb @ccc' }]),
+      Actions.getNeededAtMentionedUsernames(state, [{ message: '@aaa @bbb @ccc' }] as any),
       new Set(['bbb', 'ccc'])
     )
 
     assert.deepEqual(
-      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb. @ccc.ddd' }]),
+      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb. @ccc.ddd' }] as any),
       new Set(['bbb.', 'bbb', 'ccc.ddd'])
     )
 
     assert.deepEqual(
-      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb- @ccc-ddd' }]),
+      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb- @ccc-ddd' }] as any),
       new Set(['bbb-', 'bbb', 'ccc-ddd'])
     )
 
     assert.deepEqual(
-      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb_ @ccc_ddd' }]),
+      Actions.getNeededAtMentionedUsernames(state, [{ message: '@bbb_ @ccc_ddd' }] as any),
       new Set(['bbb_', 'ccc_ddd'])
     )
 
     assert.deepEqual(
-      Actions.getNeededAtMentionedUsernames(state, [{ message: '(@bbb/@ccc) ddd@eee' }]),
+      Actions.getNeededAtMentionedUsernames(state, [{ message: '(@bbb/@ccc) ddd@eee' }] as any),
       new Set(['bbb', 'ccc'])
     )
 
@@ -486,14 +490,14 @@ describe('Actions.Posts', () => {
         { message: '@all.' },
         { message: '@here.' },
         { message: '@channel.' },
-      ]),
+      ] as any),
       new Set(),
       'should never try to request usernames matching special mentions'
     )
   })
 
   describe('getNeededCustomEmojis', () => {
-    const state = {
+    const state: any = {
       entities: {
         emojis: {
           customEmoji: {
@@ -513,56 +517,58 @@ describe('Actions.Posts', () => {
       },
     }
 
-    setSystemEmojis(new Map([['systemEmoji1', {}]]))
+    setSystemEmojis(new Map([['systemEmoji1', {}] as any]))
 
     it('no emojis in post', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: 'aaa' }]), new Set())
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: 'aaa' }] as any), new Set())
     })
 
     it('already loaded custom emoji in post', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name1:' }]), new Set())
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name1:' }] as any), new Set())
     })
 
     it('system emoji in post', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':systemEmoji1:' }]), new Set())
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':systemEmoji1:' }] as any), new Set())
     })
 
     it('mixed emojis in post', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: ':systemEmoji1: :name1: :name2: :name3:' }]),
+        Actions.getNeededCustomEmojis(state, [{ message: ':systemEmoji1: :name1: :name2: :name3:' }] as any),
         new Set(['name3'])
       )
     })
 
     it('custom emojis and text in post', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: 'aaa :name3: :name4:' }]),
+        Actions.getNeededCustomEmojis(state, [{ message: 'aaa :name3: :name4:' }] as any),
         new Set(['name3', 'name4'])
       )
     })
 
     it('custom emoji followed by punctuation', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name3:!' }]), new Set(['name3']))
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name3:!' }] as any), new Set(['name3']))
     })
 
     it('custom emoji including hyphen', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name-3:' }]), new Set(['name-3']))
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name-3:' }] as any), new Set(['name-3']))
     })
 
     it('custom emoji including underscore', () => {
-      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name_3:' }]), new Set(['name_3']))
+      assert.deepEqual(Actions.getNeededCustomEmojis(state, [{ message: ':name_3:' }] as any), new Set(['name_3']))
     })
 
     it('custom emoji in message attachment text', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: [{ text: ':name3:' }] } }]),
+        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: [{ text: ':name3:' }] } }] as any),
         new Set(['name3'])
       )
     })
 
     it('custom emoji in message attachment pretext', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: [{ pretext: ':name3:' }] } }]),
+        Actions.getNeededCustomEmojis(state, [
+          { message: '', props: { attachments: [{ pretext: ':name3:' }] } },
+        ] as any),
         new Set(['name3'])
       )
     })
@@ -570,7 +576,7 @@ describe('Actions.Posts', () => {
     it('custom emoji in message attachment field', () => {
       assert.deepEqual(
         Actions.getNeededCustomEmojis(state, [
-          { message: '', props: { attachments: [{ fields: [{ value: ':name3:' }] }] } },
+          { message: '', props: { attachments: [{ fields: [{ value: ':name3:' }] }] } } as any,
         ]),
         new Set(['name3'])
       )
@@ -583,18 +589,20 @@ describe('Actions.Posts', () => {
             message: '',
             props: {
               attachments: [
-                { text: ':name4: :name1:', pretext: ':name3: :systemEmoji1:', fields: [{ value: ':name3:' }] },
+                { text: ':name4: :name1:', pretext: ':name3: :systemEmoji1:', fields: [{ value: ':name3:' }] as any },
               ],
             },
           },
-        ]),
+        ] as any),
         new Set(['name3', 'name4'])
       )
     })
 
     it('empty message attachment field', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: [{ fields: [{}] }] } }]),
+        Actions.getNeededCustomEmojis(state, [
+          { message: '', props: { attachments: [{ fields: [{}] as any }] } },
+        ] as any),
         new Set([])
       )
     })
@@ -602,7 +610,7 @@ describe('Actions.Posts', () => {
     it('null message attachment contents', () => {
       assert.deepEqual(
         Actions.getNeededCustomEmojis(state, [
-          { message: '', props: { attachments: [{ text: null, pretext: null, fields: null }] } },
+          { message: '', props: { attachments: [{ text: null, pretext: null, fields: null }] } } as any,
         ]),
         new Set([])
       )
@@ -610,14 +618,14 @@ describe('Actions.Posts', () => {
 
     it('null message attachment', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: null } }]),
+        Actions.getNeededCustomEmojis(state, [{ message: '', props: { attachments: null } }] as any),
         new Set([])
       )
     })
 
     it('multiple posts', () => {
       assert.deepEqual(
-        Actions.getNeededCustomEmojis(state, [{ message: ':emoji3:' }, { message: ':emoji4:' }]),
+        Actions.getNeededCustomEmojis(state, [{ message: ':emoji3:' }, { message: ':emoji4:' }] as any),
         new Set(['emoji3', 'emoji4'])
       )
     })
@@ -634,8 +642,8 @@ describe('Actions.Posts', () => {
                 },
               },
             },
-          },
-          [{ message: ':emoji3:' }]
+          } as any,
+          [{ message: ':emoji3:' }] as any
         ),
         new Set([])
       )
@@ -647,10 +655,10 @@ describe('Actions.Posts', () => {
           {
             message: ':emoji3:',
             metadata: {
-              emojis: [{ name: 'emoji3' }],
+              emojis: [{ name: 'emoji3' }] as any,
             },
           },
-        ]),
+        ] as any),
         new Set([])
       )
     })
@@ -671,7 +679,7 @@ describe('Actions.Posts', () => {
             post2,
           },
           postsInChannel: {
-            channel1: [{ order: ['post2', 'post1'], recent: true }],
+            channel1: [{ order: ['post2', 'post1'], recent: true }] as any,
           },
         },
       },
@@ -703,7 +711,7 @@ describe('Actions.Posts', () => {
       post4,
     })
     expect(state.entities.posts.postsInChannel).toEqual({
-      channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: true }],
+      channel1: [{ order: ['post4', 'post3', 'post2', 'post1'], recent: true }] as any,
     })
     expect(state.entities.posts.postsInThread).toEqual({
       post0: ['post4'],
@@ -724,7 +732,7 @@ describe('Actions.Posts', () => {
             post3,
           },
           postsInChannel: {
-            channel1: [{ order: ['post1'], recent: false, oldest: false }],
+            channel1: [{ order: ['post1'], recent: false, oldest: false }] as any,
           },
         },
       },
@@ -771,7 +779,7 @@ describe('Actions.Posts', () => {
             post1,
           },
           postsInChannel: {
-            channel1: [{ order: ['post1'], recent: false }],
+            channel1: [{ order: ['post1'], recent: false }] as any,
           },
         },
       },
@@ -816,7 +824,7 @@ describe('Actions.Posts', () => {
             post1,
           },
           postsInChannel: {
-            channel1: [{ order: ['post1'], recent: false }],
+            channel1: [{ order: ['post1'], recent: false }] as any,
           },
         },
       },
@@ -840,7 +848,9 @@ describe('Actions.Posts', () => {
     const state = store.getState()
 
     expect(state.entities.posts.posts).toEqual({ post1, post2, post3 })
-    expect(state.entities.posts.postsInChannel.channel1).toEqual([{ order: ['post3', 'post2', 'post1'], recent: true }])
+    expect(state.entities.posts.postsInChannel.channel1).toEqual([
+      { order: ['post3', 'post2', 'post1'], recent: true },
+    ] as any)
   })
 
   it('getPostsAround', async () => {
@@ -865,7 +875,7 @@ describe('Actions.Posts', () => {
       next_post_id: 'post2',
       before_post_id: 'post5',
     }
-    const postsBefore = {
+    const postsBefore: any = {
       posts: {
         post4: { id: 'post4', create_at: 9999, message: '' },
         post5: { id: 'post5', create_at: 9998, message: '' },
@@ -1181,7 +1191,7 @@ describe('Actions.Posts', () => {
   })
 
   it('getCustomEmojiForReaction', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
     const { dispatch, getState } = store
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
@@ -1193,13 +1203,13 @@ describe('Actions.Posts', () => {
       name: TestHelper.generateId(),
     })
 
-    const { data: created } = await createCustomEmoji(
+    const { data: created } = (await createCustomEmoji(
       {
         name: TestHelper.generateId(),
         creator_id: TestHelper.basicUser.id,
       },
       testImageData
-    )(store.dispatch, store.getState)
+    )(store.dispatch, store.getState)) as ActionResult
 
     nock(Client4.getEmojisRoute()).get(`/name/${created.name}`).reply(200, created)
 
@@ -1275,19 +1285,19 @@ describe('Actions.Posts', () => {
   it('addMessageIntoHistory', async () => {
     const { dispatch, getState } = store
 
-    await Actions.addMessageIntoHistory('test1')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test1')(dispatch)
 
     let history = getState().entities.posts.messagesHistory.messages
     assert.ok(history.length === 1)
     assert.ok(history[0] === 'test1')
 
-    await Actions.addMessageIntoHistory('test2')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test2')(dispatch)
 
     history = getState().entities.posts.messagesHistory.messages
     assert.ok(history.length === 2)
     assert.ok(history[1] === 'test2')
 
-    await Actions.addMessageIntoHistory('test3')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test3')(dispatch)
 
     history = getState().entities.posts.messagesHistory.messages
     assert.ok(history.length === 3)
@@ -1297,32 +1307,32 @@ describe('Actions.Posts', () => {
   it('resetHistoryIndex', async () => {
     const { dispatch, getState } = store
 
-    await Actions.addMessageIntoHistory('test1')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test2')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test3')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test1')(dispatch)
+    await Actions.addMessageIntoHistory('test2')(dispatch)
+    await Actions.addMessageIntoHistory('test3')(dispatch)
 
     let index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 1)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 2)
 
-    await Actions.resetHistoryIndex(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.resetHistoryIndex(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 2)
 
-    await Actions.resetHistoryIndex(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
+    await Actions.resetHistoryIndex(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
@@ -1333,42 +1343,42 @@ describe('Actions.Posts', () => {
   it('moveHistoryIndexBack', async () => {
     const { dispatch, getState } = store
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     let index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === -1)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === -1)
 
-    await Actions.addMessageIntoHistory('test1')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test2')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test3')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test1')(dispatch)
+    await Actions.addMessageIntoHistory('test2')(dispatch)
+    await Actions.addMessageIntoHistory('test3')(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 1)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 0)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 0)
@@ -1379,51 +1389,51 @@ describe('Actions.Posts', () => {
   it('moveHistoryIndexForward', async () => {
     const { dispatch, getState } = store
 
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     let index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 0)
 
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 0)
 
-    await Actions.addMessageIntoHistory('test1')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test2')(dispatch, getState)
-    await Actions.addMessageIntoHistory('test3')(dispatch, getState)
+    await Actions.addMessageIntoHistory('test1')(dispatch)
+    await Actions.addMessageIntoHistory('test2')(dispatch)
+    await Actions.addMessageIntoHistory('test3')(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 3)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 3)
 
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
-    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.POST)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
+    await Actions.moveHistoryIndexBack(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 1)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 1)
 
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch, getState)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.POST)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 2)
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.COMMENT]
     assert.ok(index === 1)
 
-    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.COMMENT)(dispatch, getState)
+    await Actions.moveHistoryIndexForward(Posts.MESSAGE_TYPES.COMMENT)(dispatch)
 
     index = getState().entities.posts.messagesHistory.index[Posts.MESSAGE_TYPES.POST]
     assert.ok(index === 2)
@@ -1435,10 +1445,10 @@ describe('Actions.Posts', () => {
     describe('different values for posts argument', () => {
       // Mock the state to prevent any followup requests since we aren't testing those
       const currentUserId = 'user'
-      const post = { id: 'post', user_id: currentUserId, message: 'This is a post' }
+      const post: any = { id: 'post', user_id: currentUserId, message: 'This is a post' }
 
       const dispatch = null
-      const getState = () => ({
+      const getState: any = () => ({
         entities: {
           general: {
             config: {
@@ -1465,7 +1475,7 @@ describe('Actions.Posts', () => {
       })
 
       it('object map of posts', async () => {
-        const posts = {
+        const posts: any = {
           [post.id]: post,
         }
 
@@ -1503,7 +1513,7 @@ describe('Actions.Posts', () => {
           {
             order: [post2.id, post3.id],
             posts: { [post2.id]: post2, [post3.id]: post3 },
-          },
+          } as any,
           channelId
         )
       )
@@ -1567,7 +1577,7 @@ describe('Actions.Posts', () => {
 
   describe('receivedPostsBefore', () => {
     it('Should return default false for oldest key if param does not exist', () => {
-      const posts = []
+      const posts: any = []
       const result = Actions.receivedPostsBefore(posts, 'channelId', 'beforePostId')
       assert.deepEqual(result, {
         type: PostTypes.RECEIVED_POSTS_BEFORE,
@@ -1579,7 +1589,7 @@ describe('Actions.Posts', () => {
     })
 
     it('Should return true for oldest key', () => {
-      const posts = []
+      const posts: any = []
       const result = Actions.receivedPostsBefore(posts, 'channelId', 'beforePostId', true)
       assert.deepEqual(result, {
         type: PostTypes.RECEIVED_POSTS_BEFORE,
@@ -1593,7 +1603,7 @@ describe('Actions.Posts', () => {
 
   describe('receivedPostsInChannel', () => {
     it('Should return default false for both recent and oldest keys if params dont exist', () => {
-      const posts = []
+      const posts: any = []
       const result = Actions.receivedPostsInChannel(posts, 'channelId')
       assert.deepEqual(result, {
         type: PostTypes.RECEIVED_POSTS_IN_CHANNEL,
@@ -1605,7 +1615,7 @@ describe('Actions.Posts', () => {
     })
 
     it('Should return true for oldest and recent keys', () => {
-      const posts = []
+      const posts: any = []
       const result = Actions.receivedPostsInChannel(posts, 'channelId', true, true)
       assert.deepEqual(result, {
         type: PostTypes.RECEIVED_POSTS_IN_CHANNEL,

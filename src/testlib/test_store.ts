@@ -4,7 +4,6 @@ import { createTransform, persistStore } from 'redux-persist'
 import configureStore from '../store'
 import { Config } from '@redux-offline/redux-offline/lib/types'
 import { IModule } from 'redux-dynamic-modules-core'
-import { EntitiesModule } from '../modules/reducerModule'
 
 export default function testConfigureStore(loadedModule: IModule<any>[] = [], preloadedState = null) {
   const storageTransform = createTransform(
@@ -41,4 +40,17 @@ export default function testConfigureStore(loadedModule: IModule<any>[] = [], pr
   // await wait()
 
   return store
+}
+
+// This should probably be replaced by redux-mock-store like the web app
+export function mockDispatch(dispatch) {
+  const mocked = (action) => {
+    dispatch(action)
+
+    mocked.actions.push(action)
+  }
+
+  mocked.actions = []
+
+  return mocked
 }

@@ -123,7 +123,7 @@ describe('Actions.Files', () => {
 
     nock(Client4.getBaseRoute())
       .post('/posts')
-      .reply(201, { ...TestHelper.fakePostWithId(), ...fakePostForFile })
+      .reply(201, { ...TestHelper.fakePostWithId(''), ...fakePostForFile })
     const postForFile = await basicClient4.createPost(fakePostForFile)
 
     nock(Client4.getBaseRoute())
@@ -180,7 +180,7 @@ describe('Actions.Files', () => {
   })
 
   it('receivedFiles', async () => {
-    const files = {
+    const files: any = {
       filename: { data: 'data' },
     }
     const result = Actions.receivedFiles(files)

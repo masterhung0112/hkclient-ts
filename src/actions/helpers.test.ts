@@ -8,6 +8,7 @@ import { forceLogoutIfNecessary } from 'actions/helpers'
 import { Client4 } from 'client'
 import { ClientError } from 'client/client4'
 import configureStore, { mockDispatch } from 'testlib/test_store'
+import { Client4Error } from 'types/client4'
 
 describe('Actions.Helpers', () => {
   describe('forceLogoutIfNecessary', () => {
@@ -32,7 +33,7 @@ describe('Actions.Helpers', () => {
         url: '/api/v4/foo/bar',
       })
 
-      forceLogoutIfNecessary(error, dispatch, store.getState)
+      forceLogoutIfNecessary(error as Client4Error, dispatch as any, store.getState)
 
       assert.equal(Client4.token, token)
       assert.deepEqual(dispatch.actions, [])
@@ -54,7 +55,7 @@ describe('Actions.Helpers', () => {
         url: '/api/v4/foo/bar',
       })
 
-      forceLogoutIfNecessary(error, dispatch, store.getState)
+      forceLogoutIfNecessary(error as any, dispatch as any, store.getState)
 
       assert.equal(Client4.token, token)
       assert.deepEqual(dispatch.actions, [])
@@ -76,7 +77,7 @@ describe('Actions.Helpers', () => {
         url: '/api/v4/foo/bar',
       })
 
-      forceLogoutIfNecessary(error, dispatch, store.getState)
+      forceLogoutIfNecessary(error as any, dispatch as any, store.getState)
 
       assert.notEqual(Client4.token, token)
       assert.deepEqual(dispatch.actions, [{ type: UserTypes.LOGOUT_SUCCESS, data: {} }])
@@ -98,7 +99,7 @@ describe('Actions.Helpers', () => {
         url: '/api/v4/login',
       })
 
-      forceLogoutIfNecessary(error, dispatch, store.getState)
+      forceLogoutIfNecessary(error as any, dispatch as any, store.getState)
 
       assert.equal(Client4.token, token)
       assert.deepEqual(dispatch.actions, [])
@@ -120,7 +121,7 @@ describe('Actions.Helpers', () => {
         url: '/api/v4/foo/bar',
       })
 
-      forceLogoutIfNecessary(error, dispatch, store.getState)
+      forceLogoutIfNecessary(error as any, dispatch as any, store.getState)
 
       assert.equal(Client4.token, token)
       assert.deepEqual(dispatch.actions, [])

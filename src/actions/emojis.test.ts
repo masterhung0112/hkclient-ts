@@ -30,7 +30,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('createCustomEmoji', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -57,7 +57,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('getCustomEmojis', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -103,7 +103,7 @@ describe('Actions.Emojis', () => {
         name: TestHelper.generateId(),
         creator_id: TestHelper.basicUser.id,
       },
-      fs.createReadStream('test/assets/images/test.png')
+      fs.createReadStream('src/test/assets/images/test.png')
     )(store.dispatch, store.getState)) as ActionResult
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
@@ -119,7 +119,7 @@ describe('Actions.Emojis', () => {
         name: TestHelper.generateId(),
         creator_id: TestHelper.basicUser.id,
       },
-      fs.createReadStream('test/assets/images/test.png')
+      fs.createReadStream('src/test/assets/images/test.png')
     )(store.dispatch, store.getState)) as ActionResult
 
     nock(Client4.getBaseRoute()).get('/emoji').query(true).reply(200, [created1])
@@ -160,7 +160,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('deleteCustomEmoji', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -224,7 +224,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('searchCustomEmojis', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -255,7 +255,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('autocompleteCustomEmojis', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -286,7 +286,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('getCustomEmoji', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -317,7 +317,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('getCustomEmojiByName', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -359,7 +359,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('getCustomEmojisByName', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),
@@ -394,7 +394,7 @@ describe('Actions.Emojis', () => {
   })
 
   it('getCustomEmojisInText', async () => {
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     nock(Client4.getBaseRoute()).post('/emoji').reply(201, {
       id: TestHelper.generateId(),

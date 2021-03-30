@@ -28,7 +28,7 @@ describe('Actions.Jobs', () => {
   })
 
   it('createJob', async () => {
-    const job = {
+    const job: any = {
       type: 'data_retention',
     }
 

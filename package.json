@@ -44,13 +44,13 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.27.2",
     "ts-jest": "^26.4.0",
+    "tslib": "^2.1.0",
     "ttypescript": "^1.5.12",
     "typescript": "^3.9.7"
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.6.0",
     "cross-fetch": "^3.0.6",
-    "tslib": "^2.1.0",
     "moment-timezone": "^0.5.33",
     "redux": "^4.0.5",
     "redux-action-buffer": "^1.2.0",

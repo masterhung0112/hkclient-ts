@@ -1,15 +1,20 @@
 import { IModule } from 'redux-dynamic-modules-core'
 
 import entitiesReducer from '../reducers/entities'
-import { EntitiesState } from '../types/store'
+import errorsReducer from '../reducers/errors'
+import requestsReducer from '../reducers/requests'
+import websocketReducer from '../reducers/websocket'
 
-export interface EntityAwareState {
-  entities: EntitiesState
-}
+import { GlobalState } from '../types/store'
+
+export type EntityAwareState = GlobalState
 
 export const EntitiesModule: IModule<EntityAwareState> = {
   id: 'entity',
   reducerMap: {
-    entities: entitiesReducer,
+    entities: entitiesReducer as any,
+    errors: errorsReducer as any,
+    requests: requestsReducer as any,
+    websocket: websocketReducer as any,
   },
 }

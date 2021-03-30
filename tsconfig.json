@@ -48,11 +48,11 @@
       "utils/*": [
         "src/utils/*"
       ],
-      "hkclient": [
-        "src/hkclient"
+      "client": [
+        "src/client"
       ],
-      "hkclient/*": [
-        "src/hkclient/*"
+      "client/*": [
+        "src/client/*"
       ],
       "testlib": [
         "src/testlib"

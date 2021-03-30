@@ -1,0 +1,36 @@
+import { isMinimumServerVersion } from 'utils/helpers'
+import { GeneralAwareState, GeneralState } from 'types/general'
+import { General } from 'hkconstants/general'
+import { createSelector } from 'reselect'
+
+export const generalSelector = (state: GeneralAwareState): GeneralState => {
+  return state[General.GENERAL_MODULE_NAME]
+}
+
+export const getConfig = createSelector(generalSelector, (generalState) => generalState.config)
+export const getLicense = createSelector(generalSelector, (generalState) => generalState.license)
+export const getServerVersion = createSelector(generalSelector, (generalState) => generalState.serverVersion)
+export const getDeviceToken = createSelector(generalSelector, (generalState) => generalState.deviceToken)
+
+export const hasNewPermissions = createSelector(
+  getServerVersion,
+  (serverVersion) =>
+    isMinimumServerVersion(serverVersion, 4, 9, 0) ||
+    (serverVersion.indexOf('dev') !== -1 && isMinimumServerVersion(serverVersion, 4, 8, 0)) ||
+    (serverVersion.match(/^4.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(serverVersion, 4, 8, 0))
+)
+
+// export function hasNewPermissions(state: GlobalState): boolean {
+//   const version = state.entities.general.serverVersion
+
+//   // FIXME This must be changed to 4, 9, 0 before we generate the 4.9.0 release
+//   return (
+//     isMinimumServerVersion(version, 4, 9, 0) ||
+//     (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 4, 8, 0)) ||
+//     (version.match(/^4.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 4, 8, 0))
+//   )
+// }
+
+// export const getServerVersion = (state: GlobalState): string => {
+//   return state.entities.general.serverVersion
+// }

@@ -13,6 +13,7 @@ import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
 import { getThunkExtension } from 'hkredux/thunkMiddleware'
 import { EntitiesModule } from 'hkmodules/reducerModule'
 import { getSagaPromiseExtension } from 'hkredux'
+import DefaultReducer from 'reducers'
 
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   const loadReduxDevtools = process.env.NODE_ENV !== 'test'

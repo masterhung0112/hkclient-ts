@@ -6,7 +6,7 @@ import { Config } from '@redux-offline/redux-offline/lib/types'
 import { IModule } from 'redux-dynamic-modules-core'
 import { EntitiesModule } from '../modules/reducerModule'
 
-export default async function testConfigureStore(loadedModule: IModule<any>[] = [], preloadedState = null) {
+export default function testConfigureStore(loadedModule: IModule<any>[] = [], preloadedState = null) {
   const storageTransform = createTransform(
     () => ({}),
     () => ({})
@@ -37,8 +37,8 @@ export default async function testConfigureStore(loadedModule: IModule<any>[] = 
 
   const store = configureStore(preloadedState, offlineConfig, [...loadedModule])
 
-    const wait = () => new Promise((resolve) => setTimeout(resolve, 300)) //eslint-disable-line
-  await wait()
+  // const wait = () => new Promise((resolve) => setTimeout(resolve, 300)) //eslint-disable-line
+  // await wait()
 
   return store
 }

@@ -1,13 +1,56 @@
 import { combineReducers } from 'redux'
-import { Role } from 'types/roles'
+import { RoleTypes, UserTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
-
-function roles(state: Record<string, Role> = {}, action: GenericAction) {
-  return state
+import { Dictionary } from 'types/utilities'
+import { Role } from 'types/roles'
+function pending(state: Set<string> = new Set(), action: GenericAction) {
+  switch (action.type) {
+    case RoleTypes.SET_PENDING_ROLES:
+      return action.data
+    case UserTypes.LOGOUT_SUCCESS:
+      return new Set()
+    default:
+      return state
+  }
 }
 
-function pending(state: string[] = [], action: GenericAction) {
-  return state
+function roles(state: Dictionary<Role> = {}, action: GenericAction) {
+  switch (action.type) {
+    case RoleTypes.RECEIVED_ROLES: {
+      if (action.data) {
+        const nextState = { ...state }
+        for (const role of action.data) {
+          nextState[role.name] = role
+        }
+        return nextState
+      }
+
+      return state
+    }
+    case RoleTypes.ROLE_DELETED: {
+      if (action.data) {
+        const nextState = { ...state }
+        Reflect.deleteProperty(nextState, action.data.name)
+        return nextState
+      }
+
+      return state
+    }
+    case RoleTypes.RECEIVED_ROLE: {
+      if (action.data) {
+        const nextState = { ...state }
+        nextState[action.data.name] = action.data
+        return nextState
+      }
+
+      return state
+    }
+
+    case UserTypes.LOGOUT_SUCCESS:
+      return {}
+    default:
+      return state
+  }
 }
 
 export default combineReducers({

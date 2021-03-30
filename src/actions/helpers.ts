@@ -1,16 +1,16 @@
-import { DispatchFunc, GetStateFunc, ActionFunc, GenericAction, Action, ActionResultType } from 'types/actions'
-import { HkClient } from 'hkclient'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+import { Client4 } from 'client'
 import { UserTypes } from 'action-types'
-import { HkClientError } from 'types/hkclient'
+
+import { Client4Error } from 'types/client4'
+import { batchActions, Action, ActionFunc, GenericAction, DispatchFunc, GetStateFunc } from 'types/actions'
+
 import { logError } from './errors'
-import { getCurrentUserId } from 'selectors/users'
-import { all, call, put, select } from 'redux-saga/effects'
-const HTTP_UNAUTHORIZED = 401
-
 type ActionType = string
-
-export function forceLogoutIfNecessary(err: HkClientError, dispatch: DispatchFunc, getState: GetStateFunc) {
-  const currentUserId = getCurrentUserId(getState())
+const HTTP_UNAUTHORIZED = 401
+export function forceLogoutIfNecessary(err: Client4Error, dispatch: DispatchFunc, getState: GetStateFunc) {
+  const { currentUserId } = getState().entities.users
 
   if (
     'status_code' in err &&
@@ -19,8 +19,17 @@ export function forceLogoutIfNecessary(err: HkClientError, dispatch: DispatchFun
     err.url.indexOf('/login') === -1 &&
     currentUserId
   ) {
-    HkClient.token = ''
+    Client4.setToken('')
     dispatch({ type: UserTypes.LOGOUT_SUCCESS, data: {} })
+  }
+}
+
+function dispatcher(type: ActionType, data: any, dispatch: DispatchFunc) {
+  if (type.indexOf('SUCCESS') === -1) {
+    // we don't want to pass the data for the request types
+    dispatch(requestSuccess(type, data))
+  } else {
+    dispatch(requestData(type))
   }
 }
 
@@ -31,18 +40,17 @@ export function requestData(type: ActionType): GenericAction {
   }
 }
 
-export function* forceLogoutIfNecessarySaga(err: HkClientError): Generator {
-  const currentUserId = yield select(getCurrentUserId)
+export function requestSuccess(type: ActionType, data: any) {
+  return {
+    type,
+    data,
+  }
+}
 
-  if (
-    'status_code' in err &&
-    err.status_code === HTTP_UNAUTHORIZED &&
-    err.url &&
-    err.url.indexOf('/login') === -1 &&
-    currentUserId
-  ) {
-    HkClient.token = ''
-    yield put({ type: UserTypes.LOGOUT_SUCCESS, data: {} })
+export function requestFailure(type: ActionType, error: Client4Error): any {
+  return {
+    type,
+    error,
   }
 }
 
@@ -59,6 +67,7 @@ export function* forceLogoutIfNecessarySaga(err: HkClientError): Generator {
  * @param {...Array<any>} obj.params
  * @returns {ActionFunc} ActionFunc
  */
+
 export function bindClientFunc({
   clientFunc,
   onRequest,
@@ -68,9 +77,9 @@ export function bindClientFunc({
 }: {
   clientFunc: (...args: any[]) => Promise<any>
   onRequest?: ActionType
-  onSuccess?: ActionType | Array<ActionType>
+  onSuccess?: ActionType | ActionType[]
   onFailure?: ActionType
-  params?: Array<any>
+  params?: any[]
 }): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     if (onRequest) {
@@ -86,8 +95,8 @@ export function bindClientFunc({
       if (onFailure) {
         actions.push(requestFailure(onFailure, error))
       }
-      dispatch(actions)
-      return [{ error }]
+      dispatch(batchActions(actions))
+      return { error }
     }
 
     if (Array.isArray(onSuccess)) {
@@ -98,69 +107,51 @@ export function bindClientFunc({
       dispatcher(onSuccess, data, dispatch)
     }
 
-    return [{ data }]
+    return { data }
   }
 }
 
-function dispatcher(type: ActionType, data: any, dispatch: DispatchFunc) {
-  if (type.indexOf('SUCCESS') === -1) {
-    // we don't want to pass the data for the request types
-    dispatch(requestSuccess(type, data))
-  } else {
-    dispatch(requestData(type))
-  }
-}
+// Debounce function based on underscores modified to use es6 and a cb
 
-export function requestSuccess(type: ActionType, data: any) {
-  return {
-    type,
-    data,
-  }
-}
-
-export function requestFailure(type: ActionType, error: HkClientError): any {
-  return {
-    type,
-    error,
-  }
-}
-
-export function bindClientSaga({
-  clientFunc,
-  onRequest,
-  onSuccess,
-  onFailure,
-  params = [],
-}: {
-  clientFunc: (...args: any[]) => Promise<any>
-  onRequest?: ActionType
-  onSuccess?: ActionType | Array<ActionType>
-  onFailure?: ActionType
-  params?: Array<any>
-}): any {
-  return function* (): Generator<Action, ActionResultType, any> {
-    if (onRequest) {
-      yield call(requestData, onRequest)
-    }
-
-    let data: any = null
-    try {
-      data = yield call(clientFunc, ...params)
-    } catch (error) {
-      yield call(forceLogoutIfNecessarySaga, error)
-      yield call(logError, error)
-      if (onFailure) {
-        yield put(requestFailure(onFailure, error))
+export function debounce(func: (...args: any) => unknown, wait: number, immediate: boolean, cb: () => unknown) {
+  let timeout: any //NodeJS.Timeout | null
+  return function fx(...args: any[]) {
+    const runLater = () => {
+      timeout = null
+      if (!immediate) {
+        Reflect.apply(func, this, args)
+        if (cb) {
+          cb()
+        }
       }
-      return [{ error }]
     }
-
-    if (Array.isArray(onSuccess)) {
-      yield all(onSuccess.map((successType) => put(requestSuccess(successType, data))))
-    } else if (onSuccess) {
-      yield put(requestSuccess(onSuccess, data))
+    const callNow = immediate && !timeout
+    if (timeout) {
+      clearTimeout(timeout)
     }
+    timeout = setTimeout(runLater, wait)
+    if (callNow) {
+      Reflect.apply(func, this, args)
+      if (cb) {
+        cb()
+      }
+    }
+  }
+}
 
-    return [{ data }]
+export class FormattedError extends Error {
+  intl: {
+    id: string
+    defaultMessage: string
+    values: any
+  }
+
+  constructor(id: string, defaultMessage: string, values: any = {}) {
+    super(defaultMessage)
+    this.intl = {
+      id,
+      defaultMessage,
+      values,
+    }
   }
 }

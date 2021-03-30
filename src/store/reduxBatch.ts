@@ -50,13 +50,22 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
     let inDispatch = false
 
     function dispatchRecurse(action: A[] | A) {
-      // console.log('is Array', Array.isArray(action), action)
-      return Array.isArray(action)
-        ? action.map((subAction) => {
+      // Support { meta: { batch: true } } in action
+      let targetAction: A[]
+      let isArrayActions = false
+      if (Array.isArray(action)) {
+        isArrayActions = true
+        targetAction = action
+      } else if (action && 'meta' in action && action['meta'].batch) {
+        isArrayActions = true
+        targetAction = action['payload']
+      }
+      return isArrayActions
+        ? targetAction.map((subAction) => {
             // console.log('subAction', subAction)
-            return dispatchRecurse(subAction)
+            return dispatchRecurse(subAction as A)
           })
-        : store.dispatch(action)
+        : store.dispatch(action as A)
     }
 
     function dispatch(action: A[] | A) {

@@ -1,6 +1,6 @@
 import { RequestStatusOption } from 'types/request'
 
-const status: Record<string, RequestStatusOption> = {
+export const Status: Record<string, RequestStatusOption> = {
   NOT_STARTED: 'not_started',
   STARTED: 'started',
   SUCCESS: 'success',
@@ -8,4 +8,4 @@ const status: Record<string, RequestStatusOption> = {
   CANCELLED: 'cancelled',
 }
 
-export default status
+export default Status

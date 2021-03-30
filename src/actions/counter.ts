@@ -7,3 +7,7 @@ export function setCount(payload: number): AnyAction {
     payload,
   }
 }
+
+export default {
+  setCount,
+}

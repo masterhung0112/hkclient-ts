@@ -1,11 +1,18 @@
-import { General } from 'hkconstants'
-import { ClientConfig, ClientLicense } from './config'
+import { General } from 'hkconstants/general'
+import { ClientConfig, ClientLicense, WarnMetricStatus } from './config'
+
+import { Dictionary } from './utilities'
 
 export type GeneralState = {
+  appState: boolean
+  credentials: any
   config: Partial<ClientConfig>
-  serverVersion: string
+  dataRetentionPolicy: any
   deviceToken: string
   license: ClientLicense
+  serverVersion: string
+  timezones: string[]
+  warnMetricsStatus: Dictionary<WarnMetricStatus>
 }
 
 export interface GeneralAwareState {

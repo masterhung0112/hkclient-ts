@@ -33,7 +33,7 @@ export type ActionResult = {
   data?: any
 }
 
-export type ActionResultType = ActionResult[]
+export type ActionResultType = ActionResult
 
 // export type DispatchFunc = (action: Action, getState?: GetStateFunc | null) => Promise<ActionResultType>
 export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFunc> {
@@ -41,7 +41,10 @@ export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFu
   <TReturnType = ActionResultType>(actionFuncs: A[]): Promise<TReturnType>
 }
 
-export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResultType>
+export type ActionFunc = (
+  dispatch: DispatchFunc,
+  getState: GetStateFunc
+) => Promise<ActionResult | ActionResult[]> | ActionResult
 
 export type Action = GenericAction | Thunk | BatchAction | ActionFunc
 
@@ -58,11 +61,11 @@ export type ActionCreatorClient<T extends (...args: any[]) => any> = (
 //   }
 // }
 
-// export const BATCH = 'BATCHING_REDUCER.BATCH'
+export const BATCH = 'BATCHING_REDUCER.BATCH'
 
-// export function batchActions(actions: Action[], type = BATCH) {
-//   return { type, meta: { batch: true }, payload: actions }
-// }
+export function batchActions(actions: Action[], type = BATCH) {
+  return { type, meta: { batch: true }, payload: actions }
+}
 
 export interface ExtActionCreator<A = ActionFunc> {
   (...args: any[]): A

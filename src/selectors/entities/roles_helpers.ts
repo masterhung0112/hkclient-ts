@@ -1,7 +1,12 @@
-import { GlobalState } from 'types/store'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
 import { createSelector } from 'reselect'
-import { getCurrentUser } from '../users'
-import { UserProfile, UsersAwareState } from 'types/users'
+
+import { getCurrentUser } from 'selectors/entities/common'
+
+import { GlobalState } from 'types/store'
+import { UserProfile } from 'types/users'
 
 export type PermissionsOptions = {
   channel?: string
@@ -13,7 +18,7 @@ export function getRoles(state: GlobalState) {
   return state.entities.roles.roles
 }
 
-export const getMySystemRoles: (state: UsersAwareState) => Set<string> = createSelector(
+export const getMySystemRoles: (state: GlobalState) => Set<string> = createSelector(
   getCurrentUser,
   (user: UserProfile) => {
     if (user) {

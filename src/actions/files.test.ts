@@ -31,7 +31,7 @@ describe('Actions.Files', () => {
   it('uploadFile', async () => {
     const { basicChannel } = TestHelper
     const testFileName = 'test.png'
-    const testImageData = fs.createReadStream(`test/assets/images/${testFileName}`)
+    const testImageData = fs.createReadStream(`src/test/assets/images/${testFileName}`)
     const clientId = TestHelper.generateId()
 
     const imageFormData = new FormData()
@@ -84,7 +84,7 @@ describe('Actions.Files', () => {
   it('getFilesForPost', async () => {
     const { basicClient4, basicChannel } = TestHelper
     const testFileName = 'test.png'
-    const testImageData = fs.createReadStream(`test/assets/images/${testFileName}`)
+    const testImageData = fs.createReadStream(`src/test/assets/images/${testFileName}`)
     const clientId = TestHelper.generateId()
 
     const imageFormData = new FormData()

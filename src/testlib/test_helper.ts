@@ -230,7 +230,7 @@ class TestHelper {
     }
   }
 
-  fakeChannel = (teamId) => {
+  fakeChannel = (teamId): Channel => {
     const name = this.generateId()
 
     return {
@@ -241,10 +241,10 @@ class TestHelper {
       delete_at: 0,
       total_msg_count: 0,
       scheme_id: this.generateId(),
-    }
+    } as Channel
   }
 
-  fakeChannelWithId = (teamId): Channel => {
+  fakeChannelWithId = (teamId?): Channel => {
     return {
       ...this.fakeChannel(teamId),
       id: this.generateId(),

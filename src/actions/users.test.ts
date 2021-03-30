@@ -4,7 +4,6 @@ import { Client4 } from 'client'
 import * as Actions from 'actions/users'
 import nock from 'nock'
 import assert from 'assert'
-import { getUsersModuleDependencies, UsersModule } from 'hkmodules/users'
 import { getCurrentUserId, getUserProfiles } from 'selectors/users'
 
 describe('Actions.Users', () => {
@@ -14,7 +13,7 @@ describe('Actions.Users', () => {
   })
 
   beforeEach(async () => {
-    store = await configureStore([UsersModule, ...getUsersModuleDependencies()])
+    store = await configureStore([])
   })
 
   afterAll(async () => {

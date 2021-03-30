@@ -10,6 +10,6 @@ export interface EntityAwareState {
 export const EntitiesModule: IModule<EntityAwareState> = {
   id: 'entity',
   reducerMap: {
-    entities: entitiesReducer,
+    entities: entitiesReducer as any,
   },
 }

@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { GifTypes } from 'action_types'
+import { GifTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
 
 type ReducerMap = { [actionType: string]: (state: any, action: GenericAction) => any }

@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { CloudTypes } from 'action_types'
+import { CloudTypes } from 'action-types'
 
 import { GenericAction } from 'types/actions'
 import { Product, Subscription, CloudCustomer, Invoice, SubscriptionStats } from 'types/cloud'

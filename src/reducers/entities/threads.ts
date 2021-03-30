@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { TeamTypes, ThreadTypes, UserTypes } from 'action_types'
+import { TeamTypes, ThreadTypes, UserTypes } from 'action-types'
 import { combineReducers } from 'redux'
 import { GenericAction } from 'types/actions'
 import { Team } from 'types/teams'

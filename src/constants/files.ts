@@ -3,8 +3,9 @@
 
 import { Dictionary } from 'types/utilities'
 
+export const FILES_MODULE_NAME = 'files'
+
 export const Files: Dictionary<string[]> = {
-  FILES_MODULE_NAME: 'files' as const,
   AUDIO_TYPES: ['mp3', 'wav', 'wma', 'm4a', 'flac', 'aac', 'ogg'],
   CODE_TYPES: [
     'as',

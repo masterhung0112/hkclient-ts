@@ -93,3 +93,7 @@ export interface GlobalState {
     lastDisconnectAt: number
   }
 }
+
+export interface SagaStore extends Store {
+  getSagaTasks?: () => Task[]
+}

@@ -107,12 +107,14 @@ export type PostOrderBlock = {
   oldest?: boolean
 }
 
+export type MessageHistoryIndex = {
+  post: number
+  comment: number
+}
+
 export type MessageHistory = {
   messages: string[]
-  index: {
-    post: number
-    comment: number
-  }
+  index: MessageHistoryIndex
 }
 
 export type PostsState = {

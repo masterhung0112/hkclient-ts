@@ -20,7 +20,7 @@ describe('Client4', () => {
 
       assert.equal(client.serverVersion, '')
 
-      nock(client.baseRoute)
+      nock(client.getBaseRoute())
         .get('/users/me')
         .reply(200, '{}', { [HEADER_X_VERSION_ID]: '5.0.0.5.0.0.abc123' })
 
@@ -29,7 +29,7 @@ describe('Client4', () => {
       // Change the version of server version
       assert.equal(client.serverVersion, '5.0.0.5.0.0.abc123')
 
-      nock(client.baseRoute)
+      nock(client.getBaseRoute())
         .get('/users/me')
         .reply(200, '{}', { [HEADER_X_VERSION_ID]: '5.3.0.5.3.0.abc123' })
 

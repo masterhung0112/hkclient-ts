@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { IntegrationTypes, UserTypes, ChannelTypes } from 'action_types'
+import { IntegrationTypes, UserTypes, ChannelTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
 import { Command, IncomingWebhook, OutgoingWebhook, OAuthApp } from 'types/integrations'
 import { Dictionary, IDMappedObjects } from 'types/utilities'

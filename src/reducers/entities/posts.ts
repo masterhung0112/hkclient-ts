@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { ChannelTypes, GeneralTypes, PostTypes, UserTypes } from 'action_types'
+import { ChannelTypes, GeneralTypes, PostTypes, UserTypes } from 'action-types'
 
 import { Posts } from '../../constants'
 
 import { GenericAction } from 'types/actions'
-import { OpenGraphMetadata, Post, PostsState, PostOrderBlock, MessageHistory } from 'types/posts'
+import { OpenGraphMetadata, Post, PostsState, PostOrderBlock, MessageHistory, MessageHistoryIndex } from 'types/posts'
 import { Reaction } from 'types/reactions'
 import { $ID, RelationOneToOne, Dictionary, IDMappedObjects, RelationOneToMany } from 'types/utilities'
 
@@ -128,7 +128,7 @@ export function nextPostsReplies(state: { [x in $ID<Post>]: number } = {}, actio
   }
 }
 
-export function handlePosts(state: RelationOneToOne<Post, Post> = {}, action: GenericAction) {
+export function handlePosts(state: RelationOneToOne<Post, Post> = {}, action: GenericAction): IDMappedObjects<Post> {
   switch (action.type) {
     case PostTypes.RECEIVED_POST:
     case PostTypes.RECEIVED_NEW_POST: {
@@ -176,7 +176,7 @@ export function handlePosts(state: RelationOneToOne<Post, Post> = {}, action: Ge
         }
       }
 
-      return nextState
+      return nextState as IDMappedObjects<Post>
     }
 
     case PostTypes.POST_REMOVED: {
@@ -1183,10 +1183,10 @@ function storeOpenGraphForPost(state: any, post: Post) {
   }, state)
 }
 
-function messagesHistory(state: Partial<MessageHistory> = {}, action: GenericAction) {
+function messagesHistory(state: MessageHistory = {} as MessageHistory, action: GenericAction): MessageHistory {
   switch (action.type) {
     case PostTypes.ADD_MESSAGE_INTO_HISTORY: {
-      const nextIndex: Dictionary<number> = {}
+      const nextIndex: MessageHistoryIndex = {} as MessageHistoryIndex
       let nextMessages = state.messages ? [...state.messages] : []
       nextMessages.push(action.data)
       nextIndex[Posts.MESSAGE_TYPES.POST] = nextMessages.length
@@ -1202,7 +1202,7 @@ function messagesHistory(state: Partial<MessageHistory> = {}, action: GenericAct
       }
     }
     case PostTypes.RESET_HISTORY_INDEX: {
-      const index: Dictionary<number> = {}
+      const index: MessageHistoryIndex = {} as MessageHistoryIndex
       index[Posts.MESSAGE_TYPES.POST] = -1
       index[Posts.MESSAGE_TYPES.COMMENT] = -1
 
@@ -1215,7 +1215,7 @@ function messagesHistory(state: Partial<MessageHistory> = {}, action: GenericAct
       }
     }
     case PostTypes.MOVE_HISTORY_INDEX_BACK: {
-      const index: Dictionary<number> = {}
+      const index: MessageHistoryIndex = {} as MessageHistoryIndex
       index[Posts.MESSAGE_TYPES.POST] = -1
       index[Posts.MESSAGE_TYPES.COMMENT] = -1
 
@@ -1229,7 +1229,7 @@ function messagesHistory(state: Partial<MessageHistory> = {}, action: GenericAct
       }
     }
     case PostTypes.MOVE_HISTORY_INDEX_FORWARD: {
-      const index: Dictionary<number> = {}
+      const index: MessageHistoryIndex = {} as MessageHistoryIndex
       index[Posts.MESSAGE_TYPES.POST] = -1
       index[Posts.MESSAGE_TYPES.COMMENT] = -1
 
@@ -1244,7 +1244,7 @@ function messagesHistory(state: Partial<MessageHistory> = {}, action: GenericAct
       }
     }
     case UserTypes.LOGOUT_SUCCESS: {
-      const index: Dictionary<number> = {}
+      const index: MessageHistoryIndex = {} as MessageHistoryIndex
       index[Posts.MESSAGE_TYPES.POST] = -1
       index[Posts.MESSAGE_TYPES.COMMENT] = -1
 
@@ -1275,11 +1275,11 @@ export function expandedURLs(state: Dictionary<string> = {}, action: GenericActi
   }
 }
 
-export default function reducer(state: Partial<PostsState> = {}, action: GenericAction) {
+export default function reducer(state: PostsState = {} as PostsState, action: GenericAction): PostsState {
   const nextPosts = handlePosts(state.posts, action)
   const nextPostsInChannel = postsInChannel(state.postsInChannel, action, state.posts!, nextPosts)
 
-  const nextState = {
+  const nextState: PostsState = {
     // Object mapping post ids to post objects
     posts: nextPosts,
 
@@ -1327,7 +1327,7 @@ export default function reducer(state: Partial<PostsState> = {}, action: Generic
     state.expandedURLs === nextState.expandedURLs
   ) {
     // None of the children have changed so don't even let the parent object change
-    return state
+    return state as PostsState
   }
 
   return nextState

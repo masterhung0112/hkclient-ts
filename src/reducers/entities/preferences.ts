@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { PreferenceTypes, UserTypes } from 'action_types'
+import { PreferenceTypes, UserTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
 import { PreferenceType } from 'types/preferences'
 import { Dictionary } from 'types/utilities'

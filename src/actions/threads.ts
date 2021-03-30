@@ -4,7 +4,7 @@
 import { ThreadTypes, PostTypes, UserTypes } from 'action-types'
 import { Client4 } from 'client'
 
-import ThreadConstants from 'constants/threads'
+import { Threads } from 'constants/threads'
 
 import { DispatchFunc, GetStateFunc } from 'types/actions'
 
@@ -16,7 +16,7 @@ import { forceLogoutIfNecessary } from './helpers'
 export function getThreads(
   userId: string,
   teamId: string,
-  { before = '', after = '', perPage = ThreadConstants.THREADS_CHUNK_SIZE, unread = false } = {}
+  { before = '', after = '', perPage = Threads.THREADS_CHUNK_SIZE, unread = false } = {}
 ) {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const { entities } = getState()

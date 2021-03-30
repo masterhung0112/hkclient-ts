@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import { combineReducers } from 'redux'
-import { BotTypes, UserTypes } from 'action_types'
+import { BotTypes, UserTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
 import { Dictionary } from 'types/utilities'
 import { Bot } from 'types/bots'

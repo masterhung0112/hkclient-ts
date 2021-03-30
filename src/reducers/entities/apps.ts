@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import { combineReducers } from 'redux'
 
-import { AppsTypes } from 'action_types'
+import { AppsTypes } from 'action-types'
 import { AppBinding, AppsState } from 'types/apps'
 import { GenericAction } from 'types/actions'
 import { validateBindings } from 'utils/apps'

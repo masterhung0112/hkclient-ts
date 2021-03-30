@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { FileTypes, PostTypes, UserTypes } from 'action_types'
+import { FileTypes, PostTypes, UserTypes } from 'action-types'
 import { GenericAction } from 'types/actions'
 import { Post } from 'types/posts'
 import { FileInfo, FileSearchResultItem } from 'types/files'

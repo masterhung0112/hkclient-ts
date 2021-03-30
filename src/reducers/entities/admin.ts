@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import { combineReducers } from 'redux'
-import { AdminTypes, UserTypes } from 'action_types'
+import { AdminTypes, UserTypes } from 'action-types'
 import { Stats } from '../../constants'
-import PluginState from '../../constants/plugins'
+import { Plugins } from '../../constants/plugins'
 
 import { GenericAction } from 'types/actions'
 import { ClusterInfo, AnalyticsRow } from 'types/admin'
@@ -473,7 +473,7 @@ function pluginStatuses(state: Dictionary<PluginStatusRedux> = {}, action: Gener
         ...state,
         [pluginId]: {
           ...state[pluginId],
-          state: PluginState.PLUGIN_STATE_STARTING,
+          state: Plugins.PLUGIN_STATE_STARTING,
         },
       }
     }
@@ -488,7 +488,7 @@ function pluginStatuses(state: Dictionary<PluginStatusRedux> = {}, action: Gener
         ...state,
         [pluginId]: {
           ...state[pluginId],
-          state: PluginState.PLUGIN_STATE_STOPPING,
+          state: Plugins.PLUGIN_STATE_STOPPING,
         },
       }
     }

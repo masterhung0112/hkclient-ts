@@ -1,5 +1,5 @@
 import nock from 'nock'
-import HkClient from 'client/client4'
+import Client4 from 'client/client4'
 import { generateId } from 'utils/helpers'
 import { General } from '../constants'
 import { UserNotifyProps, UserProfile } from 'types/users'
@@ -8,11 +8,11 @@ export const DEFAULT_SERVER = 'http://localhost:8065'
 const PASSWORD = 'password1'
 
 class TestHelper {
-  basicClient: HkClient
+  basicClient: Client4
   basicUser = null
 
   createClient = () => {
-    const client = new HkClient()
+    const client = new Client4()
 
     client.url = DEFAULT_SERVER
 

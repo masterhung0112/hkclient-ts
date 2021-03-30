@@ -407,7 +407,7 @@ export function updateChannelNotifyProps(userId: string, channelId: string, prop
       return { error }
     }
 
-    const member = getState().entities.channels.myMembers[channelId] || {}
+    const member = getState().entities.channels.myMembers[channelId] || ({} as ChannelMembership)
     const currentNotifyProps = member.notify_props || {}
 
     dispatch({

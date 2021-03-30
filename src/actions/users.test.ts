@@ -1,6 +1,6 @@
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
-import { HkClient } from 'client'
+import { Client4 } from 'client'
 import * as Actions from 'actions/users'
 import nock from 'nock'
 import assert from 'assert'
@@ -10,7 +10,7 @@ import { getCurrentUserId, getUserProfiles } from 'selectors/users'
 describe('Actions.Users', () => {
   let store
   beforeAll(async () => {
-    await TestHelper.initBasic(HkClient)
+    await TestHelper.initBasic(Client4)
   })
 
   beforeEach(async () => {
@@ -22,7 +22,7 @@ describe('Actions.Users', () => {
   })
 
   it('getMe', async () => {
-    nock(HkClient.baseRoute).get('/users/me').reply(200, TestHelper.basicUser)
+    nock(Client4.getBaseRoute()).get('/users/me').reply(200, TestHelper.basicUser)
 
     const response = await store.dispatch(Actions.getMe())
     expect(response).toHaveLength(1)
@@ -37,11 +37,11 @@ describe('Actions.Users', () => {
   })
 
   it('getUserByUsername', async () => {
-    nock(HkClient.baseRoute).post('/users').reply(200, TestHelper.fakeUserWithId())
+    nock(Client4.getBaseRoute()).post('/users').reply(200, TestHelper.fakeUserWithId())
 
     const user = await TestHelper.basicClient.createUser(TestHelper.fakeUser())
 
-    nock(HkClient.baseRoute).get(`/users/username/${user.username}`).reply(200, user)
+    nock(Client4.getBaseRoute()).get(`/users/username/${user.username}`).reply(200, user)
 
     await store.dispatch(Actions.getUserByUsername(user.username))
 
@@ -52,11 +52,11 @@ describe('Actions.Users', () => {
   })
 
   it('getUserByEmail', async () => {
-    nock(HkClient.baseRoute).post('/users').reply(200, TestHelper.fakeUserWithId())
+    nock(Client4.getBaseRoute()).post('/users').reply(200, TestHelper.fakeUserWithId())
 
     const user = await TestHelper.basicClient.createUser(TestHelper.fakeUser())
 
-    nock(HkClient.baseRoute).get(`/users/email/${user.email}`).reply(200, user)
+    nock(Client4.getBaseRoute()).get(`/users/email/${user.email}`).reply(200, user)
 
     // await Actions.getUserByEmail(user.email)(store.dispatch, store.getState)
     await store.dispatch(Actions.getUserByEmail(user.email))

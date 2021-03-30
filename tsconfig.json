@@ -78,10 +78,10 @@
       "hkreducers/*": [
         "src/reducers/*"
       ],
-      "hkconstants": [
+      "constants": [
         "src/constants"
       ],
-      "hkconstants/*": [
+      "constants/*": [
         "src/constants/*"
       ],
       "selectors": [

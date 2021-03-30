@@ -16,7 +16,7 @@ export type ErrorApi = {
   status_code: number
   url: string
 }
-export type HkClientError = ErrorOffline | ErrorInvalidResponse | ErrorApi
+export type Client4Error = ErrorOffline | ErrorInvalidResponse | ErrorApi
 
 export type ClientResponse<T> = {
   response: Response

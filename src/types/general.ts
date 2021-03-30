@@ -1,4 +1,4 @@
-import { General } from 'hkconstants/general'
+import { General } from 'constants/general'
 import { ClientConfig, ClientLicense, WarnMetricStatus } from './config'
 
 import { Dictionary } from './utilities'

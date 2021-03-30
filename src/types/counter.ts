@@ -1,4 +1,4 @@
-import CounterConstants from 'hkconstants/counter'
+import CounterConstants from 'constants/counter'
 
 export interface CountAwareState {
   [CounterConstants.COUNT_MODULE_NAME]: CountState

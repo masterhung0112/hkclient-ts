@@ -127,7 +127,7 @@ export const getMyTeamMember: (state: GlobalState, teamId: string) => TeamMember
   getTeamMemberships,
   (state: GlobalState, teamId: string) => teamId,
   (teamMemberships, teamId) => {
-    return teamMemberships[teamId] || {}
+    return teamMemberships[teamId] || ({} as TeamMembership)
   }
 )
 

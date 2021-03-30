@@ -3,7 +3,7 @@ import assert from 'assert'
 import nock from 'nock'
 import TestHelper from 'testlib/test_helper'
 
-describe('HkClient', () => {
+describe('Client4', () => {
   beforeAll(() => {
     if (!nock.isActive()) {
       nock.activate()

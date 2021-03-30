@@ -119,7 +119,7 @@ export const DEFAULT_LIMIT_BEFORE = 30
 export const DEFAULT_LIMIT_AFTER = 30
 /* eslint-disable no-throw-literal */
 
-export default class HkClient4 {
+export default class Client44 {
   logToConsole = false
   serverVersion = ''
   clusterId = ''
@@ -465,7 +465,7 @@ export default class HkClient4 {
 
   // User Routes
 
-  createUser = (user: UserProfile, token: string, inviteId: string, redirect: string) => {
+  createUser = (user: UserProfile, token?: string, inviteId?: string, redirect?: string) => {
     this.trackEvent('api', 'api_users_create')
 
     const queryParams: any = {}

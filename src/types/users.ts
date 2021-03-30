@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { USERS_MODULE_NAME } from 'hkconstants/users'
+import { USERS_MODULE_NAME } from 'constants/users'
 import { Audit } from './audits'
 import { Channel } from './channels'
 import { Group } from './groups'

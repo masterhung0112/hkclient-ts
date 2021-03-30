@@ -1,6 +1,6 @@
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
-import { HkClient } from 'client'
+import { Client4 } from 'client'
 import * as Actions from 'actions/general'
 import nock from 'nock'
 import { IModuleStore } from 'redux-dynamic-modules-core'
@@ -11,7 +11,7 @@ import { GeneralModule } from 'hkmodules/general'
 describe('general actions', () => {
   let store: IModuleStore<any>
   beforeAll(async () => {
-    await TestHelper.initBasic(HkClient)
+    await TestHelper.initBasic(Client4)
   })
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe('general actions', () => {
   })
 
   it('getClientConfig', async () => {
-    nock(HkClient.baseRoute)
+    nock(Client4.getBaseRoute())
       .get('/config/client')
       .query(true)
       .reply(200, { SiteURL: 'hungknowtest', DiagnosticId: '123' } as Partial<ClientConfig>)

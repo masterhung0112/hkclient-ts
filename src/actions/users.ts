@@ -418,19 +418,17 @@ export function getProfilesInTeam(
       return { error }
     }
 
-    dispatch(
-      batchActions([
-        {
-          type: UserTypes.RECEIVED_PROFILES_LIST_IN_TEAM,
-          data: profiles,
-          id: teamId,
-        },
-        {
-          type: UserTypes.RECEIVED_PROFILES_LIST,
-          data: removeUserFromList(currentUserId, [...profiles]),
-        },
-      ])
-    )
+    dispatch([
+      {
+        type: UserTypes.RECEIVED_PROFILES_LIST_IN_TEAM,
+        data: profiles,
+        id: teamId,
+      },
+      {
+        type: UserTypes.RECEIVED_PROFILES_LIST,
+        data: removeUserFromList(currentUserId, [...profiles]),
+      },
+    ])
 
     return { data: profiles }
   }

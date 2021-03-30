@@ -20,7 +20,7 @@ describe('Actions.Users', () => {
   })
 
   beforeEach(async () => {
-    store = await configureStore([])
+    store = configureStore([])
   })
 
   afterAll(() => {
@@ -982,7 +982,7 @@ describe('Actions.Users', () => {
     TestHelper.mockLogin()
     await Actions.login(TestHelper.basicUser.email, 'password1')(store.dispatch, store.getState)
 
-    const testImageData = fs.createReadStream('test/assets/images/test.png')
+    const testImageData = fs.createReadStream('src/test/assets/images/test.png')
 
     const beforeTime = new Date().getTime()
     const currentUserId = store.getState().entities.users.currentUserId
@@ -1433,7 +1433,7 @@ describe('Actions.Users', () => {
         },
       })
 
-      store = configureStore(originalState)
+      store = configureStore([], originalState)
 
       await store.dispatch(Actions.checkForModifiedUsers())
 

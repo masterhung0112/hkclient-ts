@@ -19,8 +19,8 @@ describe('Actions.Users', () => {
     TestHelper.initBasic(Client4)
   })
 
-  beforeEach(() => {
-    store = configureStore([])
+  beforeEach(async () => {
+    store = await configureStore([])
   })
 
   afterAll(() => {

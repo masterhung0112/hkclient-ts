@@ -3,7 +3,7 @@
 
 import { createSelector } from 'reselect'
 
-import { ScopeTypes } from 'constants/schemes'
+import { ScopeTypes } from 'hkconstants/schemes'
 
 import { getAllChannels } from 'selectors/entities/channels'
 import { getTeams } from 'selectors/entities/teams'

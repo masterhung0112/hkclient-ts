@@ -10,7 +10,7 @@ import { logError } from 'actions/errors'
 import { forceLogoutIfNecessary } from 'actions/helpers'
 
 import { General } from '../constants'
-import { CategoryTypes } from 'constants/channel_categories'
+import { CategoryTypes } from 'hkconstants/channel_categories'
 
 import {
   getAllCategoriesByIds,

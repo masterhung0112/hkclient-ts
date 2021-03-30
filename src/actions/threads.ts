@@ -4,7 +4,7 @@
 import { ThreadTypes, PostTypes, UserTypes } from 'action-types'
 import { Client4 } from 'client'
 
-import { Threads } from 'constants/threads'
+import { Threads } from 'hkconstants/threads'
 
 import { DispatchFunc, GetStateFunc } from 'types/actions'
 

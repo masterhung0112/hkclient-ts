@@ -2,6 +2,17 @@ import { ClientError, HEADER_X_VERSION_ID } from './client4'
 import assert from 'assert'
 import nock from 'nock'
 import TestHelper from 'testlib/test_helper'
+import { rudderAnalytics, RudderTelemetryHandler } from './rudder'
+import { isMinimumServerVersion } from 'utils/helpers'
+
+jest.mock('rudder-sdk-js', () => {
+  const original = jest.requireActual('rudder-sdk-js')
+
+  return {
+    ...original,
+    track: jest.fn(),
+  }
+})
 
 describe('Client4', () => {
   beforeAll(() => {
@@ -15,8 +26,8 @@ describe('Client4', () => {
   })
 
   describe('doFetchWithResponse', () => {
-    it('serverVersion should set from response header', async () => {
-      const client = TestHelper.createClient()
+    it('serverVersion should be set from response header', async () => {
+      const client = TestHelper.createClient4()
 
       assert.equal(client.serverVersion, '')
 
@@ -26,8 +37,9 @@ describe('Client4', () => {
 
       await client.getMe()
 
-      // Change the version of server version
       assert.equal(client.serverVersion, '5.0.0.5.0.0.abc123')
+      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true)
+      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), false)
 
       nock(client.getBaseRoute())
         .get('/users/me')
@@ -36,6 +48,8 @@ describe('Client4', () => {
       await client.getMe()
 
       assert.equal(client.serverVersion, '5.3.0.5.3.0.abc123')
+      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true)
+      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), true)
     })
   })
 })
@@ -54,10 +68,26 @@ describe('ClientError', () => {
     })
 
     const copy = { ...error }
+
     assert.strictEqual(copy.message, error.message)
     assert.strictEqual(copy.intl, error.intl)
     assert.strictEqual(copy.server_error_id, error.server_error_id)
     assert.strictEqual(copy.status_code, error.status_code)
     assert.strictEqual(copy.url, error.url)
+  })
+})
+
+describe('trackEvent', () => {
+  it("should call Rudder's track when a RudderTelemetryHandler is attached to Client4", () => {
+    const client = TestHelper.createClient4()
+
+    client.trackEvent('test', 'onClick')
+
+    expect(rudderAnalytics.track).not.toHaveBeenCalled()
+
+    client.setTelemetryHandler(new RudderTelemetryHandler())
+    client.trackEvent('test', 'onClick')
+
+    expect(rudderAnalytics.track).toHaveBeenCalledTimes(1)
   })
 })

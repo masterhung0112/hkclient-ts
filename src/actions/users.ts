@@ -55,7 +55,7 @@ export function generateMfaSecret(userId: string): ActionFunc {
   })
 }
 
-export function createUser(user: UserProfile, token: string, inviteId: string, redirect: string): ActionFunc {
+export function createUser(user: UserProfile, token?: string, inviteId?: string, redirect?: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let created
 
@@ -439,7 +439,7 @@ export function getProfilesInTeam(
 export function getProfilesNotInTeam(
   teamId: string,
   groupConstrained: boolean,
-  page: number,
+  page?: number,
   perPage: number = General.PROFILE_CHUNK_SIZE
 ): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -588,7 +588,7 @@ export function getProfilesNotInChannel(
   teamId: string,
   channelId: string,
   groupConstrained: boolean,
-  page: number,
+  page?: number,
   perPage: number = General.PROFILE_CHUNK_SIZE
 ): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
@@ -1079,7 +1079,7 @@ export function searchProfiles(term: string, options: any = {}): ActionFunc {
   }
 }
 
-let statusIntervalId: NodeJS.Timeout | null
+let statusIntervalId: any //NodeJS.Timeout | null
 export function startPeriodicStatusUpdates(): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     if (statusIntervalId) {

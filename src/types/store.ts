@@ -2,7 +2,7 @@ import { GeneralAwareState, GeneralState } from './general'
 import { TeamsState } from './teams'
 import { Role } from './roles'
 import { ChannelsState } from './channels'
-import { UsersAwareState } from './users'
+import { UsersAwareState, UsersState } from './users'
 import { Store } from 'redux'
 import { Task } from 'redux-saga'
 import { AdminState } from './admin'
@@ -38,7 +38,8 @@ export interface cd extends Store {
   getSagaTasks?: () => Task[]
 }
 
-export interface EntitiesState extends UsersAwareState {
+export interface EntitiesState {
+  users: UsersState
   general: GeneralState
   teams: TeamsState
   channels: ChannelsState

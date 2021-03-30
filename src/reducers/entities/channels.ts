@@ -6,7 +6,7 @@ import { combineReducers } from 'redux'
 import { AdminTypes, ChannelTypes, UserTypes, SchemeTypes, GroupTypes, PostTypes } from 'action-types'
 
 import { General } from '../../constants'
-import { MarkUnread } from 'constants/channels'
+import { MarkUnread } from 'hkconstants/channels'
 
 import { GenericAction } from 'types/actions'
 import {

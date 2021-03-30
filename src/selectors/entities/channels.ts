@@ -4,7 +4,7 @@
 import { createSelector } from 'reselect'
 
 import { General, Permissions } from '../../constants'
-import { CategoryTypes } from 'constants/channel_categories'
+import { CategoryTypes } from 'hkconstants/channel_categories'
 
 import { getCategoryInTeamByType } from 'selectors/entities/channel_categories'
 import {

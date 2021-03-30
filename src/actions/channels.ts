@@ -6,8 +6,8 @@ import { ChannelTypes, PreferenceTypes, UserTypes } from 'action-types'
 import { Client4 } from 'client'
 
 import { General, Preferences } from '../constants'
-import { CategoryTypes } from 'constants/channel_categories'
-import { MarkUnread } from 'constants/channels'
+import { CategoryTypes } from 'hkconstants/channel_categories'
+import { MarkUnread } from 'hkconstants/channels'
 
 import { getCategoryInTeamByType } from 'selectors/entities/channel_categories'
 import {

@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import { General, Preferences, Permissions, Users } from '../constants'
-import { MarkUnread } from 'constants/channels'
+import { MarkUnread } from 'hkconstants/channels'
 
 import { hasNewPermissions } from 'selectors/entities/general'
 import { haveITeamPermission, haveIChannelPermission } from 'selectors/entities/roles'

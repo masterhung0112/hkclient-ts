@@ -17,7 +17,6 @@ import configureStore from 'testlib/test_store'
 import { getPreferenceKey } from 'utils/preference_utils'
 import { IModuleStore } from 'redux-dynamic-modules-core'
 import { GlobalState } from 'types/store'
-import { Post } from 'types/posts'
 import { ActionResult } from 'types/actions'
 
 const OK_RESPONSE = { status: 'OK' }
@@ -289,7 +288,7 @@ describe('Actions.Posts', () => {
       },
     })
 
-    await store.dispatch(Actions.removePost(post2))
+    await store.dispatch(Actions.removePost(post2) as any)
 
     const state = store.getState()
     const { stats } = state.entities.channels
@@ -330,7 +329,7 @@ describe('Actions.Posts', () => {
     assert.ok(reactions[post1.id])
     assert.ok(reactions[post1.id][TestHelper.basicUser.id + '-' + emojiName])
 
-    await store.dispatch(Actions.removePost(post1))
+    await store.dispatch(Actions.removePost(post1) as any)
 
     reactions = store.getState().entities.posts.reactions
     assert.ok(reactions)

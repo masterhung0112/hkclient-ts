@@ -195,8 +195,8 @@ describe('makeFilterPostsAndAddSeparators', () => {
       1002: { id: '1002', create_at: time + 5, type: '' },
       1003: { id: '1003', create_at: time + 10, type: '' },
       1004: { id: '1004', create_at: tomorrow, type: '' },
-      1005: { id: '1005', create_at: tomorrow.getMilliseconds() + 5, type: '' },
-      1006: { id: '1006', create_at: tomorrow.getMilliseconds() + 10, type: Posts.POST_TYPES.JOIN_CHANNEL },
+      1005: { id: '1005', create_at: (tomorrow as any) + 5, type: '' },
+      1006: { id: '1006', create_at: (tomorrow as any) + 10, type: Posts.POST_TYPES.JOIN_CHANNEL },
     }
     let state: any = {
       entities: {

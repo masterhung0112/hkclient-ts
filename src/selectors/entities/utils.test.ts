@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import assert from 'assert'
 
-import TestHelper from 'testlib/test_helper.js'
+import TestHelper from 'testlib/test_helper'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
 
 import { makeAddLastViewAtToProfiles } from './utils'

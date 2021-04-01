@@ -6,7 +6,7 @@ import assert from 'assert'
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze'
 import TestHelper from 'testlib/test_helper'
 import * as Selectors from 'selectors/entities/schemes'
-import { ScopeTypes } from 'constants/schemes'
+import { ScopeTypes } from 'hkconstants/schemes'
 
 describe('Selectors.Schemes', () => {
   const scheme1 = TestHelper.mockSchemeWithId()

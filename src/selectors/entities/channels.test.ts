@@ -4,7 +4,7 @@
 import assert from 'assert'
 
 import { General, Preferences, Permissions } from '../../constants'
-import { CategoryTypes } from 'constants/channel_categories'
+import { CategoryTypes } from 'hkconstants/channel_categories'
 
 import mergeObjects from 'testlib/merge_objects'
 import TestHelper from 'testlib/test_helper'
@@ -2717,7 +2717,7 @@ describe('Selectors.Channels.getUnreadChannelIds', () => {
     }
 
     const fromOriginalState = Selectors.getUnreadChannelIds(testState)
-    const fromModifiedState = Selectors.getUnreadChannelIds(modifiedState) //, {id: channel1.id});
+    const fromModifiedState = Selectors.getUnreadChannelIds(modifiedState, { id: channel1.id } as any)
 
     assert.ok(fromOriginalState !== fromModifiedState)
     assert.ok(fromModifiedState.includes(channel1.id))

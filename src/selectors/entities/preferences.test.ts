@@ -322,7 +322,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).mentionBg,
+        } as any).mentionBg,
         theme.mentionBg
       )
     })
@@ -361,7 +361,7 @@ describe('Selectors.Preferences', () => {
       const currentTeamId = '1234'
       const otherTeamId = 'abcd'
 
-      let state = {
+      let state: any = {
         entities: {
           general: {
             config: {
@@ -464,7 +464,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).sidebarBg,
+        } as any).sidebarBg,
         theme.sidebarBg.toLowerCase()
       )
     })
@@ -494,7 +494,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).mentionHighlightLink,
+        } as any).mentionHighlightLink,
         Preferences.THEMES.default.mentionHighlightLink
       )
     })
@@ -527,7 +527,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).sidebarText,
+        } as any).sidebarText,
         Preferences.THEMES.mattermostDark.sidebarText
       )
     })
@@ -559,7 +559,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).codeTheme,
+        } as any).codeTheme,
         Preferences.THEMES.windows10.codeTheme
       )
     })
@@ -582,7 +582,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).codeTheme,
+        } as any).codeTheme,
         Preferences.THEMES.mattermostDark.codeTheme
       )
 
@@ -604,7 +604,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).codeTheme,
+        } as any).codeTheme,
         Preferences.THEMES.mattermostDark.codeTheme
       )
     })
@@ -627,7 +627,7 @@ describe('Selectors.Preferences', () => {
               },
             },
           },
-        }).codeTheme,
+        } as any).codeTheme,
         Preferences.THEMES.default.codeTheme
       )
     })
@@ -637,7 +637,7 @@ describe('Selectors.Preferences', () => {
     const theme: any = { themeColor: '#ffffff' }
     const currentTeamId = '1234'
 
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -695,7 +695,7 @@ describe('Selectors.Preferences', () => {
 
 describe('shouldShowUnreadsCategory', () => {
   test('should return value from the preference if set', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {},
@@ -715,7 +715,7 @@ describe('shouldShowUnreadsCategory', () => {
 
   test('should fall back properly from the new preference to the old one and then to the server default', () => {
     // With the new preference set
-    let state = {
+    let state: any = {
       entities: {
         general: {
           config: {
@@ -819,7 +819,7 @@ describe('shouldShowUnreadsCategory', () => {
 
   test('should not let admins fully disable the unread section', () => {
     // With the old sidebar, setting ExperimentalGroupUnreadChannels to disabled has an effect
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -846,7 +846,7 @@ describe('shouldShowUnreadsCategory', () => {
 
 describe('shouldAutocloseDMs', () => {
   test('should return false by default', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -863,7 +863,7 @@ describe('shouldAutocloseDMs', () => {
   })
 
   test('should return true when enabled by server but not set by user', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -880,7 +880,7 @@ describe('shouldAutocloseDMs', () => {
   })
 
   test('should return true when enabled by both server and user', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -901,7 +901,7 @@ describe('shouldAutocloseDMs', () => {
   })
 
   test('should return false when enabled by server but disabled by user', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {
@@ -922,7 +922,7 @@ describe('shouldAutocloseDMs', () => {
   })
 
   test('should return false when enabled by user but disabled by server', () => {
-    const state = {
+    const state: any = {
       entities: {
         general: {
           config: {

@@ -32,7 +32,7 @@ describe('Selectors.Search', () => {
     const notifyProps = {
       first_name: 'true',
     }
-    const state = {
+    const state: any = {
       entities: {
         users: {
           currentUserId: userId,

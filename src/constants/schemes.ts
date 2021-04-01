@@ -5,6 +5,6 @@ export const schemes = {
 }
 
 export const ScopeTypes = {
-  TEAM: 'team',
-  CHANNEL: 'channel',
+  TEAM: 'team' as const,
+  CHANNEL: 'channel' as const,
 }

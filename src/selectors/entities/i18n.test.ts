@@ -37,7 +37,7 @@ describe('Selectors.I18n', () => {
 
     it('current user without locale set', () => {
       const currentUserId = TestHelper.generateId()
-      const state = {
+      const state: any = {
         entities: {
           users: {
             currentUserId,

@@ -180,7 +180,7 @@ describe('Selectors.Roles', () => {
 
   it('should return my team permission on getMyTeamPermissions', () => {
     assert.deepEqual(
-      Selectors.getMyTeamPermissions(testState, { team: team1.id }),
+      Selectors.getMyTeamPermissions(testState, { team: team1.id } as any),
       new Set(['user_role2', 'team1_role1'])
     )
   })
@@ -205,7 +205,7 @@ describe('Selectors.Roles', () => {
 
   it('should return my channel permission on getMyChannelPermissions', () => {
     assert.deepEqual(
-      Selectors.getMyChannelPermissions(testState, { team: team1.id, channel: channel1.id }),
+      Selectors.getMyChannelPermissions(testState, { team: team1.id, channel: channel1.id } as any),
       new Set(['user_role2', 'team1_role1', 'channel_a_role1', 'channel_a_role2'])
     )
   })

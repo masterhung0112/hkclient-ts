@@ -21,7 +21,7 @@ describe('Selectors.Users', () => {
   const group2 = TestHelper.fakeGroupWithId()
 
   const user1 = TestHelper.fakeUserWithId()
-  user1.notify_props = { mention_keys: 'testkey1,testkey2' }
+  user1.notify_props = { mention_keys: 'testkey1,testkey2' } as any
   user1.roles = 'system_admin system_user'
   const user2 = TestHelper.fakeUserWithId()
   user2.delete_at = 1
@@ -33,7 +33,7 @@ describe('Selectors.Users', () => {
   const user7 = TestHelper.fakeUserWithId()
   user7.delete_at = 1
   user7.roles = 'system_admin system_user'
-  const profiles = {}
+  const profiles: any = {}
   profiles[user1.id] = user1
   profiles[user2.id] = user2
   profiles[user3.id] = user3
@@ -42,10 +42,10 @@ describe('Selectors.Users', () => {
   profiles[user6.id] = user6
   profiles[user7.id] = user7
 
-  const profilesInTeam = {}
+  const profilesInTeam: any = {}
   profilesInTeam[team1.id] = new Set([user1.id, user2.id, user7.id])
 
-  const membersInTeam = {}
+  const membersInTeam: any = {}
   membersInTeam[team1.id] = {}
   membersInTeam[team1.id][user1.id] = {
     ...TestHelper.fakeTeamMember(user1.id, team1.id),
@@ -63,16 +63,16 @@ describe('Selectors.Users', () => {
     scheme_admin: false,
   }
 
-  const profilesNotInTeam = {}
+  const profilesNotInTeam: any = {}
   profilesNotInTeam[team1.id] = new Set([user3.id, user4.id])
 
   const profilesWithoutTeam = new Set([user5.id, user6.id])
 
-  const profilesInChannel = {}
+  const profilesInChannel: any = {}
   profilesInChannel[channel1.id] = new Set([user1.id])
   profilesInChannel[channel2.id] = new Set([user1.id, user2.id])
 
-  const membersInChannel = {}
+  const membersInChannel: any = {}
   membersInChannel[channel1.id] = {}
   membersInChannel[channel1.id][user1.id] = {
     ...TestHelper.fakeChannelMember(user1.id, channel1.id),
@@ -91,15 +91,15 @@ describe('Selectors.Users', () => {
     scheme_admin: false,
   }
 
-  const profilesNotInChannel = {}
+  const profilesNotInChannel: any = {}
   profilesNotInChannel[channel1.id] = new Set([user2.id, user3.id])
   profilesNotInChannel[channel2.id] = new Set([user4.id, user5.id])
 
-  const profilesInGroup = {}
+  const profilesInGroup: any = {}
   profilesInGroup[group1.id] = new Set([user1.id])
   profilesInGroup[group2.id] = new Set([user2.id, user3.id])
 
-  const userSessions = [
+  const userSessions: any = [
     {
       create_at: 1,
       expires_at: 2,
@@ -109,7 +109,7 @@ describe('Selectors.Users', () => {
     },
   ]
 
-  const userAudits = [
+  const userAudits: any = [
     {
       action: 'test_user_action',
       create_at: 1535007018934,
@@ -121,7 +121,7 @@ describe('Selectors.Users', () => {
     },
   ]
 
-  const myPreferences = {}
+  const myPreferences: any = {}
   myPreferences[`${Preferences.CATEGORY_DIRECT_CHANNEL_SHOW}--${user2.id}`] = {
     category: Preferences.CATEGORY_DIRECT_CHANNEL_SHOW,
     name: user2.id,
@@ -133,7 +133,7 @@ describe('Selectors.Users', () => {
     value: 'false',
   }
 
-  const testState = deepFreezeAndThrowOnMutation({
+  const testState: any = deepFreezeAndThrowOnMutation({
     entities: {
       users: {
         currentUserId: user1.id,
@@ -201,7 +201,7 @@ describe('Selectors.Users', () => {
     it('at mention', () => {
       const userId = '1234'
       const notifyProps = {}
-      const state = {
+      const state: any = {
         entities: {
           users: {
             currentUserId: userId,
@@ -226,7 +226,7 @@ describe('Selectors.Users', () => {
       const notifyProps = {
         channel: 'true',
       }
-      const state = {
+      const state: any = {
         entities: {
           users: {
             currentUserId: userId,
@@ -256,7 +256,7 @@ describe('Selectors.Users', () => {
       const notifyProps = {
         first_name: 'true',
       }
-      const state = {
+      const state: any = {
         entities: {
           users: {
             currentUserId: userId,
@@ -284,7 +284,7 @@ describe('Selectors.Users', () => {
       const notifyProps = {
         mention_keys: 'test,foo,@user,user',
       }
-      const state = {
+      const state: any = {
         entities: {
           users: {
             currentUserId: userId,
@@ -585,7 +585,7 @@ describe('Selectors.Users', () => {
   })
 
   it('makeGetProfilesInChannel, unknown user id in channel', () => {
-    const state = {
+    const state: any = {
       ...testState,
       entities: {
         ...testState.entities,
@@ -601,7 +601,7 @@ describe('Selectors.Users', () => {
 
     const getProfilesInChannel = Selectors.makeGetProfilesInChannel()
     assert.deepEqual(getProfilesInChannel(state, channel1.id), [user1])
-    assert.deepEqual(getProfilesInChannel(state, channel1.id, true), [user1])
+    assert.deepEqual(getProfilesInChannel(state, channel1.id, true as any), [user1])
   })
 
   it('makeGetProfilesNotInChannel', () => {
@@ -651,7 +651,7 @@ describe('Selectors.Users', () => {
     ]
 
     testCases.forEach((testCase) => {
-      assert.deepEqual(getProfilesByIdsAndUsernames(testState, testCase.input), testCase.output)
+      assert.deepEqual(getProfilesByIdsAndUsernames(testState, testCase.input as any), testCase.output)
     })
   })
 
@@ -668,7 +668,7 @@ describe('Selectors.Users', () => {
       [testUser1.id]: testUser1,
     }
     it('Should show full name since preferences is being used and LockTeammateNameDisplay is false', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -692,7 +692,7 @@ describe('Selectors.Users', () => {
       assert.deepEqual(Selectors.makeGetDisplayName()(newTestState, testUser1.id), 'First Last')
     })
     it('Should show show username since LockTeammateNameDisplay is true', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -716,7 +716,7 @@ describe('Selectors.Users', () => {
       assert.deepEqual(Selectors.makeGetDisplayName()(newTestState, testUser1.id), 'username')
     })
     it('Should show full name since license is false', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -740,7 +740,7 @@ describe('Selectors.Users', () => {
       assert.deepEqual(Selectors.makeGetDisplayName()(newTestState, testUser1.id), 'First Last')
     })
     it('Should show full name since license is not available', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -761,7 +761,7 @@ describe('Selectors.Users', () => {
       assert.deepEqual(Selectors.makeGetDisplayName()(newTestState, testUser1.id), 'First Last')
     })
     it('Should show Full name since license is not available and lock teammate name display is false', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -782,7 +782,7 @@ describe('Selectors.Users', () => {
       assert.deepEqual(Selectors.makeGetDisplayName()(newTestState, testUser1.id), 'First Last')
     })
     it('Should show username since no settings are available (falls back to default)', () => {
-      const newTestState = {
+      const newTestState: any = {
         entities: {
           users: { profiles: newProfiles },
           preferences: {
@@ -822,7 +822,7 @@ describe('Selectors.Users', () => {
             },
           },
         },
-      }),
+      } as any),
       true
     )
 
@@ -846,7 +846,7 @@ describe('Selectors.Users', () => {
             },
           },
         },
-      }),
+      } as any),
       false
     )
 
@@ -870,7 +870,7 @@ describe('Selectors.Users', () => {
             },
           },
         },
-      }),
+      } as any),
       false
     )
 
@@ -901,7 +901,7 @@ describe('Selectors.Users', () => {
             },
           },
         },
-      }),
+      } as any),
       false
     )
 
@@ -923,7 +923,7 @@ describe('Selectors.Users', () => {
             profiles: {},
           },
         },
-      }),
+      } as any),
       false
     )
   })
@@ -931,7 +931,7 @@ describe('Selectors.Users', () => {
   describe('currentUserHasAnAdminRole', () => {
     it('returns the expected result', () => {
       assert.equal(Selectors.currentUserHasAnAdminRole(testState), true)
-      const state = {
+      const state: any = {
         ...testState,
         entities: {
           ...testState.entities,

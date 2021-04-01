@@ -118,7 +118,7 @@ describe('Selectors.Teams', () => {
   it('getJoinableTeamsUsingPermissions', () => {
     const privateTeams = [team1, team2]
     const openTeams = [team3, team4]
-    let modifiedState = {
+    let modifiedState: any = {
       entities: {
         ...testState.entities,
         teams: {
@@ -194,7 +194,7 @@ describe('Selectors.Teams', () => {
   it('getSortedJoinableTeamsUsingPermissions', () => {
     const privateTeams = [team2, team1]
     const openTeams = [team4, team3]
-    const modifiedState = {
+    const modifiedState: any = {
       entities: {
         ...testState.entities,
         teams: {
@@ -224,7 +224,7 @@ describe('Selectors.Teams', () => {
   it('getListableTeamsUsingPermissions', () => {
     const privateTeams = [team1, team2]
     const openTeams = [team3, team4]
-    let modifiedState = {
+    let modifiedState: any = {
       entities: {
         ...testState.entities,
         teams: {
@@ -300,7 +300,7 @@ describe('Selectors.Teams', () => {
   it('getSortedListableTeamsUsingPermissions', () => {
     const privateTeams = [team2, team1]
     const openTeams = [team4, team3]
-    const modifiedState = {
+    const modifiedState: any = {
       entities: {
         ...testState.entities,
         teams: {
@@ -336,7 +336,7 @@ describe('Selectors.Teams', () => {
   })
 
   it('getTeam', () => {
-    const modifiedState = {
+    const modifiedState: any = {
       ...testState,
       entities: {
         ...testState.entities,
@@ -359,7 +359,7 @@ describe('Selectors.Teams', () => {
   })
 
   it('getJoinableTeamIds', () => {
-    const modifiedState = {
+    const modifiedState: any = {
       ...testState,
       entities: {
         ...testState.entities,
@@ -382,7 +382,7 @@ describe('Selectors.Teams', () => {
   })
 
   it('getMySortedTeamIds', () => {
-    const modifiedState = {
+    const modifiedState: any = {
       ...testState,
       entities: {
         ...testState.entities,
@@ -428,7 +428,7 @@ describe('Selectors.Teams', () => {
   })
 
   it('getMyTeamsCount', () => {
-    const modifiedState = {
+    const modifiedState: any = {
       ...testState,
       entities: {
         ...testState.entities,
@@ -493,7 +493,7 @@ describe('Selectors.Teams', () => {
 
   it('getCurrentRelativeTeamUrl', () => {
     assert.deepEqual(Selectors.getCurrentRelativeTeamUrl(testState), '/' + team1.name)
-    assert.deepEqual(Selectors.getCurrentRelativeTeamUrl({ entities: { teams: { teams: {} } } }), '/')
+    assert.deepEqual(Selectors.getCurrentRelativeTeamUrl({ entities: { teams: { teams: {} } } } as any), '/')
   })
 
   it('getCurrentTeamUrl', () => {

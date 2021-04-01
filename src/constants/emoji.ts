@@ -5,3 +5,5 @@ export const EMOJIS_MODULE_NAME = 'emojis'
 export const Emoji = {
   SORT_BY_NAME: 'name',
 }
+
+export default Emoji

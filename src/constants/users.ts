@@ -5,3 +5,5 @@ export const Users = {
   IGNORE_CHANNEL_MENTIONS_OFF: 'off',
   IGNORE_CHANNEL_MENTIONS_DEFAULT: 'default',
 }
+
+export default Users

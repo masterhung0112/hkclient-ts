@@ -7,7 +7,7 @@ import nock from 'nock'
 import * as Actions from 'actions/groups'
 import { Client4 } from 'client'
 
-import { Groups } from '../constants/groups'
+import Groups from '../constants/groups'
 import TestHelper from 'testlib/test_helper'
 import configureStore from 'testlib/test_store'
 

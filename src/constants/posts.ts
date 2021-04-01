@@ -69,3 +69,5 @@ export const Posts = {
     PostTypes.REMOVE_FROM_TEAM,
   ],
 }
+
+export default Posts

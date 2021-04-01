@@ -28,3 +28,5 @@ export const Stats = keyMirror({
   MONTHLY_ACTIVE_USERS: null,
   REGISTERED_USERS: null,
 })
+
+export default Stats

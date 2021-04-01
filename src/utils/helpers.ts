@@ -42,7 +42,7 @@ export const createShallowSelector = reselect.createSelectorCreator(reselect.def
 // currentVersion is a string, e.g '4.6.0'
 // minMajorVersion, minMinorVersion, minDotVersion are integers
 export const isMinimumServerVersion = (
-  currentVersion: string,
+  currentVersion = '',
   minMajorVersion = 0,
   minMinorVersion = 0,
   minDotVersion = 0

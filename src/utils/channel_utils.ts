@@ -156,8 +156,8 @@ export function isAutoClosed(
     [x: string]: PreferenceType
   },
   channel: Channel,
-  channelActivity: number,
-  channelArchiveTime: number,
+  channelActivity?: number,
+  channelArchiveTime?: number,
   currentChannelId = '',
   now = Date.now()
 ): boolean {

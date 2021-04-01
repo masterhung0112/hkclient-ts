@@ -7,7 +7,7 @@ type DialogError = {
   defaultMessage: string
   values?: any
 }
-export function checkDialogElementForError(elem: DialogElement, value: any): DialogError | undefined | null {
+export function checkDialogElementForError(elem: DialogElement, value?: any): DialogError | undefined | null {
   if (!value && !elem.optional) {
     return {
       id: 'interactive_dialog.error.required',

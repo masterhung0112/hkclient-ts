@@ -2,6 +2,7 @@ export const General = {
   GENERAL_MODULE_NAME: 'general' as const,
   PUBLIC_CHANNEL: 'public_channel' as const,
   CONFIG_CHANGED: 'config_changed',
+  PERMISSIONS_ANY: 'permissions_any' as const,
   SERVER_VERSION_CHANGED: 'server_version_changed',
   PAGE_SIZE_DEFAULT: 60,
   PAGE_SIZE_MAXIMUM: 200,

@@ -230,7 +230,7 @@ class TestHelper {
     }
   }
 
-  fakeChannel = (teamId): Channel => {
+  fakeChannel = (teamId = this.generateId()): Channel => {
     const name = this.generateId()
 
     return {

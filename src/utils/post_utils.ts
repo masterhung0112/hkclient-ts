@@ -172,7 +172,7 @@ const joinLeavePostTypes = [
 ]
 
 // Returns true if a post should be hidden when the user has Show Join/Leave Messages disabled
-export function shouldFilterJoinLeavePost(post: Post, showJoinLeave: boolean, currentUsername: string): boolean {
+export function shouldFilterJoinLeavePost(post: Post, showJoinLeave = false, currentUsername = ''): boolean {
   if (showJoinLeave) {
     return false
   }
@@ -270,7 +270,7 @@ export function fromAutoResponder(post: Post): boolean {
   return Boolean(post.type && post.type === Posts.SYSTEM_AUTO_RESPONDER)
 }
 
-export function getEmbedFromMetadata(metadata: PostMetadata): PostEmbed | null {
+export function getEmbedFromMetadata(metadata?: PostMetadata): PostEmbed | null {
   if (!metadata || !metadata.embeds || metadata.embeds.length === 0) {
     return null
   }

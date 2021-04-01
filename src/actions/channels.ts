@@ -690,7 +690,7 @@ export function leaveChannel(channelId: string): ActionFunc {
   }
 }
 
-export function joinChannel(userId: string, teamId: string, channelId: string, channelName: string): ActionFunc {
+export function joinChannel(userId: string, teamId: string, channelId: string, channelName?: string): ActionFunc {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     if (!channelId && !channelName) {
       return { data: null }

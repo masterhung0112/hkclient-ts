@@ -1,3 +1,4 @@
+import { Reducer } from 'redux'
 import { GlobalState } from './store'
 
 export type GetStateFunc = () => GlobalState
@@ -51,14 +52,14 @@ export type ActionCreatorClient<T extends (...args: any[]) => any> = (
   ...args: Parameters<T>
 ) => ReturnType<ReturnType<T>>
 
-// export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
-//   return function batchingReducer(state, action) {
-//     if (action && 'meta' in action && action.meta.batch) {
-//       return action.payload.reduce(batchingReducer, state)
-//     }
-//     return reduce(state, action)
-//   }
-// }
+export function enableBatching<S>(reduce: Reducer<S>): Reducer<S> {
+  return function batchingReducer(state, action) {
+    if (action && 'meta' in action && action.meta.batch) {
+      return action.payload.reduce(batchingReducer, state)
+    }
+    return reduce(state, action)
+  }
+}
 
 export const BATCH = 'BATCHING_REDUCER.BATCH'
 

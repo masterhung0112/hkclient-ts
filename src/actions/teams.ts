@@ -299,7 +299,7 @@ export function getTeamMembers(
   teamId: string,
   page = 0,
   perPage: number = General.TEAMS_CHUNK_SIZE,
-  options: GetTeamMembersOpts
+  options: GetTeamMembersOpts = {}
 ): ActionFunc {
   return bindClientFunc({
     clientFunc: Client4.getTeamMembers,

@@ -8,12 +8,11 @@ import initialState from './initial_state'
 import { offline } from '@redux-offline/redux-offline'
 import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults'
 import { createMiddleware } from './middleware'
-import reduxBatch from './reduxBatch'
 import { getSagaExtension, SagaExtensionContext } from 'hkredux/saga-modular'
 import { getThunkExtension } from 'hkredux/thunkMiddleware'
 import { EntitiesModule } from 'hkmodules/reducerModule'
 import { getSagaPromiseExtension } from 'hkredux'
-import DefaultReducer from 'reducers'
+import { enableBatching } from 'types/actions'
 
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   const loadReduxDevtools = process.env.NODE_ENV !== 'test'
@@ -24,6 +23,14 @@ function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
   }
 
   return redux.applyMiddleware(...createMiddleware(clientOptions))
+}
+
+export const advancedCombineReducersWithBatchActions = <S>(
+  advancedCombineReducers: typeof redux.combineReducers = redux.combineReducers
+) => (reducersMap: redux.ReducersMapObject<S, any>): Reducer<S> => {
+  const newReducers = advancedCombineReducers(reducersMap)
+  // return newReducers
+  return enableBatching(newReducers)
 }
 
 export default function configureServiceStore<S>(
@@ -48,17 +55,19 @@ export default function configureServiceStore<S>(
       const { composeWithDevTools } = require('redux-devtools-extension/developmentOnly')
       customCompose = composeWithDevTools({ maxAge: 500 })
     }
-    return customCompose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
+    // return customCompose(reduxBatch, redux.compose.apply(null, args), reduxBatch)
+    return customCompose(redux.compose.apply(null, args))
   }
 
   const sagaContext: SagaExtensionContext = {}
   const store = createStoreRedux(
     {
       initialState: baseState,
-      enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>, reduxBatch],
-      extensions: [getThunkExtension(), getSagaPromiseExtension(), getSagaExtension(sagaContext), getThunkExtension()],
-      advancedCombineReducers: advancedCombineReducers,
-      advancedComposeEnhancers: storeEnhancerForReduxBatch as any,
+      enhancers: [offline(baseOfflineConfig) as redux.StoreEnhancer<S>],
+      // extensions: [getThunkExtension(), getSagaPromiseExtension(), getSagaExtension(sagaContext)],
+      extensions: [getThunkExtension(), getSagaExtension(sagaContext)],
+      advancedCombineReducers: advancedCombineReducersWithBatchActions(advancedCombineReducers as any),
+      advancedComposeEnhancers: storeEnhancerForReduxBatch,
     },
     EntitiesModule,
     ...loadedModules

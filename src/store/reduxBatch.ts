@@ -60,12 +60,18 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
         isArrayActions = true
         targetAction = action['payload']
       }
-      return isArrayActions
-        ? targetAction.map((subAction) => {
-            // console.log('subAction', subAction)
-            return dispatchRecurse(subAction as A)
-          })
-        : store.dispatch(action as A)
+      try {
+        const result = isArrayActions
+          ? targetAction.map((subAction) => {
+              return dispatchRecurse(subAction as A)
+            })
+          : store.dispatch(action as A)
+        return result
+      } catch (e) {
+        console.error(e)
+      }
+
+      return null
     }
 
     function dispatch(action: A[] | A) {

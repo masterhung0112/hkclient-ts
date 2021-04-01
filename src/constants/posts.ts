@@ -39,8 +39,8 @@ export const Posts = {
   SYSTEM_AUTO_RESPONDER: 'system_auto_responder',
   POST_TYPES: PostTypes,
   MESSAGE_TYPES: {
-    POST: 'post',
-    COMMENT: 'comment',
+    POST: 'post' as const,
+    COMMENT: 'comment' as const,
   },
   MAX_PREV_MSGS: 100,
   POST_COLLAPSE_TIMEOUT: 1000 * 60 * 5, // five minutes

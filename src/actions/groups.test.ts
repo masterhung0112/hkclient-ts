@@ -392,7 +392,7 @@ describe('Actions.Groups', () => {
       .get(`/teams/${teamID}/groups?page=100&per_page=60&q=0&include_member_count=true&filter_allow_reference=false`)
       .reply(200, response)
 
-    await Actions.getGroupsAssociatedToTeam(teamID, '', 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsAssociatedToTeam(teamID, '0', 100)(store.dispatch, store.getState)
 
     const state = store.getState()
 
@@ -441,7 +441,7 @@ describe('Actions.Groups', () => {
       .get(`/groups?not_associated_to_team=${teamID}&page=100&per_page=60&q=0&include_member_count=true`)
       .reply(200, response)
 
-    await Actions.getGroupsNotAssociatedToTeam(teamID, '', 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsNotAssociatedToTeam(teamID, '0', 100)(store.dispatch, store.getState)
 
     const state = store.getState()
     const groupIDs = state.entities.teams.groupsAssociatedToTeam[teamID].ids
@@ -665,7 +665,9 @@ describe('Actions.Groups', () => {
       )
       .reply(200, response)
 
-    await Actions.getGroupsAssociatedToChannel(channelID, '', 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsAssociatedToChannel(channelID, '0', 100)(store.dispatch, store.getState)
+
+    await TestHelper.wait(100)
 
     const state = store.getState()
 
@@ -714,7 +716,7 @@ describe('Actions.Groups', () => {
       .get(`/groups?not_associated_to_channel=${channelID}&page=100&per_page=60&q=0&include_member_count=true`)
       .reply(200, response)
 
-    await Actions.getGroupsNotAssociatedToChannel(channelID, '', 0, 100)(store.dispatch, store.getState)
+    await Actions.getGroupsNotAssociatedToChannel(channelID, '0', 100)(store.dispatch, store.getState)
 
     const state = store.getState()
 

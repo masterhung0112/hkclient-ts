@@ -811,8 +811,8 @@ describe('Actions.Admin', () => {
   })
 
   it('overwritePlugin', async () => {
-    const data1 = fs.createReadStream('src/test/setup.js') as any
-    const data2 = fs.createReadStream('src/test/setup.js') as any
+    const data1 = fs.createReadStream('src/test/setup.ts') as any
+    const data2 = fs.createReadStream('src/test/setup.ts') as any
     const testPlugin = { id: 'testplugin', webapp: { bundle_path: '/static/somebundle.js' } }
 
     nock(Client4.getBaseRoute())

@@ -152,7 +152,7 @@ class TestHelper {
     } as Scheme
   }
 
-  mockSchemeWithId = () => {
+  mockSchemeWithId = (): Scheme => {
     return {
       ...this.mockScheme(),
       id: this.generateId(),
@@ -351,7 +351,7 @@ class TestHelper {
     }
   }
 
-  fakeGroupWithId = (groupId): Group => {
+  fakeGroupWithId = (groupId = this.generateId()): Group => {
     return {
       ...this.fakeGroup(groupId),
       id: this.generateId(),

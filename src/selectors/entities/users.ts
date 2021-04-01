@@ -257,7 +257,7 @@ function sortAndInjectProfiles(
   return currentProfiles.sort(sortByUsername)
 }
 
-export const getProfiles: (state: GlobalState, filters: Filters) => UserProfile[] = createSelector(
+export const getProfiles: (state: GlobalState, filters?: Filters) => UserProfile[] = createSelector(
   getUsers,
   (state: GlobalState, filters: Filters) => filters,
   (profiles, filters) => {
@@ -682,13 +682,13 @@ export function makeGetProfilesByIdsAndUsernames(): (
 export function makeGetDisplayName(): (
   state: GlobalState,
   userId: $ID<UserProfile>,
-  useFallbackUsername: boolean
+  useFallbackUsername?: boolean
 ) => string {
   return createSelector(
     (state: GlobalState, userId: string) => getUser(state, userId),
     getTeammateNameDisplaySetting,
     (state, userId, useFallbackUsername = true) => useFallbackUsername,
-    (user, teammateNameDisplaySetting, useFallbackUsername) => {
+    (user, teammateNameDisplaySetting, useFallbackUsername = true) => {
       return displayUsername(user, teammateNameDisplaySetting!, useFallbackUsername)
     }
   )

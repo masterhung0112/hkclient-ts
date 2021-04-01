@@ -133,7 +133,7 @@ export const mapAndSortChannelIds = (
   currentUser: UserProfile,
   myMembers: RelationOneToOne<Channel, ChannelMembership>,
   lastPosts: RelationOneToOne<Channel, Post>,
-  sorting: SortingType,
+  sorting?: SortingType,
   sortMentionsFirst = false
 ): string[] => {
   const locale = currentUser.locale || General.DEFAULT_LOCALE
@@ -170,8 +170,8 @@ export function filterChannels(
   unreadIds: string[],
   favoriteIds: string[],
   channelIds: string[],
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean
 ): string[] {
   let channels: string[] = channelIds
 
@@ -898,31 +898,31 @@ export const getUnreadChannels: (
 export const getMapAndSortedUnreadChannelIds: (
   state: GlobalState,
   lastUnreadChannel: Channel,
-  sorting: SortingType
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannels,
   getCurrentUser,
   getMyChannelMemberships,
   getLastPostPerChannel,
   (state: GlobalState, lastUnreadChannel: Channel, sorting: SortingType = 'alpha') => sorting,
-  (channels, currentUser, myMembers, lastPosts: RelationOneToOne<Channel, Post>, sorting: SortingType) => {
+  (channels, currentUser, myMembers, lastPosts: RelationOneToOne<Channel, Post>, sorting?: SortingType) => {
     return mapAndSortChannelIds(channels, currentUser, myMembers, lastPosts, sorting, true)
   }
 )
 
 export const getSortedUnreadChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannelIds,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => {
     return getMapAndSortedUnreadChannelIds(state, lastUnreadChannel, sorting)
@@ -1069,9 +1069,9 @@ export const getFavoriteChannels: (state: GlobalState) => Channel[] = createIdsS
 export const getFavoriteChannelIds: (
   state: GlobalState,
   lastUnreadChannel: Channel,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getFavoriteChannels,
   getCurrentUser,
@@ -1080,8 +1080,8 @@ export const getFavoriteChannelIds: (
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => sorting,
   mapAndSortChannelIds
@@ -1089,19 +1089,19 @@ export const getFavoriteChannelIds: (
 
 export const getSortedFavoriteChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  favoritesAtTop: boolean,
-  unreadsAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  favoritesAtTop?: boolean,
+  unreadsAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannelIds,
   getFavoritesPreferences,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
-    sorting: SortingType
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
+    sorting?: SortingType
   ) => getFavoriteChannelIds(state, lastUnreadChannel, unreadsAtTop, favoritesAtTop, sorting),
   (state, lastUnreadChannel, unreadsAtTop = true) => unreadsAtTop,
   (unreadChannelIds, favoritePreferences, favoriteChannelIds, unreadsAtTop) => {
@@ -1137,9 +1137,9 @@ export const getPublicChannels: (state: GlobalState) => Channel[] = createSelect
 export const getPublicChannelIds: (
   state: GlobalState,
   lastUnreadChannel: Channel,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getPublicChannels,
   getCurrentUser,
@@ -1148,8 +1148,8 @@ export const getPublicChannelIds: (
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => sorting,
   mapAndSortChannelIds
@@ -1157,18 +1157,18 @@ export const getPublicChannelIds: (
 
 export const getSortedPublicChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannelIds,
   getFavoritesPreferences,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => getPublicChannelIds(state, lastUnreadChannel, unreadsAtTop, favoritesAtTop, sorting),
   (state, lastUnreadChannel, unreadsAtTop = true) => unreadsAtTop,
@@ -1206,9 +1206,9 @@ export const getPrivateChannels: (a: GlobalState) => Channel[] = createSelector(
 export const getPrivateChannelIds: (
   state: GlobalState,
   lastUnreadChannel: Channel,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getPrivateChannels,
   getCurrentUser,
@@ -1217,8 +1217,8 @@ export const getPrivateChannelIds: (
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => sorting,
   mapAndSortChannelIds
@@ -1226,18 +1226,18 @@ export const getPrivateChannelIds: (
 
 export const getSortedPrivateChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannelIds,
   getFavoritesPreferences,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => getPrivateChannelIds(state, lastUnreadChannel, unreadsAtTop, favoritesAtTop, sorting),
   (state, lastUnreadChannel, unreadsAtTop = true) => unreadsAtTop,
@@ -1368,10 +1368,10 @@ export const getDirectAndGroupChannels: (a: GlobalState) => Channel[] = createSe
 
 export const getDirectChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getDirectChannels,
   getCurrentUser,
@@ -1380,8 +1380,8 @@ export const getDirectChannelIds: (
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => sorting,
   (directChannels, currentUser, myChannelMemberships, lastPostPerChannel, sorting) => {
@@ -1391,18 +1391,18 @@ export const getDirectChannelIds: (
 
 export const getSortedDirectChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => Array<$ID<Channel>> = createIdsSelector(
   getUnreadChannelIds,
   getFavoritesPreferences,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => getDirectChannelIds(state, lastUnreadChannel, unreadsAtTop, favoritesAtTop, sorting),
   (state, lastUnreadChannel, unreadsAtTop = true) => unreadsAtTop,
@@ -1468,9 +1468,9 @@ const getAllActiveChannels = createSelector(
 export const getAllChannelIds: (
   state: GlobalState,
   lastUnreadChannel: Channel,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getAllActiveChannels,
   getCurrentUser,
@@ -1479,8 +1479,8 @@ export const getAllChannelIds: (
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => sorting,
   mapAndSortChannelIds
@@ -1488,18 +1488,18 @@ export const getAllChannelIds: (
 
 export const getAllSortedChannelIds: (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean,
-  sorting: SortingType
+  lastUnreadChannel?: Channel | null,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean,
+  sorting?: SortingType
 ) => string[] = createIdsSelector(
   getUnreadChannelIds,
   getFavoritesPreferences,
   (
     state: GlobalState,
     lastUnreadChannel: Channel,
-    unreadsAtTop: boolean,
-    favoritesAtTop: boolean,
+    unreadsAtTop?: boolean,
+    favoritesAtTop?: boolean,
     sorting: SortingType = 'alpha'
   ) => getAllChannelIds(state, lastUnreadChannel, unreadsAtTop, favoritesAtTop, sorting),
   (state, lastUnreadChannel, unreadsAtTop = true) => unreadsAtTop,
@@ -1531,11 +1531,11 @@ const haveChannelsChanged = (channels: ChannelsByCategory[]) => {
 
 export const getOrderedChannelIds = (
   state: GlobalState,
-  lastUnreadChannel: Channel | null,
-  grouping: 'by_type' | 'none',
-  sorting: SortingType,
-  unreadsAtTop: boolean,
-  favoritesAtTop: boolean
+  lastUnreadChannel?: Channel | null,
+  grouping?: 'by_type' | 'none',
+  sorting?: SortingType,
+  unreadsAtTop?: boolean,
+  favoritesAtTop?: boolean
 ) => {
   const channels: ChannelsByCategory[] = []
 

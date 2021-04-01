@@ -158,7 +158,7 @@ export function makeGetPostIdsAroundPost(): (
   state: GlobalState,
   postId: $ID<Post>,
   channelId: $ID<Channel>,
-  a: {
+  a?: {
     postsBeforeCount: number
     postsAfterCount: number
   }
@@ -291,7 +291,7 @@ function formatPostInChannel(
 export function makeGetPostsInChannel(): (
   state: GlobalState,
   channelId: $ID<Channel>,
-  numPosts: number
+  numPosts?: number
 ) => PostWithFormatData[] | undefined | null {
   return createSelector(
     getAllPosts,
@@ -576,7 +576,7 @@ export const getLatestReplyablePostId: (state: GlobalState) => $ID<Post> = creat
 
 export const getCurrentUsersLatestPost: (
   state: GlobalState,
-  postId: $ID<Post>
+  postId?: $ID<Post>
 ) => PostWithFormatData | undefined | null = createSelector(
   getPostsInCurrentChannel,
   getCurrentUser,

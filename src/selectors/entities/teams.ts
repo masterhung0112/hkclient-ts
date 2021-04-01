@@ -177,7 +177,7 @@ export const getListableTeams: (state: GlobalState) => Team[] = createSelector(
   }
 )
 
-export const getSortedListableTeams: (state: GlobalState, locale: string) => Team[] = createSelector(
+export const getSortedListableTeams: (state: GlobalState, locale?: string) => Team[] = createSelector(
   getTeams,
   getListableTeamIds,
   (state: GlobalState, locale: string) => locale,
@@ -219,7 +219,7 @@ export const getJoinableTeams: (state: GlobalState) => Team[] = createSelector(
   }
 )
 
-export const getSortedJoinableTeams: (state: GlobalState, locale: string) => Team[] = createSelector(
+export const getSortedJoinableTeams: (state: GlobalState, locale?: string) => Team[] = createSelector(
   getTeams,
   getJoinableTeamIds,
   (state: GlobalState, locale: string) => locale,
@@ -234,7 +234,7 @@ export const getSortedJoinableTeams: (state: GlobalState, locale: string) => Tea
   }
 )
 
-export const getMySortedTeamIds: (state: GlobalState, locale: string) => Array<$ID<Team>> = createIdsSelector(
+export const getMySortedTeamIds: (state: GlobalState, locale?: string) => Array<$ID<Team>> = createIdsSelector(
   getMyTeams,
   (state: GlobalState, locale: string) => locale,
   (teams, locale) => {

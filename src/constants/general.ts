@@ -1,5 +1,6 @@
 export const General = {
   GENERAL_MODULE_NAME: 'general' as const,
+  PUBLIC_CHANNEL: 'public_channel' as const,
   CONFIG_CHANGED: 'config_changed',
   SERVER_VERSION_CHANGED: 'server_version_changed',
   PAGE_SIZE_DEFAULT: 60,
@@ -48,8 +49,8 @@ export const General = {
   DEFAULT_CHANNEL: 'town-square',
   DM_CHANNEL: 'D',
   OPEN_CHANNEL: 'O',
-  PRIVATE_CHANNEL: 'P',
-  GM_CHANNEL: 'G',
+  PRIVATE_CHANNEL: 'P' as const,
+  GM_CHANNEL: 'G' as const,
   PUSH_NOTIFY_APPLE_REACT_NATIVE: 'apple_rn',
   PUSH_NOTIFY_ANDROID_REACT_NATIVE: 'android_rn',
   STORE_REHYDRATION_COMPLETE: 'store_hydation_complete',

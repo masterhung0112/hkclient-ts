@@ -1041,7 +1041,7 @@ describe('Selectors.Posts', () => {
         },
       }
 
-      assert.deepEqual(getPostIdsAroundPost(state, 'e', '1234', { postsAfterCount: 3 }), ['b', 'c', 'd', 'e'])
+      assert.deepEqual(getPostIdsAroundPost(state, 'e', '1234', { postsAfterCount: 3 } as any), ['b', 'c', 'd', 'e'])
     })
 
     it('posts before/after limit', () => {
@@ -2399,7 +2399,7 @@ describe('getCurrentUsersLatestPost', () => {
     assert.equal(Selectors.isPostIdSending(state, '2'), true)
     assert.equal(Selectors.isPostIdSending(state, '3'), true)
     assert.equal(Selectors.isPostIdSending(state, '4'), false)
-    assert.equal(Selectors.isPostIdSending(state), false)
+    assert.equal(Selectors.isPostIdSending(state, ''), false)
   })
 })
 

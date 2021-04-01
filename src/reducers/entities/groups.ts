@@ -189,7 +189,6 @@ function groups(state: Dictionary<Group> = {}, action: GenericAction) {
     case GroupTypes.RECEIVED_GROUPS_ASSOCIATED_TO_CHANNEL: {
       const nextState = { ...state }
       for (const group of action.data.groups) {
-        console.log('@@', group.id, group)
         nextState[group.id] = group
       }
 

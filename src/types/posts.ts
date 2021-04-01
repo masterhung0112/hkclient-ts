@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { Posts } from 'hkconstants/posts'
+import Posts from 'hkconstants/posts'
 import { CustomEmoji } from './emojis'
 import { FileInfo } from './files'
 import { Reaction } from './reactions'

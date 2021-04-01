@@ -1,5 +1,3 @@
-export const CounterConstants = {
+export default {
   COUNT_MODULE_NAME: 'count' as const,
 }
-
-export default CounterConstants

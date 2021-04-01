@@ -1,8 +1,8 @@
 export const General = {
   GENERAL_MODULE_NAME: 'general' as const,
-  PUBLIC_CHANNEL: 'public_channel' as const,
+  PUBLIC_CHANNEL: 'public_channel',
   CONFIG_CHANGED: 'config_changed',
-  PERMISSIONS_ANY: 'permissions_any' as const,
+  PERMISSIONS_ANY: 'permissions_any',
   SERVER_VERSION_CHANGED: 'server_version_changed',
   PAGE_SIZE_DEFAULT: 60,
   PAGE_SIZE_MAXIMUM: 200,
@@ -74,3 +74,5 @@ export const General = {
   ALWAYS_ON: 'always_on',
   DEFAULT_GROUP: 'board',
 }
+
+export default General

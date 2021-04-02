@@ -20,7 +20,7 @@ import { bindClientFunc, forceLogoutIfNecessary } from './helpers'
 
 import { deletePreferences, savePreferences } from './preferences'
 import { getProfilesByIds, getProfilesByUsernames, getStatusesByIds } from './users'
-import { Action, ActionResult, batchActions, DispatchFunc, GetStateFunc } from 'types/actions'
+import { Action, ActionFunc, ActionResult, batchActions, DispatchFunc, GetStateFunc } from 'types/actions'
 import { ChannelUnread } from 'types/channels'
 import { GlobalState } from 'types/store'
 import { Post, PostList } from 'types/posts'
@@ -970,7 +970,7 @@ export function getPostsAround(
 export function getThreadsForPosts(posts: Post[], fetchThreads = true) {
   return (dispatch: DispatchFunc, getState: GetStateFunc) => {
     if (!Array.isArray(posts) || !posts.length) {
-      return { data: true }
+      return Promise.resolve({ data: true })
     }
 
     const state = getState()

@@ -853,8 +853,8 @@ export function viewChannel(channelId: string, prevChannelId = ''): ActionFunc {
   }
 }
 
-export function markChannelAsViewed(channelId: string, prevChannelId = ''): ActionFunc {
-  return (dispatch: DispatchFunc, getState: GetStateFunc) => {
+export function markChannelAsViewed(channelId: string, prevChannelId = '') {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const actions: Action[] = []
 
     const { myMembers } = getState().entities.channels

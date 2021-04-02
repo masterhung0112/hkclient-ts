@@ -48,14 +48,14 @@ export function checkMfa(loginId: string): ActionFunc {
   }
 }
 
-export function generateMfaSecret(userId: string): ActionFunc {
+export function generateMfaSecret(userId: string) {
   return bindClientFunc({
     clientFunc: Client4.generateMfaSecret,
     params: [userId],
   })
 }
 
-export function createUser(user: UserProfile, token?: string, inviteId?: string, redirect?: string): ActionFunc {
+export function createUser(user: UserProfile, token?: string, inviteId?: string, redirect?: string) {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     let created
 
@@ -78,7 +78,7 @@ export function createUser(user: UserProfile, token?: string, inviteId?: string,
   }
 }
 
-export function login(loginId: string, password: string, mfaToken = '', ldapOnly = false): ActionFunc {
+export function login(loginId: string, password: string, mfaToken = '', ldapOnly = false) {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     dispatch({ type: UserTypes.LOGIN_REQUEST, data: null })
 
@@ -104,7 +104,7 @@ export function login(loginId: string, password: string, mfaToken = '', ldapOnly
   }
 }
 
-export function loginById(id: string, password: string, mfaToken = ''): ActionFunc {
+export function loginById(id: string, password: string, mfaToken = '') {
   return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     dispatch({ type: UserTypes.LOGIN_REQUEST, data: null })
 

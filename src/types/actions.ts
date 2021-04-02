@@ -1,7 +1,7 @@
 import { Reducer } from 'redux'
 import { GlobalState } from './store'
 
-export type GetStateFunc = () => GlobalState
+export type GetStateFunc = <S extends GlobalState = GlobalState>() => S
 export type GenericAction = {
   type: string
   data?: any

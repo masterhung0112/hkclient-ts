@@ -104,6 +104,7 @@ import { isSystemAdmin } from 'utils/user_utils'
 import fetch from './fetch_etag'
 import { TelemetryHandler } from './telemetry'
 import { UserThreadList, UserThread, UserThreadWithPost } from 'types/threads'
+import { SystemSetting } from 'types/general'
 
 const FormData = require('form-data')
 const HEADER_AUTH = 'Authorization'
@@ -2172,6 +2173,17 @@ export default class Client44 {
       method: 'post',
       body: JSON.stringify({ forceAck: forceAckVal }),
     })
+  }
+
+  setFirstAdminVisitMarketplaceStatus = async () => {
+    return this.doFetch<StatusOK>(`${this.getPluginsRoute()}/marketplace/first_admin_visit`, {
+      method: 'post',
+      body: JSON.stringify({ first_admin_visit_marketplace_status: true }),
+    })
+  }
+
+  getFirstAdminVisitMarketplaceStatus = async () => {
+    return this.doFetch<SystemSetting>(`${this.getPluginsRoute()}/marketplace/first_admin_visit`, { method: 'get' })
   }
 
   getTranslations = (url: string) => {

@@ -15,6 +15,11 @@ export type GeneralState = {
   warnMetricsStatus: Dictionary<WarnMetricStatus>
 }
 
+export type SystemSetting = {
+  name: string
+  value: string
+}
+
 export interface GeneralAwareState {
   [General.GENERAL_MODULE_NAME]: GeneralState
 }

@@ -41,10 +41,7 @@ export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFu
   <TReturnType = ActionResultType>(actionFuncs: A[]): Promise<TReturnType>
 }
 
-export type ActionFunc = (
-  dispatch: DispatchFunc,
-  getState: GetStateFunc
-) => Promise<ActionResult | ActionResult[]> | ActionResult
+export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResult | ActionResult[]> // | ActionResult
 
 export type Action = GenericAction | Thunk | BatchAction | ActionFunc
 

@@ -149,8 +149,8 @@ export function fetchMyCategories(teamId: string) {
 //
 // Unless setOnServer is true, this only affects the categories on this client. If it is set to true, this updates
 // categories on the server too.
-export function addChannelToInitialCategory(channel: Channel, setOnServer = false): ActionFunc {
-  return (dispatch: DispatchFunc, getState: GetStateFunc) => {
+export function addChannelToInitialCategory(channel: Channel, setOnServer = false) {
+  return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
     const state = getState()
     const categories = Object.values(getAllCategoriesByIds(state))
 

@@ -12,6 +12,7 @@ const state: Partial<GlobalState> = {
       serverVersion: '',
       timezones: [],
       warnMetricsStatus: {},
+      firstAdminVisitMarketplaceStatus: false,
     },
     users: {
       currentUserId: '',

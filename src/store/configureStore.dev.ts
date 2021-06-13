@@ -51,7 +51,8 @@ export default function configureServiceStore<S>(
 
     // const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
 
-    const storeEnhancerForReduxBatch = function(...args) {
+    // eslint-disable-next-line func-style
+    const storeEnhancerForReduxBatch = function(...args: any[]) {
         const loadReduxDevtools = process.env.NODE_ENV !== 'test';
         let customCompose = redux.compose;
 

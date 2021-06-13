@@ -23,7 +23,8 @@ const createExposedPromise = () => {
     return [promise, deferred];
 };
 
-const sagaPromiseMiddleware = (store) => (next) => (action) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const sagaPromiseMiddleware = () => (next: any) => (action: any) => {
     const [promise, deferred] = createExposedPromise();
 
     // console.log('call action', typeof action, typeof action === 'function' ? 'nothing' : action)

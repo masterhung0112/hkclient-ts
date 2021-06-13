@@ -1,11 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {ClientError, HEADER_X_VERSION_ID} from './client4';
+
 import assert from 'assert';
 import nock from 'nock';
-import TestHelper from 'testlib/test_helper';
-import {rudderAnalytics, RudderTelemetryHandler} from './rudder';
+
+import {ClientError, HEADER_X_VERSION_ID} from 'client/client4';
+import TestHelper from 'test/test_helper';
 import {isMinimumServerVersion} from 'utils/helpers';
+import {rudderAnalytics, RudderTelemetryHandler} from './rudder';
 
 jest.mock('rudder-sdk-js', () => {
     const original = jest.requireActual('rudder-sdk-js');
@@ -80,7 +82,7 @@ describe('ClientError', () => {
 });
 
 describe('trackEvent', () => {
-    it("should call Rudder's track when a RudderTelemetryHandler is attached to Client4", () => {
+    it('should call Rudder\'s track when a RudderTelemetryHandler is attached to Client4', () => {
         const client = TestHelper.createClient4();
 
         client.trackEvent('test', 'onClick');

@@ -12,7 +12,7 @@
 /store
 /utils
 /types
-/test
+# /test
 /dist
 
 # browser bundle

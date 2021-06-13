@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {Action, AnyAction, PreloadedState, Reducer, Store, StoreEnhancerStoreCreator} from 'redux';
+import {AnyAction, PreloadedState, Reducer, Store, StoreEnhancerStoreCreator} from 'redux';
 
 export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Record<string, unknown>>(
     next: StoreEnhancerStoreCreator,
 ): StoreEnhancerStoreCreator<Ext, StateExt> {
-    let nextListeners = [];
-    let currentListeners;
+    let nextListeners: any[] = [];
+    let currentListeners: any[];
 
     function ensureCanMutateNextListeners() {
         if (nextListeners === currentListeners) {
@@ -14,7 +14,7 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
         }
     }
 
-    function subscribe(listener) {
+    function subscribe(listener: any) {
         if (typeof listener !== 'function') {
             throw new Error('Invalid listener, expected a function');
         }
@@ -47,7 +47,8 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
 
     // eslint-disable-next-line @typescript-eslint/ban-types
     // eslint-disable-next-line func-names
-    return function <S = Record<string, any>, A extends Action = AnyAction>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return function <S = Record<string, any>, A extends AnyAction = AnyAction>(
         reducer: Reducer<S, A>,
         preloadedState?: PreloadedState<S>,
     ): Store<S & StateExt, A> & Ext {
@@ -56,9 +57,10 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
         let receivedNotification = false;
         let inDispatch = false;
 
-        function dispatchRecurse(action: A[] | A) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        function dispatchRecurse(action: A[] | A): any {
             // Support { meta: { batch: true } } in action
-            let targetAction: A[];
+            let targetAction: A[] = [];
             let isArrayActions = false;
             if (Array.isArray(action)) {
                 isArrayActions = true;

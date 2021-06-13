@@ -57,23 +57,23 @@ export function getGroupChannels(state: GlobalState, id: string) {
 export const getAssociatedGroupsByName: (state: GlobalState, teamID: string, channelId: string) => NameMappedObjects<Group> = createSelector(
     getAssociatedGroupsForReference,
     (groups) => {
-    const groupsByName: Dictionary<Group> = {};
+        const groupsByName: Dictionary<Group> = {};
 
-    for (const id in groups) {
-        if (groups.hasOwnProperty(id)) {
-            const group = groups[id];
-            groupsByName[group.name] = group;
+        for (const id in groups) {
+            if (groups.hasOwnProperty(id)) {
+                const group = groups[id];
+                groupsByName[group.name] = group;
+            }
         }
-    }
 
-    return groupsByName;
+        return groupsByName;
     },
 );
 
 export const getAssociatedGroupsForReferenceByMention: (state: GlobalState, teamID: string, channelId: string) => Map<string, Group> = createSelector(
     getAssociatedGroupsForReference,
     (groups) => {
-    return new Map(groups.map((group) => [`@${group.name}`, group]));
+        return new Map(groups.map((group) => [`@${group.name}`, group]));
     },
 );
 
@@ -200,7 +200,7 @@ export const getAllGroupsForReferenceByName: (state: GlobalState) => NameMappedO
 export const getMyAllowReferencedGroups: (state: GlobalState) => Group[] = createSelector(
     getMyGroups,
     (myGroups) => {
-    return Object.values(myGroups).filter((group) => group.allow_reference && group.delete_at === 0);
+        return Object.values(myGroups).filter((group) => group.allow_reference && group.delete_at === 0);
     },
 );
 
@@ -208,7 +208,7 @@ export const getMyGroupsAssociatedToChannelForReference: (state: GlobalState, te
     getMyGroups,
     getAssociatedGroupsByName,
     (myGroups, groups) => {
-    return Object.values(myGroups).filter((group) => group.allow_reference && group.delete_at === 0 && groups[group.name]);
+        return Object.values(myGroups).filter((group) => group.allow_reference && group.delete_at === 0 && groups[group.name]);
     },
 );
 
@@ -224,8 +224,8 @@ export const getMyGroupMentionKeys: (state: GlobalState) => UserMentionKey[] = c
 export const getMyGroupMentionKeysForChannel: (state: GlobalState, teamId: string, channelId: string) => UserMentionKey[] = createSelector(
     getMyGroupsAssociatedToChannelForReference,
     (groups: Group[]) => {
-    const keys: UserMentionKey[] = [];
-    groups.forEach((group) => keys.push({key: `@${group.name}`}));
-    return keys;
+        const keys: UserMentionKey[] = [];
+        groups.forEach((group) => keys.push({key: `@${group.name}`}));
+        return keys;
     },
 );

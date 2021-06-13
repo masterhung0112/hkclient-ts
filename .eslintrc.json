@@ -1,54 +1,56 @@
 {
-    "ignorePatterns": ["**/build/*"],
-    "env": {
-        "browser": true,
-        "es2020": true,
-        "es6": true,
-        "jest": true,
-        "node": true
-    },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-        "prettier/flowtype",
-        "prettier/react",
-        "prettier/standard"
+        "plugin:mattermost/base",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
     "plugins": [
-        "react",
-        "@typescript-eslint",
-        "prettier"
+        "mattermost",
+        "@typescript-eslint"
     ],
+    "env": {
+        "jest": true
+    },
     "rules": {
-        "strict": 0,
-        "no-prototype-builtins": "off",
-        "@typescript-eslint/no-var-requires": "off",
-        "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "react/prop-types": "off",
-        "prettier/prettier": ["error",
+        "camelcase": 0,
+        "no-shadow": 0,
+        "no-undefined": 0,
+        "no-use-before-define": 0,
+        "@typescript-eslint/naming-convention": [
+            2,
             {
-                "printWidth": 120,
-                "singleQuote": true,
-                "trailingComma": "es5",
-                "semi": false,
-                "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
-                "no-unused-vars": ["error"],
-                "endOfLine":"auto"
+                "selector": "variableLike",
+                "format": ["camelCase", "PascalCase", "UPPER_CASE"]
+            },
+            {
+                "selector": "memberLike",
+                "format": null
             }
-        ]
-    }
+        ],
+        "@typescript-eslint/no-non-null-assertion": 0,
+        "@typescript-eslint/no-shadow": 2,
+        "@typescript-eslint/no-unused-vars": [
+            2,
+            {
+                "vars": "all",
+                "args": "after-used"
+            }
+        ],
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-use-before-define": 0,
+        "@typescript-eslint/no-var-requires": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "linebreak-style": "off",
+        "indent": ["error", 4]
+    },
+    "overrides": [
+        {
+            "files": [
+                "*.test.js"
+            ],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
 }

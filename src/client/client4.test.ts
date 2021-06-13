@@ -1,93 +1,95 @@
-import { ClientError, HEADER_X_VERSION_ID } from './client4'
-import assert from 'assert'
-import nock from 'nock'
-import TestHelper from 'testlib/test_helper'
-import { rudderAnalytics, RudderTelemetryHandler } from './rudder'
-import { isMinimumServerVersion } from 'utils/helpers'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+import {ClientError, HEADER_X_VERSION_ID} from './client4';
+import assert from 'assert';
+import nock from 'nock';
+import TestHelper from 'testlib/test_helper';
+import {rudderAnalytics, RudderTelemetryHandler} from './rudder';
+import {isMinimumServerVersion} from 'utils/helpers';
 
 jest.mock('rudder-sdk-js', () => {
-  const original = jest.requireActual('rudder-sdk-js')
+    const original = jest.requireActual('rudder-sdk-js');
 
-  return {
-    ...original,
-    track: jest.fn(),
-  }
-})
+    return {
+        ...original,
+        track: jest.fn(),
+    };
+});
 
 describe('Client4', () => {
-  beforeAll(() => {
-    if (!nock.isActive()) {
-      nock.activate()
-    }
-  })
+    beforeAll(() => {
+        if (!nock.isActive()) {
+            nock.activate();
+        }
+    });
 
-  afterAll(() => {
-    nock.restore()
-  })
+    afterAll(() => {
+        nock.restore();
+    });
 
-  describe('doFetchWithResponse', () => {
-    it('serverVersion should be set from response header', async () => {
-      const client = TestHelper.createClient4()
+    describe('doFetchWithResponse', () => {
+        it('serverVersion should be set from response header', async () => {
+            const client = TestHelper.createClient4();
 
-      assert.equal(client.serverVersion, '')
+            assert.equal(client.serverVersion, '');
 
-      nock(client.getBaseRoute())
-        .get('/users/me')
-        .reply(200, '{}', { [HEADER_X_VERSION_ID]: '5.0.0.5.0.0.abc123' })
+            nock(client.getBaseRoute()).
+                get('/users/me').
+                reply(200, '{}', {[HEADER_X_VERSION_ID]: '5.0.0.5.0.0.abc123'});
 
-      await client.getMe()
+            await client.getMe();
 
-      assert.equal(client.serverVersion, '5.0.0.5.0.0.abc123')
-      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true)
-      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), false)
+            assert.equal(client.serverVersion, '5.0.0.5.0.0.abc123');
+            assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true);
+            assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), false);
 
-      nock(client.getBaseRoute())
-        .get('/users/me')
-        .reply(200, '{}', { [HEADER_X_VERSION_ID]: '5.3.0.5.3.0.abc123' })
+            nock(client.getBaseRoute()).
+                get('/users/me').
+                reply(200, '{}', {[HEADER_X_VERSION_ID]: '5.3.0.5.3.0.abc123'});
 
-      await client.getMe()
+            await client.getMe();
 
-      assert.equal(client.serverVersion, '5.3.0.5.3.0.abc123')
-      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true)
-      assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), true)
-    })
-  })
-})
+            assert.equal(client.serverVersion, '5.3.0.5.3.0.abc123');
+            assert.equal(isMinimumServerVersion(client.serverVersion, 5, 0, 0), true);
+            assert.equal(isMinimumServerVersion(client.serverVersion, 5, 1, 0), true);
+        });
+    });
+});
 
 describe('ClientError', () => {
-  it('standard fields should be enumerable', () => {
-    const error = new ClientError('https://example.com', {
-      message: 'This is a message',
-      intl: {
-        id: 'test.error',
-        defaultMessage: 'This is a message with a translation',
-      },
-      server_error_id: 'test.app_error',
-      status_code: 418,
-      url: 'https://example.com/api/v4/error',
-    })
+    it('standard fields should be enumerable', () => {
+        const error = new ClientError('https://example.com', {
+            message: 'This is a message',
+            intl: {
+                id: 'test.error',
+                defaultMessage: 'This is a message with a translation',
+            },
+            server_error_id: 'test.app_error',
+            status_code: 418,
+            url: 'https://example.com/api/v4/error',
+        });
 
-    const copy = { ...error }
+        const copy = {...error};
 
-    assert.strictEqual(copy.message, error.message)
-    assert.strictEqual(copy.intl, error.intl)
-    assert.strictEqual(copy.server_error_id, error.server_error_id)
-    assert.strictEqual(copy.status_code, error.status_code)
-    assert.strictEqual(copy.url, error.url)
-  })
-})
+        assert.strictEqual(copy.message, error.message);
+        assert.strictEqual(copy.intl, error.intl);
+        assert.strictEqual(copy.server_error_id, error.server_error_id);
+        assert.strictEqual(copy.status_code, error.status_code);
+        assert.strictEqual(copy.url, error.url);
+    });
+});
 
 describe('trackEvent', () => {
-  it("should call Rudder's track when a RudderTelemetryHandler is attached to Client4", () => {
-    const client = TestHelper.createClient4()
+    it("should call Rudder's track when a RudderTelemetryHandler is attached to Client4", () => {
+        const client = TestHelper.createClient4();
 
-    client.trackEvent('test', 'onClick')
+        client.trackEvent('test', 'onClick');
 
-    expect(rudderAnalytics.track).not.toHaveBeenCalled()
+        expect(rudderAnalytics.track).not.toHaveBeenCalled();
 
-    client.setTelemetryHandler(new RudderTelemetryHandler())
-    client.trackEvent('test', 'onClick')
+        client.setTelemetryHandler(new RudderTelemetryHandler());
+        client.trackEvent('test', 'onClick');
 
-    expect(rudderAnalytics.track).toHaveBeenCalledTimes(1)
-  })
-})
+        expect(rudderAnalytics.track).toHaveBeenCalledTimes(1);
+    });
+});

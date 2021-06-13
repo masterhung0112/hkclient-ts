@@ -13,24 +13,24 @@ export type EmojiCategory =
   | 'flags'
   | 'custom'
 export type CustomEmoji = {
-  id: string
-  create_at: number
-  update_at: number
-  delete_at: number
-  creator_id: string
-  name: string
-  category: 'custom'
+  id: string;
+  create_at: number;
+  update_at: number;
+  delete_at: number;
+  creator_id: string;
+  name: string;
+  category: 'custom';
 }
 export type SystemEmoji = {
-  filename: string
-  aliases: string[]
-  category: EmojiCategory
-  batch: number
+  filename: string;
+  aliases: string[];
+  category: EmojiCategory;
+  batch: number;
 }
 export type Emoji = SystemEmoji | CustomEmoji
 export type EmojisState = {
   customEmoji: {
-    [x: string]: CustomEmoji
-  }
-  nonExistentEmoji: Set<string>
+    [x: string]: CustomEmoji;
+  };
+  nonExistentEmoji: Set<string>;
 }

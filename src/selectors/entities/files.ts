@@ -1,51 +1,56 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { createSelector } from 'reselect'
+import {createSelector} from 'reselect';
 
-import { getCurrentUserLocale } from 'selectors/entities/i18n'
+import {getCurrentUserLocale} from 'selectors/entities/i18n';
 
-import { FileInfo, FileSearchResultItem } from 'types/files'
-import { GlobalState } from 'types/store'
+import {FileInfo, FileSearchResultItem} from 'types/files';
+import {GlobalState} from 'types/store';
 
-import { sortFileInfos } from 'utils/file_utils'
+import {sortFileInfos} from 'utils/file_utils';
 
 function getAllFiles(state: GlobalState) {
-  return state.entities.files.files
+    return state.entities.files.files;
 }
 
 function getAllFilesFromSearch(state: GlobalState) {
-  return state.entities.files.filesFromSearch
+    return state.entities.files.filesFromSearch;
 }
 
 function getFilesIdsForPost(state: GlobalState, postId: string) {
-  if (postId) {
-    return state.entities.files.fileIdsByPostId[postId] || []
-  }
+    if (postId) {
+        return state.entities.files.fileIdsByPostId[postId] || [];
+    }
 
-  return []
+    return [];
 }
 
 export function getFilePublicLink(state: GlobalState) {
-  return state.entities.files.filePublicLink
+    return state.entities.files.filePublicLink;
 }
 
 export function makeGetFilesForPost(): (state: GlobalState, postId: string) => FileInfo[] {
-  return createSelector(getAllFiles, getFilesIdsForPost, getCurrentUserLocale, (allFiles, fileIdsForPost, locale) => {
-    const fileInfos = fileIdsForPost.map((id) => allFiles[id]).filter((id) => Boolean(id))
+    return createSelector(
+        getAllFiles,
+        getFilesIdsForPost,
+        getCurrentUserLocale,
+        (allFiles, fileIdsForPost, locale) => {
+        const fileInfos = fileIdsForPost.map((id) => allFiles[id]).filter((id) => Boolean(id));
 
-    return sortFileInfos(fileInfos, locale)
-  })
+        return sortFileInfos(fileInfos, locale);
+        },
+    );
 }
 
 export const getSearchFilesResults: (state: GlobalState) => FileSearchResultItem[] = createSelector(
-  getAllFilesFromSearch,
-  (state: GlobalState) => state.entities.search.fileResults,
-  (files, fileIds) => {
-    if (!fileIds) {
-      return []
-    }
+    getAllFilesFromSearch,
+    (state: GlobalState) => state.entities.search.fileResults,
+    (files, fileIds) => {
+        if (!fileIds) {
+            return [];
+        }
 
-    return fileIds.map((id) => files[id])
-  }
-)
+        return fileIds.map((id) => files[id]);
+    },
+);

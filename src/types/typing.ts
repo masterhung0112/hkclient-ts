@@ -2,6 +2,6 @@
 // See LICENSE.txt for license information.
 export type Typing = {
   [x: string]: {
-    [x: string]: number
-  }
+    [x: string]: number;
+  };
 }

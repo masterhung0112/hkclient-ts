@@ -1,32 +1,32 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import { ErrorTypes } from 'action-types'
-import { GenericAction } from 'types/actions'
-export default (state: Array<{ error: any; displayable?: boolean; date: string }> = [], action: GenericAction) => {
-  switch (action.type) {
+import {ErrorTypes} from 'action-types';
+import {GenericAction} from 'types/actions';
+export default ((state: Array<{error: any;displayable?: boolean;date: string}> = [], action: GenericAction) => {
+    switch (action.type) {
     case ErrorTypes.DISMISS_ERROR: {
-      const nextState = [...state]
-      nextState.splice(action.index!, 1)
+        const nextState = [...state];
+        nextState.splice(action.index!, 1);
 
-      return nextState
+        return nextState;
     }
     case ErrorTypes.LOG_ERROR: {
-      const nextState = [...state]
-      const { displayable, error } = action
-      nextState.push({
-        displayable,
-        error,
-        date: new Date(Date.now()).toUTCString(),
-      })
+        const nextState = [...state];
+        const {displayable, error} = action;
+        nextState.push({
+            displayable,
+            error,
+            date: new Date(Date.now()).toUTCString(),
+        });
 
-      return nextState
+        return nextState;
     }
     case ErrorTypes.RESTORE_ERRORS:
-      return action.data
+        return action.data;
     case ErrorTypes.CLEAR_ERRORS: {
-      return []
+        return [];
     }
     default:
-      return state
-  }
-}
+        return state;
+    }
+});

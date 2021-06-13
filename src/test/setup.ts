@@ -1,6 +1,8 @@
-global.WebSocket = require('ws')
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+global.WebSocket = require('ws');
 
-require('isomorphic-fetch')
+require('isomorphic-fetch');
 
 // let warns
 // let errors

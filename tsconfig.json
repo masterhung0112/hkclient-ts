@@ -72,16 +72,16 @@
       "actions/*": [
         "src/actions/*"
       ],
-      "hkreducers": [
+      "reducers": [
         "src/reducers"
       ],
-      "hkreducers/*": [
+      "reducers/*": [
         "src/reducers/*"
       ],
-      "hkconstants": [
+      "constants": [
         "src/constants"
       ],
-      "hkconstants/*": [
+      "constants/*": [
         "src/constants/*"
       ],
       "selectors": [
@@ -102,16 +102,16 @@
       "saga-modular/*": [
         "src/hkredux/saga-modular/*"
       ],
-      "hksagas": [
+      "sagas": [
         "src/sagas"
       ],
-      "hksagas/*": [
+      "sagas/*": [
         "src/sagas/*"
       ],
-      "hkmodules": [
+      "modules": [
         "src/modules"
       ],
-      "hkmodules/*": [
+      "modules/*": [
         "src/modules/*"
       ],
       "*": [
@@ -123,11 +123,11 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "plugins": [
-      { 
+      {
         "transform": "@zerollup/ts-transform-paths",
         "exclude": [
           "*"
-        ] 
+        ]
       }
     ],
   }

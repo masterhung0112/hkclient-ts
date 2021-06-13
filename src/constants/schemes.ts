@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 export default {
-  SCHEMES_MODULE_NAME: 'schemes',
-}
+    SCHEMES_MODULE_NAME: 'schemes',
+};
 
 export const ScopeTypes = {
-  TEAM: 'team' as const,
-  CHANNEL: 'channel' as const,
-}
+    TEAM: 'team',
+    CHANNEL: 'channel',
+};

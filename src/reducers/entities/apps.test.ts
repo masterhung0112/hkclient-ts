@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {AppsTypes} from '../../action-types';
+import {AppsTypes} from '../../action_types';
 import {AppBinding} from '../../types/apps';
 import * as Reducers from './apps';
 

@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {combineReducers} from 'redux';
-import {AdminTypes, UserTypes} from 'action-types';
+import {AdminTypes, UserTypes} from 'action_types';
 import {Stats} from '../../constants';
 import PluginState from '../../constants/plugins';
 

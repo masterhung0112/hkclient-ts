@@ -3,7 +3,7 @@
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import CounterActions from '../actions/counter';
-import {CounterTypes} from '../action-types';
+import {CounterTypes} from '../action_types';
 import {countSelector} from '../selectors/entities/counter';
 
 function* incrementWorker() {

@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {AdminTypes} from 'action-types';
+import {AdminTypes} from 'action_types';
 import {General} from '../constants';
 import {Client4} from 'client';
 
@@ -873,7 +873,7 @@ export function removeDataRetentionCustomPolicyChannels(id: string, policy: Patc
 }
 
 export function clearDataRetentionCustomPolicyTeams(): ActionFunc {
-    return (dispatch: DispatchFunc) => {
+    return async (dispatch: DispatchFunc) => {
         dispatch(
             {type: AdminTypes.CLEAR_DATA_RETENTION_CUSTOM_POLICY_TEAMS, data: {}},
         );
@@ -882,7 +882,7 @@ export function clearDataRetentionCustomPolicyTeams(): ActionFunc {
 }
 
 export function clearDataRetentionCustomPolicyChannels(): ActionFunc {
-    return (dispatch: DispatchFunc) => {
+    return async (dispatch: DispatchFunc) => {
         dispatch(
             {type: AdminTypes.CLEAR_DATA_RETENTION_CUSTOM_POLICY_CHANNELS, data: {}},
         );

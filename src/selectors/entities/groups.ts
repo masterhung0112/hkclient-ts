@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {Group} from 'types/groups';
+import {Group, GroupStats} from 'types/groups';
 import {filterGroupsMatchingTerm} from 'utils/group_utils';
 import {getChannel} from 'selectors/entities/channels';
 import {getTeam} from 'selectors/entities/teams';
@@ -31,7 +31,7 @@ export function getAllGroupStats(state: GlobalState) {
 }
 
 export function getGroupStats(state: GlobalState, id: string) {
-    return getAllGroupStats(state)[id] || {};
+    return getAllGroupStats(state)[id] || {} as GroupStats;
 }
 
 export function getGroup(state: GlobalState, id: string) {

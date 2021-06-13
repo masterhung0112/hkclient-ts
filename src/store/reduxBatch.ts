@@ -46,7 +46,8 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    return function <S = {}, A extends Action = AnyAction>(
+    // eslint-disable-next-line func-names
+    return function <S = Record<string, any>, A extends Action = AnyAction>(
         reducer: Reducer<S, A>,
         preloadedState?: PreloadedState<S>,
     ): Store<S & StateExt, A> & Ext {
@@ -62,18 +63,19 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
             if (Array.isArray(action)) {
                 isArrayActions = true;
                 targetAction = action;
-            } else if (action && 'meta' in action && action.meta.batch) {
+            // eslint-disable-next-line dot-notation
+            } else if (action && 'meta' in action && action['meta'].batch) {
                 isArrayActions = true;
-                targetAction = action.payload;
+                // eslint-disable-next-line dot-notation
+                targetAction = action['payload'];
             }
             try {
-                const result = isArrayActions ?
-                    targetAction.map((subAction) => {
-                        return dispatchRecurse(subAction as A);
-                    }) :
-                    store.dispatch(action as A);
+                const result = isArrayActions ? targetAction.map((subAction) => {
+                    return dispatchRecurse(subAction as A);
+                }) : store.dispatch(action as A);
                 return result;
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error(e);
             }
 

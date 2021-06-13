@@ -11,7 +11,6 @@ export type GeneralState = {
   config: Partial<ClientConfig>;
   dataRetentionPolicy: any;
   deviceToken: string;
-  firstAdminVisitMarketplaceStatus: boolean;
   license: ClientLicense;
   serverVersion: string;
   timezones: string[];

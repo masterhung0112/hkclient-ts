@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {ChannelTypes, PreferenceTypes, UserTypes} from 'action-types';
+import {ChannelTypes, PreferenceTypes, UserTypes} from 'action_types';
 
 import {Client4} from 'client';
 
@@ -392,7 +392,7 @@ export function updateChannelNotifyProps(userId: string, channelId: string, prop
             return {error};
         }
 
-        const member = getState().entities.channels.myMembers[channelId] || {};
+        const member = getState().entities.channels.myMembers[channelId] || {} as ChannelMembership;
         const currentNotifyProps = member.notify_props || {};
 
         dispatch({
@@ -835,7 +835,7 @@ export function viewChannel(channelId: string, prevChannelId = ''): ActionFunc {
 }
 
 export function markChannelAsViewed(channelId: string, prevChannelId = ''): ActionFunc {
-    return (dispatch: DispatchFunc, getState: GetStateFunc) => {
+    return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         const actions: Action[] = [];
 
         const {myMembers} = getState().entities.channels;

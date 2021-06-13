@@ -3,7 +3,7 @@
 
 import {CategoryTypes} from '../../constants/channel_categories';
 
-import {ChannelTypes, TeamTypes} from 'action-types';
+import {ChannelTypes, TeamTypes} from 'action_types';
 
 import * as Reducers from './channel_categories';
 

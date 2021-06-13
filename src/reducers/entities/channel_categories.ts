@@ -3,7 +3,7 @@
 
 import {combineReducers} from 'redux';
 
-import {ChannelCategoryTypes, TeamTypes, UserTypes, ChannelTypes} from 'action-types';
+import {ChannelCategoryTypes, TeamTypes, UserTypes, ChannelTypes} from 'action_types';
 
 import {GenericAction} from 'types/actions';
 import {ChannelCategory} from 'types/channel_categories';

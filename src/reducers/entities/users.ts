@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
-import {UserTypes, ChannelTypes} from 'action-types';
+import {UserTypes, ChannelTypes} from 'action_types';
 import {profileListToMap} from 'utils/user_utils';
 import {GenericAction} from 'types/actions';
 import {UserAccessToken, UserProfile, UserStatus} from 'types/users';

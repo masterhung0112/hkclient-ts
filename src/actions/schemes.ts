@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {Client4} from 'client';
-import {SchemeTypes} from 'action-types';
+import {SchemeTypes} from 'action_types';
 import {General} from '../constants';
 
 import {Scheme, SchemeScope, SchemePatch} from 'types/schemes';

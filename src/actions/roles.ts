@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {Client4} from 'client';
-import {RoleTypes} from 'action-types';
+import {RoleTypes} from 'action_types';
 import {getRoles} from 'selectors/entities/roles_helpers';
 import {hasNewPermissions} from 'selectors/entities/general';
 

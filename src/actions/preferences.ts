@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {PreferenceTypes} from 'action-types';
+import {PreferenceTypes} from 'action_types';
 
 import {Client4} from 'client';
 

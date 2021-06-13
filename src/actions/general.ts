@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import {Client4} from 'client';
 
-import {GeneralTypes} from 'action-types';
+import {GeneralTypes} from 'action_types';
 
 import {getServerVersion} from 'selectors/entities/general';
 import {isMinimumServerVersion} from 'utils/helpers';

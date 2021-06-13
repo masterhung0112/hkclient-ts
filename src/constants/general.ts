@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 export default {
-    GENERAL_MODULE_NAME: 'general',
+    GENERAL_MODULE_NAME: 'general' as const,
 
     CONFIG_CHANGED: 'config_changed',
 

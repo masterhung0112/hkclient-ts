@@ -6,7 +6,7 @@ import {UserProfile, UserStatus, GetFilteredUsersStatsOpts, UsersStats, UserCust
 import {TeamMembership} from 'types/teams';
 import {Client4} from 'client';
 import {General} from '../constants';
-import {UserTypes, TeamTypes, AdminTypes} from 'action-types';
+import {UserTypes, TeamTypes, AdminTypes} from 'action_types';
 import {getAllCustomEmojis} from './emojis';
 import {getClientConfig, setServerVersion} from './general';
 import {getMyTeams, getMyTeamMembers, getMyTeamUnreads} from './teams';

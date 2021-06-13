@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {ChannelCategoryTypes, ChannelTypes} from 'action-types';
+import {ChannelCategoryTypes, ChannelTypes} from 'action_types';
 
 import {Client4} from 'client';
 
@@ -147,7 +147,7 @@ export function fetchMyCategories(teamId: string) {
 // Unless setOnServer is true, this only affects the categories on this client. If it is set to true, this updates
 // categories on the server too.
 export function addChannelToInitialCategory(channel: Channel, setOnServer = false): ActionFunc {
-    return (dispatch: DispatchFunc, getState: GetStateFunc) => {
+    return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         const state = getState();
         const categories = Object.values(getAllCategoriesByIds(state));
 

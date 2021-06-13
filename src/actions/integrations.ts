@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {IntegrationTypes} from 'action-types';
+import {IntegrationTypes} from 'action_types';
 import {General} from '../constants';
 import {Client4} from 'client';
 import {getCurrentUserId} from 'selectors/entities/users';

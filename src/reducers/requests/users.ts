@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
 import {RequestStatus} from '../../constants';
-import {UserTypes} from 'action-types';
+import {UserTypes} from 'action_types';
 
 import {GenericAction} from 'types/actions';
 import {UsersRequestsStatuses, RequestStatusType} from 'types/requests';

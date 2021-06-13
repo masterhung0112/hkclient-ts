@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {combineReducers} from 'redux';
-import {GroupTypes} from 'action-types';
+import {GroupTypes} from 'action_types';
 import {GroupChannel, GroupSyncablesState, GroupTeam, Group} from 'types/groups';
 import {GenericAction} from 'types/actions';
 import {Dictionary} from 'types/utilities';

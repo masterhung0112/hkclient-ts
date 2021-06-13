@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {Client4} from 'client';
-import {BotTypes} from 'action-types';
+import {BotTypes} from 'action_types';
 import {bindClientFunc} from './helpers';
 
 import {ActionFunc} from 'types/actions';

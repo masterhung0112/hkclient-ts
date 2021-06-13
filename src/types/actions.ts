@@ -40,7 +40,7 @@ export interface DispatchFunc<A = GenericAction | Thunk | BatchAction | ActionFu
   <TReturnType = ActionResultType>(actionFuncs: A[]): Promise<TReturnType>;
 }
 
-export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResult | ActionResult[]> // | ActionResult
+export type ActionFunc = (dispatch: DispatchFunc, getState: GetStateFunc) => Promise<ActionResult | ActionResult[]> //| ActionResult
 
 export type Action = GenericAction | Thunk | BatchAction | ActionFunc
 
@@ -80,13 +80,15 @@ declare module 'redux' {
    * Overload to add thunk support to Redux's dispatch() function.
    * Useful for react-redux or any other library which could use this type.
    */
-  export interface Dispatch<A extends Action = AnyAction> {
+  //<A extends Action = AnyAction>
+  export interface Dispatch {
     <TReturnType = ActionResultType>(actionFunc: ActionFunc): TReturnType;
     <TReturnType = ActionResultType>(actionFuncs: ActionFunc[]): TReturnType;
     <TReturnType = ActionResultType>(actions: AnyAction[]): TReturnType;
     <TReturnType = ActionResultType>(actions: Array<AnyAction | ActionFunc>): TReturnType;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function bindActionCreators<A, M extends ExtActionCreatorsMapObject<any>>(
     actionCreator: M,
     dispatch: DispatchFunc

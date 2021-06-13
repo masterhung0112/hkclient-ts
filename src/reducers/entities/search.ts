@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
-import {PostTypes, PreferenceTypes, SearchTypes, UserTypes} from 'action-types';
+import {PostTypes, PreferenceTypes, SearchTypes, UserTypes} from 'action_types';
 import {Preferences} from '../../constants';
 import {PreferenceType} from 'types/preferences';
 import {GenericAction} from 'types/actions';

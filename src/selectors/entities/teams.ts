@@ -50,7 +50,7 @@ export function getMembersInTeams(state: GlobalState) {
 export const getTeamsList: (state: GlobalState) => Team[] = createSelector(
     getTeams,
     (teams) => {
-    return Object.values(teams);
+        return Object.values(teams);
     },
 );
 
@@ -130,7 +130,7 @@ export const getMyTeamMember: (state: GlobalState, teamId: string) => TeamMember
     getTeamMemberships,
     (state: GlobalState, teamId: string) => teamId,
     (teamMemberships, teamId) => {
-        return teamMemberships[teamId] || {};
+        return teamMemberships[teamId] || {} as TeamMembership;
     },
 );
 

@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {GifTypes} from 'action-types';
+import {GifTypes} from 'action_types';
 import {Client4} from 'client';
 import gfycatSdk from 'utils/gfycat_sdk';
 import {DispatchFunc, GetStateFunc} from 'types/actions';

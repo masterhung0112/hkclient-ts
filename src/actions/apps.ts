@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {AppsTypes} from 'action-types';
+import {AppsTypes} from 'action_types';
 import {Client4} from 'client';
 
 import {ActionFunc} from 'types/actions';

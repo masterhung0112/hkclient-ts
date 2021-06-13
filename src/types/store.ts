@@ -29,6 +29,8 @@ import {Typing} from './typing';
 import {UsersState} from './users';
 import {Dictionary} from './utilities';
 import {AppsState} from './apps';
+import {Task} from 'redux-saga';
+import {Store} from 'redux';
 
 export type GlobalState = {
     entities: {

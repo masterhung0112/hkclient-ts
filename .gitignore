@@ -3,7 +3,7 @@
 .DS_Store
 
 # Compiled files
-/action-types
+/action_types
 /actions
 /hkclient
 /constants

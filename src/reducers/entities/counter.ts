@@ -1,6 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {CounterTypes} from 'action-types';
+import {CounterTypes} from 'action_types';
 import {CountState} from 'types/counter';
 import {GenericAction} from 'types/actions';
 

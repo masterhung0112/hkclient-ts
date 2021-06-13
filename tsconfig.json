@@ -60,11 +60,11 @@
       "testlib/*": [
         "src/testlib/*"
       ],
-      "action-types": [
-        "src/action-types"
+      "action_types": [
+        "src/action_types"
       ],
-      "action-types/*": [
-        "src/action-types/*"
+      "action_types/*": [
+        "src/action_types/*"
       ],
       "actions": [
         "src/actions"

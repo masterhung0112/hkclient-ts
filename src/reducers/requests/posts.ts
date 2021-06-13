@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
-import {PostTypes} from 'action-types';
+import {PostTypes} from 'action_types';
 import {handleRequest, initialRequestState} from './helpers';
 import {GenericAction} from 'types/actions';
 import {PostsRequestsStatuses, RequestStatusType} from 'types/requests';

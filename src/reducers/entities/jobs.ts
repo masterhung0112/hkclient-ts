@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
-import {JobTypes} from 'action-types';
+import {JobTypes} from 'action_types';
 import {JobsState, JobType, Job, JobsByType} from 'types/jobs';
 import {GenericAction} from 'types/actions';
 import {IDMappedObjects} from 'types/utilities';

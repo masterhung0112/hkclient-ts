@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {Client4} from 'client';
-import {SearchTypes} from 'action-types';
+import {SearchTypes} from 'action_types';
 import {getCurrentTeamId} from 'selectors/entities/teams';
 import {getCurrentUserId, getCurrentUserMentionKeys} from 'selectors/entities/users';
 

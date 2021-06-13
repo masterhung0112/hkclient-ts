@@ -41,7 +41,7 @@
         "@typescript-eslint/no-var-requires": 0,
         "@typescript-eslint/explicit-function-return-type": 0,
         "linebreak-style": "off",
-        "indent": ["error", 4]
+        "max-lines": "off"
     },
     "overrides": [
         {

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 import {combineReducers} from 'redux';
-import {SearchTypes} from 'action-types';
+import {SearchTypes} from 'action_types';
 
 import {GenericAction} from 'types/actions';
 import {SearchRequestsStatuses, RequestStatusType} from 'types/requests';

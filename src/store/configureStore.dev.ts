@@ -12,8 +12,7 @@ import defaultOfflineConfig from '@redux-offline/redux-offline/lib/defaults';
 import {createMiddleware} from './middleware';
 import {getSagaExtension, SagaExtensionContext} from 'hkredux/saga-modular';
 import {getThunkExtension} from 'hkredux/thunkMiddleware';
-import {EntitiesModule} from 'hkmodules/reducerModule';
-import {getSagaPromiseExtension} from 'hkredux';
+import {EntitiesModule} from 'modules/reducerModule';
 import {enableBatching} from 'types/actions';
 
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {

@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import {CountAwareState} from 'types/counter';
 import {countReducer} from 'reducers/entities/counter';
-import {countWatcher} from 'hksagas/counter';
+import {countWatcher} from 'sagas/counter';
 import {ISagaModule} from 'saga-modular/contracts';
 import CounterConstants from 'constants/counter';
 

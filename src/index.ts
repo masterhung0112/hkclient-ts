@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import {ActionFunc} from 'types/actions';
 
-export * from './action-types';
+export * from './action_types';
 export * from './actions';
 export * from './constants';
 export * from './client';

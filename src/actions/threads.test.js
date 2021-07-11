@@ -82,7 +82,7 @@ describe('Actions.Threads', () => {
     const currentUserId = 'currentUserId'.padEnd(26, ID_PAD);
 
     beforeEach(() => {
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 teams: {
                     currentTeamId,

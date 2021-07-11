@@ -3,7 +3,7 @@
 
 import nock from 'nock';
 
-import configureStore from 'testlib/test_store';
+import configureStore from 'test/test_store';
 
 import {Client4} from 'client';
 
@@ -15,7 +15,7 @@ import {getAllCategoriesByIds} from 'selectors/entities/channel_categories';
 import {isFavoriteChannel} from 'selectors/entities/channels';
 import {getMyPreferences} from 'selectors/entities/preferences';
 
-import TestHelper, {DEFAULT_SERVER} from 'testlib/test_helper';
+import TestHelper, {DEFAULT_SERVER} from 'test/test_helper';
 
 import {CategorySorting} from 'types/channel_categories';
 

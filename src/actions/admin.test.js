@@ -26,7 +26,7 @@ describe('Actions.Admin', () => {
     });
 
     beforeEach(() => {
-        store = configureStore();
+        store = configureStore([]);
     });
 
     afterAll(() => {
@@ -825,8 +825,8 @@ describe('Actions.Admin', () => {
     });
 
     it('overwritePlugin', async () => {
-        const data1 = fs.createReadStream('src/test/setup.ts');
-        const data2 = fs.createReadStream('src/test/setup.ts');
+        const data1 = fs.createReadStream('src/test/setup.js');
+        const data2 = fs.createReadStream('src/test/setup.js');
         const testPlugin = {id: 'testplugin', webapp: {bundle_path: '/static/somebundle.js'}};
 
         nock(Client4.getBaseRoute()).

@@ -18,7 +18,7 @@ describe('Actions.Bots', () => {
     });
 
     beforeEach(() => {
-        store = configureStore();
+        store = configureStore([]);
     });
 
     afterAll(() => {

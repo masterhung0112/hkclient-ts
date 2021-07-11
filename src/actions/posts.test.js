@@ -288,7 +288,7 @@ describe('Actions.Posts', () => {
         const post3 = {id: 'post3', channel_id: 'channel1', root_id: 'post2', create_at: 1003, message: ''};
         const post4 = {id: 'post4', channel_id: 'channel1', root_id: 'post1', create_at: 1004, message: ''};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 posts: {
                     posts: {
@@ -767,7 +767,7 @@ describe('Actions.Posts', () => {
         const post3 = {id: 'post3', channel_id: 'channel1', create_at: 1003, message: ''};
         const post4 = {id: 'post4', channel_id: 'channel1', root_id: 'post0', create_at: 1004, message: ''};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 posts: {
                     posts: {
@@ -828,7 +828,7 @@ describe('Actions.Posts', () => {
         const post2 = {id: 'post2', channel_id: channelId, root_id: 'post1', create_at: 1002, message: ''};
         const post3 = {id: 'post3', channel_id: channelId, create_at: 1003, message: ''};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 posts: {
                     posts: {
@@ -880,7 +880,7 @@ describe('Actions.Posts', () => {
         const post2 = {id: 'post2', channel_id: channelId, root_id: 'post1', create_at: 1002, message: ''};
         const post3 = {id: 'post3', channel_id: channelId, create_at: 1003, message: ''};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 posts: {
                     posts: {
@@ -930,7 +930,7 @@ describe('Actions.Posts', () => {
         const post2 = {id: 'post2', channel_id: channelId, root_id: 'post1', create_at: 1002, message: ''};
         const post3 = {id: 'post3', channel_id: channelId, create_at: 1003, message: ''};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 posts: {
                     posts: {
@@ -1124,7 +1124,7 @@ describe('Actions.Posts', () => {
         const userId = TestHelper.generateId();
         const postId = TestHelper.generateId();
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channels: {
                     channels: {
@@ -1347,7 +1347,7 @@ describe('Actions.Posts', () => {
     });
 
     it('getCustomEmojiForReaction', async () => {
-        const testImageData = fs.createReadStream('test/assets/images/test.png');
+        const testImageData = fs.createReadStream('src/test/assets/images/test.png');
         const {dispatch, getState} = store;
 
         nock(Client4.getBaseRoute()).

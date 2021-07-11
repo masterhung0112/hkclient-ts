@@ -1044,11 +1044,11 @@ export function searchProfiles(term: string, options: any = {}): ActionFunc {
     };
 }
 
-let statusIntervalId: NodeJS.Timeout|null;
+let statusIntervalId: NodeJS.Timeout|number|null;
 export function startPeriodicStatusUpdates(): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         if (statusIntervalId) {
-            clearInterval(statusIntervalId);
+            clearInterval(statusIntervalId as any);
         }
 
         statusIntervalId = setInterval(
@@ -1076,7 +1076,7 @@ export function startPeriodicStatusUpdates(): ActionFunc {
 export function stopPeriodicStatusUpdates(): ActionFunc {
     return async () => {
         if (statusIntervalId) {
-            clearInterval(statusIntervalId);
+            clearInterval(statusIntervalId as any);
         }
 
         return {data: true};

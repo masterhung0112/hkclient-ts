@@ -605,7 +605,7 @@ describe('Actions.Channels', () => {
 
             const currentUserId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         myMembers: {
@@ -646,7 +646,7 @@ describe('Actions.Channels', () => {
 
             const currentUserId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         manuallyUnread: {
@@ -683,7 +683,7 @@ describe('Actions.Channels', () => {
 
             const currentUserId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         manuallyUnread: {
@@ -765,7 +765,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const userId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -801,7 +801,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const userId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -837,7 +837,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const userId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -873,7 +873,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const userId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -909,7 +909,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const userId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -946,7 +946,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const teamId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -991,7 +991,7 @@ describe('Actions.Channels', () => {
             const channelId = TestHelper.generateId();
             const teamId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1035,7 +1035,7 @@ describe('Actions.Channels', () => {
         it('one unread DM channel', async () => {
             const channelId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1073,7 +1073,7 @@ describe('Actions.Channels', () => {
             const channelId2 = TestHelper.generateId();
             const teamId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1132,7 +1132,7 @@ describe('Actions.Channels', () => {
             const channelId2 = TestHelper.generateId();
             const teamId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1191,7 +1191,7 @@ describe('Actions.Channels', () => {
             const channelId2 = TestHelper.generateId();
             const teamId = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1251,7 +1251,7 @@ describe('Actions.Channels', () => {
             const teamId1 = TestHelper.generateId();
             const teamId2 = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1319,7 +1319,7 @@ describe('Actions.Channels', () => {
             const teamId1 = TestHelper.generateId();
             const teamId2 = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -1387,7 +1387,7 @@ describe('Actions.Channels', () => {
             const teamId1 = TestHelper.generateId();
             const teamId2 = TestHelper.generateId();
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -2032,7 +2032,7 @@ describe('Actions.Channels', () => {
         test('should delete the channel member when leaving a public channel', async () => {
             const channel = {id: 'channel', team_id: team.id, type: General.OPEN_CHANNEL};
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -2063,7 +2063,7 @@ describe('Actions.Channels', () => {
         test('should delete the channel member and channel when leaving a private channel', async () => {
             const channel = {id: 'channel', team_id: team.id, type: General.PRIVATE_CHANNEL};
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -2095,7 +2095,7 @@ describe('Actions.Channels', () => {
             const channel = {id: 'channel', team_id: team.id, type: General.OPEN_CHANNEL};
             const category = {id: 'category', team_id: team.id, type: CategoryTypes.CUSTOM, channel_ids: [channel.id]};
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channelCategories: {
                         byId: {
@@ -2136,7 +2136,7 @@ describe('Actions.Channels', () => {
             const channel = {id: 'channel', team_id: team.id, type: General.OPEN_CHANNEL};
             const category = {id: 'category', team_id: team.id, type: CategoryTypes.CHANNELS, channel_ids: [channel.id]};
 
-            store = await configureStore({
+            store = await configureStore([], {
                 entities: {
                     channelCategories: {
                         byId: {
@@ -2184,7 +2184,7 @@ describe('Actions.Channels', () => {
 
         const channelsCategory = {id: 'channelsCategory', team_id: team.id, type: CategoryTypes.CHANNELS, channel_ids: []};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channelCategories: {
                     byId: {
@@ -2231,7 +2231,7 @@ describe('Actions.Channels', () => {
 
         const channelsCategory = {id: 'channelsCategory', team_id: team.id, type: CategoryTypes.CHANNELS, channel_ids: []};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channelCategories: {
                     byId: {
@@ -2276,7 +2276,7 @@ describe('Actions.Channels', () => {
         const favoritesCategory = {id: 'favoritesCategory', team_id: team.id, type: CategoryTypes.FAVORITES, channel_ids: []};
         const channelsCategory = {id: 'channelsCategory', team_id: team.id, type: CategoryTypes.CHANNELS, channel_ids: [channel.id]};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channels: {
                     channels: {
@@ -2325,7 +2325,7 @@ describe('Actions.Channels', () => {
         const channel = TestHelper.basicChannel;
         const currentUserId = TestHelper.generateId();
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channels: {
                     channels: {
@@ -2366,7 +2366,7 @@ describe('Actions.Channels', () => {
         const favoritesCategory = {id: 'favoritesCategory', team_id: team.id, type: CategoryTypes.FAVORITES, channel_ids: [channel.id]};
         const channelsCategory = {id: 'channelsCategory', team_id: team.id, type: CategoryTypes.CHANNELS, channel_ids: []};
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channels: {
                     channels: {
@@ -2418,7 +2418,7 @@ describe('Actions.Channels', () => {
 
         const prefKey = getPreferenceKey(Preferences.CATEGORY_FAVORITE_CHANNEL, channel.id);
 
-        store = configureStore({
+        store = configureStore([], {
             entities: {
                 channels: {
                     channels: {
@@ -2557,7 +2557,7 @@ describe('Actions.Channels', () => {
         const now = new Date().getTime();
         const currentUserId = TestHelper.generateId();
 
-        store = await configureStore({
+        store = await configureStore([], {
             entities: {
                 users: {
                     currentUserId,

@@ -1032,7 +1032,7 @@ describe('Actions.Users', () => {
         TestHelper.mockLogin();
         await Actions.login(TestHelper.basicUser.email, 'password1')(store.dispatch, store.getState);
 
-        const testImageData = fs.createReadStream('test/assets/images/test.png');
+        const testImageData = fs.createReadStream('src/test/assets/images/test.png');
 
         const beforeTime = new Date().getTime();
         const currentUserId = store.getState().entities.users.currentUserId;
@@ -1422,7 +1422,7 @@ describe('Actions.Users', () => {
                 query({since: lastDisconnectAt}).
                 reply(200, [{...user2, update_at: 2000}]);
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     general: {
                         serverVersion: '5.14.0',
@@ -1463,7 +1463,7 @@ describe('Actions.Users', () => {
                 },
             });
 
-            store = configureStore(originalState);
+            store = configureStore([], originalState);
 
             await store.dispatch(Actions.checkForModifiedUsers());
 

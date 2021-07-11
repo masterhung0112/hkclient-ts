@@ -5,29 +5,51 @@ import {createTransform, persistStore} from 'redux-persist';
 
 import configureStore from 'store';
 
-export default function testConfigureStore(preloadedState) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default (loadedModule = [], preloadedState = null) => {
     const storageTransform = createTransform(
         () => ({}),
         () => ({}),
     );
 
-    const persistConfig = {
-        persist: (store, options) => {
-            return persistStore(store, {storage: new AsyncNodeStorage('./.tmp'), ...options});
+    // const persistConfig = {
+    //     persist: (store, options) => {
+    //         return persistStore(store, {storage: new AsyncNodeStorage('./.tmp'), ...options});
+    //     },
+    //     persistOptions: {
+    //         debounce: 1000,
+    //         transforms: [
+    //             storageTransform,
+    //         ],
+    //         whitelist: [],
+    //     },
+    // };
+
+    const offlineConfig = {
+        detectNetwork: (callback) => callback(true),
+        persist: (store) => {
+            return persistStore(store, {storage: new AsyncNodeStorage('./.tmp')});
         },
         persistOptions: {
             debounce: 1000,
-            transforms: [
-                storageTransform,
-            ],
+            transforms: [storageTransform],
             whitelist: [],
+        },
+        retry: (action, retries) => 200 * (retries + 1),
+        discard: (error, action, retries) => {
+            if (action.meta && Object.prototype.hasOwnProperty.call(action.meta.offline, 'maxRetry')) {
+                return retries >= (action.meta.offline).maxRetry;
+            }
+
+            return retries >= 1;
         },
     };
 
-    const store = configureStore(preloadedState, {}, persistConfig, () => ({}));
+    // const store = configureStore(preloadedState, {}, persistConfig, () => ({}));
+    const store = configureStore(preloadedState, offlineConfig, [...loadedModule]);
 
     return store;
-}
+};
 
 // This should probably be replaced by redux-mock-store like the web app
 export function mockDispatch(dispatch) {

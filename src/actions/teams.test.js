@@ -527,7 +527,7 @@ describe('Actions.Teams', () => {
         const user = {id: 'user'};
 
         test('should remove the user from the team', async () => {
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     teams: {
                         membersInTeam: {
@@ -563,7 +563,7 @@ describe('Actions.Teams', () => {
             const channel1 = {id: 'channel1', team_id: team.id};
             const channel2 = {id: 'channel2', team_id: 'team2'};
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -594,7 +594,7 @@ describe('Actions.Teams', () => {
         test('should clear the current channel when leaving a team', async () => {
             const channel = {id: 'channel'};
 
-            store = configureStore({
+            store = configureStore([], {
                 entities: {
                     channels: {
                         channels: {
@@ -674,7 +674,7 @@ describe('Actions.Teams', () => {
         await login(TestHelper.basicUser.email, 'password1')(store.dispatch, store.getState);
 
         const team = TestHelper.basicTeam;
-        const imageData = fs.createReadStream('test/assets/images/test.png');
+        const imageData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getTeamRoute(team.id)).
             post('/image').

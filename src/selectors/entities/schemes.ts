@@ -14,7 +14,7 @@ import {GlobalState} from 'types/store';
 import {Team} from 'types/teams';
 
 export function getSchemes(state: GlobalState): {
-  [x: string]: Scheme;
+    [x: string]: Scheme;
 } {
     return state.entities.schemes.schemes;
 }
@@ -27,7 +27,7 @@ export function getScheme(state: GlobalState, id: string): Scheme {
 export function makeGetSchemeChannels() {
     return (createSelector(
         getAllChannels,
-        (state: GlobalState, props: { schemeId: string }) => getScheme(state, props.schemeId),
+        (state: GlobalState, props: {schemeId: string}) => getScheme(state, props.schemeId),
         (allChannels, scheme) => {
             if (!scheme) {
                 return [];
@@ -50,14 +50,14 @@ export function makeGetSchemeChannels() {
 
             return schemeChannels;
         }) as (b: GlobalState, a: {
-      schemeId: string;
+        schemeId: string;
     }) => Channel[]);
 }
 
 export function makeGetSchemeTeams() {
     return (createSelector(
         getTeams,
-        (state: GlobalState, props: { schemeId: string }) => getScheme(state, props.schemeId),
+        (state: GlobalState, props: {schemeId: string}) => getScheme(state, props.schemeId),
         (allTeams, scheme) => {
             if (!scheme) {
                 return [];
@@ -80,6 +80,6 @@ export function makeGetSchemeTeams() {
 
             return schemeTeams;
         }) as (b: GlobalState, a: {
-      schemeId: string;
+        schemeId: string;
     }) => Team[]);
 }

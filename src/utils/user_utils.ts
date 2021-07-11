@@ -208,18 +208,18 @@ function checkUserHasRole(user: UserProfile, userIsNotAdminOrGuest: boolean, mem
     return (
         (
 
-    // If role is system user then user cannot have system admin or system guest roles
+            // If role is system user then user cannot have system admin or system guest roles
             isSystemRole && user.roles.includes(role) && (
                 (role === General.SYSTEM_USER_ROLE && userIsNotAdminOrGuest) ||
                 role !== General.SYSTEM_USER_ROLE
             )
         ) || (
 
-    // If user is a system admin or a system guest then ignore team and channel memberships
+            // If user is a system admin or a system guest then ignore team and channel memberships
             !isSystemRole && userIsNotAdminOrGuest && (
                 (role === General.TEAM_ADMIN_ROLE && membership?.scheme_admin) ||
-        (role === General.CHANNEL_ADMIN_ROLE && membership?.scheme_admin) ||
-        (role === General.TEAM_USER_ROLE && membership?.scheme_user && !membership?.scheme_admin) ||
+                (role === General.CHANNEL_ADMIN_ROLE && membership?.scheme_admin) ||
+                (role === General.TEAM_USER_ROLE && membership?.scheme_user && !membership?.scheme_admin) ||
                 (role === General.CHANNEL_USER_ROLE && membership?.scheme_user && !membership?.scheme_admin)
             )
         )

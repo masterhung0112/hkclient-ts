@@ -74,7 +74,7 @@ export const getThreadOrderInCurrentTeam: (state: GlobalState, selectedThreadIdI
 );
 
 export const getUnreadThreadOrderInCurrentTeam: (
-  state: GlobalState,
+    state: GlobalState,
     selectedThreadIdInTeam?: $ID<UserThread>,
 ) => Array<$ID<UserThread>> = createSelector(
     getThreadsInCurrentTeam,

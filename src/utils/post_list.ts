@@ -24,9 +24,9 @@ function shouldShowJoinLeaveMessages(state: GlobalState) {
 }
 
 interface PostFilterOptions {
-  postIds: string[];
-  lastViewedAt: number;
-  indicateNewMessages: boolean;
+    postIds: string[];
+    lastViewedAt: number;
+    indicateNewMessages: boolean;
 }
 
 export function makePreparePostIdsForPostList() {
@@ -100,10 +100,10 @@ export function makeFilterPostsAndAddSeparators() {
 
                 if (
                     lastViewedAt &&
-          post.create_at > lastViewedAt &&
-          (post.user_id !== currentUser.id || isFromWebhook(post)) &&
-          !addedNewMessagesIndicator &&
-          indicateNewMessages
+                    post.create_at > lastViewedAt &&
+                    (post.user_id !== currentUser.id || isFromWebhook(post)) &&
+                    !addedNewMessagesIndicator &&
+                    indicateNewMessages
                 ) {
                     out.push(START_OF_NEW_MESSAGES);
                     addedNewMessagesIndicator = true;
@@ -325,24 +325,24 @@ function extractUserActivityData(userActivities: any) {
     Object.entries(userActivities).forEach(([postType, values]: [string, any]) => {
         if (
             postType === Posts.POST_TYPES.ADD_TO_TEAM ||
-      postType === Posts.POST_TYPES.ADD_TO_CHANNEL ||
-      postType === Posts.POST_TYPES.REMOVE_FROM_CHANNEL
+            postType === Posts.POST_TYPES.ADD_TO_CHANNEL ||
+            postType === Posts.POST_TYPES.REMOVE_FROM_CHANNEL
         ) {
             Object.keys(values).map((key) => [key, values[key]]).forEach(([actorId, users]) => {
-                    if (Array.isArray(users)) {
-                        throw new Error('Invalid Post activity data');
-                    }
-                    const {ids, usernames} = users;
-                    messageData.push({postType, userIds: [...usernames, ...ids], actorId});
-                    if (ids.length > 0) {
-                        allUserIds.push(...ids);
-                    }
+                if (Array.isArray(users)) {
+                    throw new Error('Invalid Post activity data');
+                }
+                const {ids, usernames} = users;
+                messageData.push({postType, userIds: [...usernames, ...ids], actorId});
+                if (ids.length > 0) {
+                    allUserIds.push(...ids);
+                }
 
-                    if (usernames.length > 0) {
-                        allUsernames.push(...usernames);
-                    }
-                    allUserIds.push(actorId);
-                });
+                if (usernames.length > 0) {
+                    allUsernames.push(...usernames);
+                }
+                allUserIds.push(actorId);
+            });
         } else {
             if (!Array.isArray(values)) {
                 throw new Error('Invalid Post activity data');
@@ -380,8 +380,8 @@ export function combineUserActivitySystemPost(systemPosts: types.posts.Post[] = 
 
         if (
             postType === Posts.POST_TYPES.ADD_TO_TEAM ||
-      postType === Posts.POST_TYPES.ADD_TO_CHANNEL ||
-      postType === Posts.POST_TYPES.REMOVE_FROM_CHANNEL
+            postType === Posts.POST_TYPES.ADD_TO_CHANNEL ||
+            postType === Posts.POST_TYPES.REMOVE_FROM_CHANNEL
         ) {
             const userId = post.props.addedUserId || post.props.removedUserId;
             const username = post.props.addedUsername || post.props.removedUsername;

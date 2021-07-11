@@ -21,6 +21,7 @@ export function getSagaExtension<C extends SagaExtensionContext>(
 ): IExtension {
     const sagaMonitor = undefined;
 
+    // eslint-disable-next-line no-process-env
     if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
     // sagaMonitor = (window as any)['__SAGA_MONITOR_EXTENSION__'] || undefined
     }
@@ -32,7 +33,8 @@ export function getSagaExtension<C extends SagaExtensionContext>(
         onError,
     });
 
-    const _sagaManager: ISagaItemManager<ISagaRegistration<any>> = getRefCountedManager(
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const sagaManager: ISagaItemManager<ISagaRegistration<any>> = getRefCountedManager(
         getSagaManager(sagaMiddleware),
         sagaEquals,
     );
@@ -43,24 +45,24 @@ export function getSagaExtension<C extends SagaExtensionContext>(
         onModuleManagerCreated: (moduleManager: IModuleManager) => {
             if (sagaContext) {
                 sagaContext.moduleManager = moduleManager;
-                sagaContext.sagaManager = _sagaManager;
+                sagaContext.sagaManager = sagaManager;
             }
         },
 
         onModuleAdded: (module: ISagaModule<any>): void => {
             if (module.sagas) {
-                _sagaManager.add(module.sagas);
+                sagaManager.add(module.sagas);
             }
         },
 
         onModuleRemoved: (module: ISagaModule<any>): void => {
             if (module.sagas) {
-                _sagaManager.remove(module.sagas);
+                sagaManager.remove(module.sagas);
             }
         },
 
         dispose: () => {
-            _sagaManager.dispose();
+            sagaManager.dispose();
         },
     };
 }

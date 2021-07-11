@@ -34,4 +34,4 @@ export type OrderedChannelCategories = {
 export type ChannelCategoriesState = {
     byId: IDMappedObjects<ChannelCategory>;
     orderByTeam: RelationOneToOne<Team, Array<$ID<ChannelCategory>>>;
-}
+};

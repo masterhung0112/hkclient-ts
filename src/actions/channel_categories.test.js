@@ -244,7 +244,8 @@ describe('addChannelToInitialCategory', () => {
             },
         });
 
-        const newDmChannel = {id: 'newDmChannel', type: General.DM_CHANNEL} as any;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const newDmChannel = {id: 'newDmChannel', type: General.DM_CHANNEL};
 
         store.dispatch(Actions.addChannelToInitialCategory(newDmChannel));
 
@@ -273,7 +274,7 @@ describe('addChannelToInitialCategory', () => {
             },
         });
 
-        const publicChannel1 = {id: 'publicChannel1', type: General.OPEN_CHANNEL, team_id: 'team2'} as any;
+        const publicChannel1 = {id: 'publicChannel1', type: General.OPEN_CHANNEL, team_id: 'team2'};
 
         store.dispatch(Actions.addChannelToInitialCategory(publicChannel1));
 
@@ -313,7 +314,7 @@ describe('addChannelToInitialCategory', () => {
             },
         });
 
-        const newChannel = {id: 'newChannel', type: General.OPEN_CHANNEL, team_id: 'team1'} as any;
+        const newChannel = {id: 'newChannel', type: General.OPEN_CHANNEL, team_id: 'team1'};
 
         store.dispatch(Actions.addChannelToInitialCategory(newChannel));
 
@@ -342,7 +343,7 @@ describe('addChannelToInitialCategory', () => {
             },
         });
 
-        const publicChannel1 = {id: 'publicChannel1', type: General.OPEN_CHANNEL, team_id: 'team1'} as any;
+        const publicChannel1 = {id: 'publicChannel1', type: General.OPEN_CHANNEL, team_id: 'team1'};
 
         store.dispatch(Actions.addChannelToInitialCategory(publicChannel1));
 
@@ -378,7 +379,7 @@ describe('addChannelToInitialCategory', () => {
             },
         });
 
-        const newDmChannel = {id: 'gmChannel', type: General.GM_CHANNEL} as any;
+        const newDmChannel = {id: 'gmChannel', type: General.GM_CHANNEL};
 
         store.dispatch(Actions.addChannelToInitialCategory(newDmChannel));
 

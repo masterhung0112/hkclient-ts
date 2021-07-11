@@ -47,6 +47,7 @@ export function getSagaPromiseExtension(): IExtension {
 }
 
 export function withPromise(saga: Saga, ...sagaArgs: any): Saga {
+    // eslint-disable-next-line func-names
     return function* ({[DEFERRED]: deferred, ...action}): SagaIterator {
         let error;
         let data;

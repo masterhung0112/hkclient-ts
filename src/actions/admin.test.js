@@ -9,9 +9,8 @@ import * as Actions from 'actions/admin';
 import {Client4} from 'client';
 
 import {RequestStatus, Stats} from '../constants';
-import TestHelper from 'testlib/test_helper';
-import configureStore from 'testlib/test_store';
-import {ActionResult} from 'types/actions';
+import TestHelper from 'test/test_helper';
+import configureStore from 'test/test_store';
 
 const OK_RESPONSE = {status: 'OK'};
 const NO_GROUPS_RESPONSE = {count: 0, groups: []};
@@ -99,11 +98,11 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             get('/terms_of_service').
             reply(200, {
-            create_at: 1537976679426,
-            id: '1234',
-            text: 'Terms of Service',
-            user_id: '1',
-        });
+                create_at: 1537976679426,
+                id: '1234',
+                text: 'Terms of Service',
+                user_id: '1',
+            });
 
         await Actions.getConfig()(store.dispatch, store.getState);
 
@@ -131,13 +130,13 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             post('/terms_of_service').
             reply(201, {
-            create_at: 1537976679426,
-            id: '1234',
-            text: 'Terms of Service',
-            user_id: '1',
-        });
+                create_at: 1537976679426,
+                id: '1234',
+                text: 'Terms of Service',
+                user_id: '1',
+            });
 
-        const {data} = (await Actions.getConfig()(store.dispatch, store.getState)) as ActionResult;
+        const {data} = (await Actions.getConfig()(store.dispatch, store.getState));
         const updated = JSON.parse(JSON.stringify(data));
         const oldSiteName = updated.TeamSettings.SiteName;
         const testSiteName = 'MattermostReduxTest';
@@ -216,7 +215,7 @@ describe('Actions.Admin', () => {
             get('/config').
             reply(200, {});
 
-        const {data: config} = (await Actions.getConfig()(store.dispatch, store.getState)) as ActionResult;
+        const {data: config} = (await Actions.getConfig()(store.dispatch, store.getState));
 
         nock(Client4.getBaseRoute()).
             post('/email/test').
@@ -250,7 +249,7 @@ describe('Actions.Admin', () => {
             get('/config').
             reply(200, {});
 
-        const {data: config} = (await Actions.getConfig()(store.dispatch, store.getState)) as ActionResult;
+        const {data: config} = (await Actions.getConfig()(store.dispatch, store.getState));
 
         nock(Client4.getBaseRoute()).
             post('/file/s3_test').
@@ -305,23 +304,23 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             post('/compliance/reports').
             reply(201, {
-            id: 'six4h67ja7ntdkek6g13dp3wka',
-            create_at: 1491399241953,
-            user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
-            status: 'running',
-            count: 0,
-            desc: 'testjob',
-            type: 'adhoc',
-            start_at: 1457654400000,
-            end_at: 1458000000000,
-            keywords: 'testkeyword',
-            emails: 'joram@example.com',
-        });
+                id: 'six4h67ja7ntdkek6g13dp3wka',
+                create_at: 1491399241953,
+                user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
+                status: 'running',
+                count: 0,
+                desc: 'testjob',
+                type: 'adhoc',
+                start_at: 1457654400000,
+                end_at: 1458000000000,
+                keywords: 'testkeyword',
+                emails: 'joram@example.com',
+            });
 
         const {data: created} = (await Actions.createComplianceReport(job)(
             store.dispatch,
             store.getState,
-        )) as ActionResult;
+        ));
 
         const state = store.getState();
         const request = state.requests.admin.createCompliance;
@@ -346,20 +345,20 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             post('/compliance/reports').
             reply(201, {
-            id: 'six4h67ja7ntdkek6g13dp3wka',
-            create_at: 1491399241953,
-            user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
-            status: 'running',
-            count: 0,
-            desc: 'testjob',
-            type: 'adhoc',
-            start_at: 1457654400000,
-            end_at: 1458000000000,
-            keywords: 'testkeyword',
-            emails: 'joram@example.com',
-        });
+                id: 'six4h67ja7ntdkek6g13dp3wka',
+                create_at: 1491399241953,
+                user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
+                status: 'running',
+                count: 0,
+                desc: 'testjob',
+                type: 'adhoc',
+                start_at: 1457654400000,
+                end_at: 1458000000000,
+                keywords: 'testkeyword',
+                emails: 'joram@example.com',
+            });
 
-        const {data: report} = (await Actions.createComplianceReport(job)(store.dispatch, store.getState)) as ActionResult;
+        const {data: report} = (await Actions.createComplianceReport(job)(store.dispatch, store.getState));
 
         nock(Client4.getBaseRoute()).
             get(`/compliance/reports/${report.id}`).
@@ -390,20 +389,20 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             post('/compliance/reports').
             reply(201, {
-            id: 'six4h67ja7ntdkek6g13dp3wka',
-            create_at: 1491399241953,
-            user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
-            status: 'running',
-            count: 0,
-            desc: 'testjob',
-            type: 'adhoc',
-            start_at: 1457654400000,
-            end_at: 1458000000000,
-            keywords: 'testkeyword',
-            emails: 'joram@example.com',
-        });
+                id: 'six4h67ja7ntdkek6g13dp3wka',
+                create_at: 1491399241953,
+                user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
+                status: 'running',
+                count: 0,
+                desc: 'testjob',
+                type: 'adhoc',
+                start_at: 1457654400000,
+                end_at: 1458000000000,
+                keywords: 'testkeyword',
+                emails: 'joram@example.com',
+            });
 
-        const {data: report} = (await Actions.createComplianceReport(job)(store.dispatch, store.getState)) as ActionResult;
+        const {data: report} = (await Actions.createComplianceReport(job)(store.dispatch, store.getState));
 
         nock(Client4.getBaseRoute()).
             get('/compliance/reports').
@@ -424,7 +423,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadBrandImage', async () => {
-        const testImageData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testImageData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/brand/image').
@@ -509,10 +508,10 @@ describe('Actions.Admin', () => {
         nock(Client4.getBaseRoute()).
             get('/saml/certificate/status').
             reply(200, {
-            public_certificate_file: true,
-            private_key_file: true,
-            idp_certificate_file: true,
-        });
+                public_certificate_file: true,
+                private_key_file: true,
+                idp_certificate_file: true,
+            });
 
         await Actions.getSamlCertificateStatus()(store.dispatch, store.getState);
 
@@ -530,7 +529,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadPublicSamlCertificate', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/saml/certificate/public').
@@ -546,7 +545,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadPrivateSamlCertificate', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/saml/certificate/private').
@@ -562,7 +561,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadIdpSamlCertificate', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/saml/certificate/idp').
@@ -620,26 +619,26 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadPublicLdapCertificate', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/ldap/certificate/public').
             reply(200, OK_RESPONSE);
 
-        const request = (await Actions.uploadPublicLdapCertificate(testFileData)(store.dispatch, store.getState)) as any;
+        const request = (await Actions.uploadPublicLdapCertificate(testFileData)(store.dispatch, store.getState));
         if (request.status === RequestStatus.FAILURE) {
             throw new Error('uploadPublicLdapCertificate request failed err=' + request.error);
         }
     });
 
     it('uploadPrivateLdapCertificate', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).
             post('/ldap/certificate/private').
             reply(200, OK_RESPONSE);
 
-        const request = (await Actions.uploadPrivateLdapCertificate(testFileData)(store.dispatch, store.getState)) as any;
+        const request = (await Actions.uploadPrivateLdapCertificate(testFileData)(store.dispatch, store.getState));
         if (request.status === RequestStatus.FAILURE) {
             throw new Error('uploadPrivateLdapCertificate request failed err=' + request.error);
         }
@@ -650,7 +649,7 @@ describe('Actions.Admin', () => {
             delete('/ldap/certificate/public').
             reply(200, OK_RESPONSE);
 
-        const request = (await Actions.removePublicLdapCertificate()(store.dispatch, store.getState)) as any;
+        const request = (await Actions.removePublicLdapCertificate()(store.dispatch, store.getState));
         if (request.status === RequestStatus.FAILURE) {
             throw new Error('removePublicLdapCertificate request failed err=' + request.error);
         }
@@ -661,7 +660,7 @@ describe('Actions.Admin', () => {
             delete('/ldap/certificate/private').
             reply(200, OK_RESPONSE);
 
-        const request = (await Actions.removePrivateLdapCertificate()(store.dispatch, store.getState)) as any;
+        const request = (await Actions.removePrivateLdapCertificate()(store.dispatch, store.getState));
         if (request.status === RequestStatus.FAILURE) {
             throw new Error('removePrivateLdapCertificate request failed err=' + request.error);
         }
@@ -682,7 +681,9 @@ describe('Actions.Admin', () => {
     });
 
     it('purgeElasticsearchIndexes', async () => {
-        nock(Client4.getBaseRoute()).post('/elasticsearch/purge_indexes').reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            post('/elasticsearch/purge_indexes').
+            reply(200, OK_RESPONSE);
 
         await Actions.purgeElasticsearchIndexes()(store.dispatch, store.getState);
 
@@ -694,7 +695,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadLicense', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
 
         nock(Client4.getBaseRoute()).post('/license').reply(200, OK_RESPONSE);
 
@@ -824,8 +825,8 @@ describe('Actions.Admin', () => {
     });
 
     it('overwritePlugin', async () => {
-        const data1 = fs.createReadStream('src/test/setup.ts') as any;
-        const data2 = fs.createReadStream('src/test/setup.ts') as any;
+        const data1 = fs.createReadStream('src/test/setup.ts');
+        const data2 = fs.createReadStream('src/test/setup.ts');
         const testPlugin = {id: 'testplugin', webapp: {bundle_path: '/static/somebundle.js'}};
 
         nock(Client4.getBaseRoute()).
@@ -850,7 +851,7 @@ describe('Actions.Admin', () => {
     });
 
     it('uploadPlugin', async () => {
-        const testFileData = fs.createReadStream('src/test/assets/images/test.png') as any;
+        const testFileData = fs.createReadStream('src/test/assets/images/test.png');
         const testPlugin = {id: 'testplugin', webapp: {bundle_path: '/static/somebundle.js'}};
 
         nock(Client4.getBaseRoute()).post('/plugins').reply(200, testPlugin);
@@ -868,7 +869,9 @@ describe('Actions.Admin', () => {
         const testPlugin = {id: 'testplugin', webapp: {bundle_path: '/static/somebundle.js'}};
 
         let urlMatch = `/plugins/install_from_url?plugin_download_url=${downloadUrl}&force=false`;
-        nock(Client4.getBaseRoute()).post(urlMatch).reply(200, testPlugin);
+        nock(Client4.getBaseRoute()).
+            post(urlMatch).
+            reply(200, testPlugin);
         await Actions.installPluginFromUrl(downloadUrl, false)(store.dispatch, store.getState);
 
         let state = store.getState();
@@ -878,7 +881,9 @@ describe('Actions.Admin', () => {
         }
 
         urlMatch = `/plugins/install_from_url?plugin_download_url=${downloadUrl}&force=true`;
-        nock(Client4.getBaseRoute()).post(urlMatch).reply(200, testPlugin);
+        nock(Client4.getBaseRoute()).
+            post(urlMatch).
+            reply(200, testPlugin);
         await Actions.installPluginFromUrl(downloadUrl, true)(store.dispatch, store.getState);
 
         state = store.getState();
@@ -893,7 +898,9 @@ describe('Actions.Admin', () => {
         const testPlugin = {id: 'testplugin', webapp: {bundle_path: '/static/somebundle.js'}};
 
         const urlMatch = `/plugins/install_from_url?plugin_download_url=${downloadUrl}&force=false`;
-        nock(Client4.getBaseRoute()).post(urlMatch).reply(200, testPlugin);
+        nock(Client4.getBaseRoute()).
+            post(urlMatch).
+            reply(200, testPlugin);
         await Actions.installPluginFromUrl(downloadUrl, false)(store.dispatch, store.getState);
 
         const state = store.getState();
@@ -937,7 +944,9 @@ describe('Actions.Admin', () => {
             state: 0,
         };
 
-        nock(Client4.getBaseRoute()).get('/plugins/statuses').reply(200, [testPluginStatus, testPluginStatus2]);
+        nock(Client4.getBaseRoute()).
+            get('/plugins/statuses').
+            reply(200, [testPluginStatus, testPluginStatus2]);
 
         await Actions.getPluginStatuses()(store.dispatch, store.getState);
 
@@ -969,7 +978,9 @@ describe('Actions.Admin', () => {
         assert.ok(plugins);
         assert.ok(plugins[testPlugin.id]);
 
-        nock(Client4.getBaseRoute()).delete(`/plugins/${testPlugin.id}`).reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            delete(`/plugins/${testPlugin.id}`).
+            reply(200, OK_RESPONSE);
 
         await Actions.removePlugin(testPlugin.id)(store.dispatch, store.getState);
 
@@ -999,7 +1010,9 @@ describe('Actions.Admin', () => {
         assert.ok(plugins[testPlugin.id]);
         assert.ok(!plugins[testPlugin.id].active);
 
-        nock(Client4.getBaseRoute()).post(`/plugins/${testPlugin.id}/enable`).reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            post(`/plugins/${testPlugin.id}/enable`).
+            reply(200, OK_RESPONSE);
 
         await Actions.enablePlugin(testPlugin.id)(store.dispatch, store.getState);
 
@@ -1030,7 +1043,9 @@ describe('Actions.Admin', () => {
         assert.ok(plugins[testPlugin.id]);
         assert.ok(plugins[testPlugin.id].active);
 
-        nock(Client4.getBaseRoute()).post(`/plugins/${testPlugin.id}/disable`).reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            post(`/plugins/${testPlugin.id}/disable`).
+            reply(200, OK_RESPONSE);
 
         await Actions.disablePlugin(testPlugin.id)(store.dispatch, store.getState);
 
@@ -1055,7 +1070,9 @@ describe('Actions.Admin', () => {
             ],
         };
 
-        nock(Client4.getBaseRoute()).get('/ldap/groups?page=0&per_page=100').reply(200, ldapGroups);
+        nock(Client4.getBaseRoute()).
+            get('/ldap/groups?page=0&per_page=100').
+            reply(200, ldapGroups);
 
         await Actions.getLdapGroups(0, 100, null)(store.dispatch, store.getState);
 
@@ -1124,7 +1141,9 @@ describe('Actions.Admin', () => {
     });
 
     it('getLdapGroups with name query', async () => {
-        nock(Client4.getBaseRoute()).get('/ldap/groups?page=0&per_page=100&q=est').reply(200, NO_GROUPS_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            get('/ldap/groups?page=0&per_page=100&q=est').
+            reply(200, NO_GROUPS_RESPONSE);
 
         await Actions.getLdapGroups(0, 100, {q: 'est'})(store.dispatch, store.getState);
 
@@ -1134,7 +1153,9 @@ describe('Actions.Admin', () => {
             throw new Error('getLdapGroups request failed err=' + request.error);
         }
 
-        nock(Client4.getBaseRoute()).get('/ldap/groups?page=0&per_page=100&q=esta').reply(200, NO_GROUPS_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            get('/ldap/groups?page=0&per_page=100&q=esta').
+            reply(200, NO_GROUPS_RESPONSE);
 
         await Actions.getLdapGroups(0, 100, {q: 'esta'})(store.dispatch, store.getState);
 
@@ -1154,7 +1175,9 @@ describe('Actions.Admin', () => {
             ],
         };
 
-        nock(Client4.getBaseRoute()).get('/ldap/groups?page=0&per_page=100').reply(200, ldapGroups);
+        nock(Client4.getBaseRoute()).
+            get('/ldap/groups?page=0&per_page=100').
+            reply(200, ldapGroups);
 
         await Actions.getLdapGroups(0, 100, null)(store.dispatch, store.getState);
 
@@ -1182,13 +1205,17 @@ describe('Actions.Admin', () => {
             ],
         };
 
-        nock(Client4.getBaseRoute()).get('/ldap/groups?page=0&per_page=100').reply(200, ldapGroups);
+        nock(Client4.getBaseRoute()).
+            get('/ldap/groups?page=0&per_page=100').
+            reply(200, ldapGroups);
 
         await Actions.getLdapGroups(0, 100, null)(store.dispatch, store.getState);
 
         const key = 'test2';
 
-        nock(Client4.getBaseRoute()).delete(`/ldap/groups/${key}/link`).reply(200, {ok: true});
+        nock(Client4.getBaseRoute()).
+            delete(`/ldap/groups/${key}/link`).
+            reply(200, {ok: true});
 
         await Actions.unlinkLdapGroup(key)(store.dispatch, store.getState);
 
@@ -1200,11 +1227,13 @@ describe('Actions.Admin', () => {
     });
 
     it('getSamlMetadataFromIdp', async () => {
-        nock(Client4.getBaseRoute()).post('/saml/metadatafromidp').reply(200, {
-            idp_url: samlIdpUrl,
-            idp_descriptor_url: samlIdpDescriptorUrl,
-            idp_public_certificate: samlIdpPublicCertificateText,
-        });
+        nock(Client4.getBaseRoute()).
+            post('/saml/metadatafromidp').
+            reply(200, {
+                idp_url: samlIdpUrl,
+                idp_descriptor_url: samlIdpDescriptorUrl,
+                idp_public_certificate: samlIdpPublicCertificateText,
+            });
 
         await Actions.getSamlMetadataFromIdp('')(store.dispatch, store.getState);
 
@@ -1217,19 +1246,23 @@ describe('Actions.Admin', () => {
     });
 
     it('setSamlIdpCertificateFromMetadata', async () => {
-        nock(Client4.getBaseRoute()).post('/saml/certificate/idp').reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            post('/saml/certificate/idp').
+            reply(200, OK_RESPONSE);
 
         await Actions.setSamlIdpCertificateFromMetadata(samlIdpPublicCertificateText)(store.dispatch, store.getState);
 
-    // This test doesn't appear to actually check anything?
+        // This test doesn't appear to actually check anything?
     });
 
     it('sendWarnMetricAck', async () => {
         const warnMetricAck = {
             id: 'metric1',
         };
-        nock(Client4.getBaseRoute()).post('/warn_metrics/ack').reply(200, OK_RESPONSE);
+        nock(Client4.getBaseRoute()).
+            post('/warn_metrics/ack').
+            reply(200, OK_RESPONSE);
 
-        await Actions.sendWarnMetricAck(warnMetricAck.id, false)(store.dispatch);
+        await Actions.sendWarnMetricAck(warnMetricAck.id, false)(store.dispatch, store.getState);
     });
 });

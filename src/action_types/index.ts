@@ -24,7 +24,6 @@ import ChannelCategoryTypes from './channel_categories';
 import CloudTypes from './cloud';
 import AppsTypes from './apps';
 import ThreadTypes from './threads';
-import CounterTypes from './counter';
 
 export {
     ErrorTypes,
@@ -50,5 +49,4 @@ export {
     CloudTypes,
     AppsTypes,
     ThreadTypes,
-    CounterTypes,
 };

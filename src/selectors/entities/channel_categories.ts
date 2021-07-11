@@ -332,7 +332,7 @@ export function makeFilterManuallyClosedDMs(): (state: GlobalState, channels: Ch
 
 export function makeCompareChannels(getDisplayName: (channel: Channel) => string, locale: string, myMembers: RelationOneToOne<Channel, ChannelMembership>) {
     return (a: Channel, b: Channel) => {
-    // Sort muted channels last
+        // Sort muted channels last
         const aMuted = isChannelMuted(myMembers[a.id]);
         const bMuted = isChannelMuted(myMembers[b.id]);
 

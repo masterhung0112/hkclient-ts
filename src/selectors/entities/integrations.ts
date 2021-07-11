@@ -56,7 +56,7 @@ export const getAutocompleteCommandsList: (state: GlobalState) => Command[] = cr
     getCurrentTeamId,
     (commands, currentTeamId) => {
         return Object.values(commands).filter((command) => {
-                return command && (!command.team_id || command.team_id === currentTeamId) && command.auto_complete;
+            return command && (!command.team_id || command.team_id === currentTeamId) && command.auto_complete;
         }).sort((a, b) => a.display_name.localeCompare(b.display_name));
     },
 );

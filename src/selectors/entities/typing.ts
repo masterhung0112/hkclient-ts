@@ -33,8 +33,8 @@ export function makeGetUsersTypingByChannelAndPost(): (state: GlobalState, props
     return createSelector(
         getUsers,
         getTeammateNameDisplaySetting,
-        (state: GlobalState, options: { channelId: string; postId: string }) => options.channelId,
-        (state: GlobalState, options: { channelId: string; postId: string }) => options.postId,
+        (state: GlobalState, options: {channelId: string; postId: string}) => options.channelId,
+        (state: GlobalState, options: {channelId: string; postId: string}) => options.postId,
         (state: GlobalState) => state.entities.typing,
         getUsersTypingImpl,
     );

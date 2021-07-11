@@ -19,7 +19,7 @@ export function makeGetJobsByType(type: JobType): (state: GlobalState) => Job[] 
     return createSelector(
         getJobsByType,
         (jobsByType) => {
-        return jobsByType[type] || [];
+            return jobsByType[type] || [];
         },
     );
 }

@@ -17,4 +17,4 @@ export type AutocompleteSuggestion = {
     Hint: string;
     Description: string;
     IconData: string;
-}
+};

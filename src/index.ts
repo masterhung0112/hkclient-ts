@@ -20,7 +20,9 @@ declare module 'redux' {
    * Overload to add thunk support to Redux's dispatch() function.
    * Useful for react-redux or any other library which could use this type.
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export interface Dispatch<A extends Action = AnyAction> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <TReturnType = any>(actionFunc: ActionFunc): TReturnType;
   }
 }

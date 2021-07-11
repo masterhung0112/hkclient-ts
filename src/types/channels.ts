@@ -146,4 +146,4 @@ export type ChannelSearchOpts = {
     deleted?: boolean;
     page?: number;
     per_page?: number;
-}
+};

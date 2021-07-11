@@ -114,31 +114,31 @@ const getThemePreference = createSelector(
     getMyPreferences,
     getCurrentTeamId,
     (myPreferences, currentTeamId) => {
-    // Prefer the user's current team-specific theme over the user's current global theme
-    let themePreference;
+        // Prefer the user's current team-specific theme over the user's current global theme
+        let themePreference;
 
-    if (currentTeamId) {
-        themePreference = myPreferences[getPreferenceKey(Preferences.CATEGORY_THEME, currentTeamId)];
-    }
+        if (currentTeamId) {
+            themePreference = myPreferences[getPreferenceKey(Preferences.CATEGORY_THEME, currentTeamId)];
+        }
 
-    if (!themePreference) {
-        themePreference = myPreferences[getPreferenceKey(Preferences.CATEGORY_THEME, '')];
-    }
+        if (!themePreference) {
+            themePreference = myPreferences[getPreferenceKey(Preferences.CATEGORY_THEME, '')];
+        }
 
-    return themePreference;
+        return themePreference;
     },
 );
 
 const getDefaultTheme = createSelector(getConfig, (config): Theme => {
-        if (config.DefaultTheme && config.DefaultTheme in Preferences.THEMES) {
-            const theme: Theme = Preferences.THEMES[config.DefaultTheme];
-            if (theme) {
-                return theme;
-            }
+    if (config.DefaultTheme && config.DefaultTheme in Preferences.THEMES) {
+        const theme: Theme = Preferences.THEMES[config.DefaultTheme];
+        if (theme) {
+            return theme;
         }
+    }
 
-        // If no config.DefaultTheme or value doesn't refer to a valid theme name...
-        return Preferences.THEMES.default;
+    // If no config.DefaultTheme or value doesn't refer to a valid theme name...
+    return Preferences.THEMES.default;
 });
 
 export const getTheme: (state: GlobalState) => Theme = createShallowSelector(
@@ -166,10 +166,10 @@ export function makeGetStyleFromTheme<Style>(): (state: GlobalState, getStyleFro
 }
 
 export type SidebarPreferences = {
-  grouping: 'by_type' | 'none';
-  unreads_at_top: 'true' | 'false';
-  favorite_at_top: 'true' | 'false';
-  sorting: 'alpha' | 'recent';
+    grouping: 'by_type' | 'none';
+    unreads_at_top: 'true' | 'false';
+    favorite_at_top: 'true' | 'false';
+    sorting: 'alpha' | 'recent';
 }
 
 const defaultSidebarPrefs: SidebarPreferences = {
@@ -183,10 +183,10 @@ export const getSidebarPreferences: (state: GlobalState) => SidebarPreferences =
     (state: GlobalState) => {
         const config = getConfig(state);
         return config.ExperimentalGroupUnreadChannels !== General.DISABLED && getBool(
-          state,
-          Preferences.CATEGORY_SIDEBAR_SETTINGS,
-          'show_unread_section',
-          config.ExperimentalGroupUnreadChannels === General.DEFAULT_ON,
+            state,
+            Preferences.CATEGORY_SIDEBAR_SETTINGS,
+            'show_unread_section',
+            config.ExperimentalGroupUnreadChannels === General.DEFAULT_ON,
         );
     },
     (state) => {
@@ -217,7 +217,7 @@ export const shouldShowUnreadsCategory: (state: GlobalState) => boolean = create
     (state: GlobalState) => get(state, Preferences.CATEGORY_SIDEBAR_SETTINGS, ''),
     (state: GlobalState) => getConfig(state).ExperimentalGroupUnreadChannels,
     (userPreference, oldUserPreference, serverDefault) => {
-    // Prefer the show_unread_section user preference over the previous version
+        // Prefer the show_unread_section user preference over the previous version
         if (userPreference) {
             return userPreference === 'true';
         }

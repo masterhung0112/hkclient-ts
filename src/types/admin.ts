@@ -49,4 +49,4 @@ export type ClusterInfo = {
 export type AnalyticsRow = {
     name: string;
     value: number;
-}
+};

@@ -15,7 +15,6 @@ import Groups from './groups';
 import Users from './users';
 import Roles from './roles';
 import Threads from './threads';
-export * from './counter';
 export * from './tracks';
 
 export {General, Preferences, Posts, Files, RequestStatus, WebsocketEvents, Teams, Stats, Permissions, Emoji, Plugins, Groups, Users, Roles, Threads};

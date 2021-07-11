@@ -36,9 +36,9 @@ export function makeGetFilesForPost(): (state: GlobalState, postId: string) => F
         getFilesIdsForPost,
         getCurrentUserLocale,
         (allFiles, fileIdsForPost, locale) => {
-        const fileInfos = fileIdsForPost.map((id) => allFiles[id]).filter((id) => Boolean(id));
+            const fileInfos = fileIdsForPost.map((id) => allFiles[id]).filter((id) => Boolean(id));
 
-        return sortFileInfos(fileInfos, locale);
+            return sortFileInfos(fileInfos, locale);
         },
     );
 }

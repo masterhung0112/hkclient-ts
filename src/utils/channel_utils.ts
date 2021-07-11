@@ -126,8 +126,8 @@ export function getUserIdFromChannelName(userId: string, channelName: string): s
 export function isAutoClosed(
     config: any,
     myPreferences: {
-    [x: string]: PreferenceType;
-  },
+        [x: string]: PreferenceType;
+    },
     channel: Channel,
     channelActivity: number,
     channelArchiveTime: number,
@@ -178,8 +178,8 @@ export function isDirectChannelVisible(
     otherUserOrOtherUserId: UserProfile | string,
     config: any,
     myPreferences: {
-    [x: string]: PreferenceType;
-  },
+        [x: string]: PreferenceType;
+    },
     channel: Channel,
     lastPost?: Post | null,
     isUnread?: boolean,
@@ -212,8 +212,8 @@ export function isGroupChannel(channel: Channel): boolean {
 export function isGroupChannelVisible(
     config: any,
     myPreferences: {
-    [x: string]: PreferenceType;
-  },
+        [x: string]: PreferenceType;
+    },
     channel: Channel,
     lastPost?: Post,
     isUnread?: boolean,
@@ -241,8 +241,8 @@ export function isGroupOrDirectChannelVisible(
     memberships: RelationOneToOne<Channel, ChannelMembership>,
     config: any,
     myPreferences: {
-    [x: string]: PreferenceType;
-  },
+        [x: string]: PreferenceType;
+    },
     currentUserId: string,
     users: IDMappedObjects<UserProfile>,
     lastPosts: RelationOneToOne<Channel, Post>,
@@ -389,7 +389,7 @@ export function showDeleteOption(state: GlobalState, config: any, license: any, 
 
 export function canManageMembersOldPermissions(channel: Channel, user: UserProfile, teamMember: TeamMembership, channelMember: ChannelMembership, config: any, license: any): boolean {
     if (channel.type === General.DM_CHANNEL ||
-    channel.type === General.GM_CHANNEL ||
+        channel.type === General.GM_CHANNEL ||
         channel.name === General.DEFAULT_CHANNEL) {
         return false;
     }
@@ -422,11 +422,11 @@ export function getChannelsIdForTeam(state: GlobalState, teamId: string): string
     const {channels} = state.entities.channels;
 
     return Object.keys(channels).map((key) => channels[key]).reduce((res, channel: Channel) => {
-            if (channel.team_id === teamId) {
-                res.push(channel.id);
-            }
-            return res;
-        }, [] as string[]);
+        if (channel.team_id === teamId) {
+            res.push(channel.id);
+        }
+        return res;
+    }, [] as string[]);
 }
 
 export function getGroupDisplayNameFromUserIds(userIds: string[], profiles: IDMappedObjects<UserProfile>, currentUserId: string, teammateNameDisplay: string): string {

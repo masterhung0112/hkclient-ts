@@ -7,7 +7,7 @@
 export function insertWithoutDuplicates<T>(array: T[], item: T, newIndex: number) {
     const index = array.indexOf(item);
     if (newIndex === index) {
-    // The item doesn't need to be moved since its location hasn't changed
+        // The item doesn't need to be moved since its location hasn't changed
         return array;
     }
 

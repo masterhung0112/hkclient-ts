@@ -38,4 +38,4 @@ export type Options = {
 
 export type StatusOK = {
     status: 'OK';
-}
+};

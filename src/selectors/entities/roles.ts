@@ -49,30 +49,30 @@ export const getMyChannelRoles: (state: GlobalState) => Dictionary<Set<string>> 
 );
 
 export const getMyRoles: (state: GlobalState) => {
-  system: Set<string>;
-  team: Dictionary<Set<string>>;
-  channel: Dictionary<Set<string>>;
+    system: Set<string>;
+    team: Dictionary<Set<string>>;
+    channel: Dictionary<Set<string>>;
 } = createSelector(
     getMySystemRoles,
     getMyTeamRoles,
     getMyChannelRoles,
     (systemRoles, teamRoles, channelRoles) => {
-    return {
-        system: systemRoles,
-        team: teamRoles,
-        channel: channelRoles,
-    };
+        return {
+            system: systemRoles,
+            team: teamRoles,
+            channel: channelRoles,
+        };
     },
 );
 
 export const getRolesById: (state: GlobalState) => Dictionary<Role> = createSelector(
     getRoles,
     (rolesByName) => {
-    const rolesById: Dictionary<Role> = {};
-    for (const role of Object.values(rolesByName)) {
-        rolesById[role.id] = role;
-    }
-    return rolesById;
+        const rolesById: Dictionary<Role> = {};
+        for (const role of Object.values(rolesByName)) {
+            rolesById[role.id] = role;
+        }
+        return rolesById;
     },
 );
 

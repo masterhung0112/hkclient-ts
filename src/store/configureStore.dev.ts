@@ -3,6 +3,7 @@
 import * as redux from 'redux';
 import {createStore as createStoreRedux, IModule} from 'redux-dynamic-modules-core';
 import {offlineConfig} from './helpers';
+// eslint-disable-next-line no-duplicate-imports
 import {Reducer, Action} from 'redux';
 import {GlobalState, SagaStore} from 'types/store';
 import deepFreezeAndThrowOnMutation from 'utils/deep_freeze';
@@ -15,10 +16,13 @@ import {getThunkExtension} from 'hkredux/thunkMiddleware';
 import {EntitiesModule} from 'modules/reducerModule';
 import {enableBatching} from 'types/actions';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function bindMiddlware(offlineConfigMiddleware: any, clientOptions: any) {
+    // eslint-disable-next-line no-process-env
     const loadReduxDevtools = process.env.NODE_ENV !== 'test';
 
     if (loadReduxDevtools) {
+        // eslint-disable-next-line global-require
         const {composeWithDevTools} = require('redux-devtools-extension');
         return composeWithDevTools(redux.applyMiddleware(offlineConfigMiddleware, ...createMiddleware(clientOptions)));
     }
@@ -52,11 +56,14 @@ export default function configureServiceStore<S>(
     // const { middleware, enhanceReducer, enhanceStore } = createOffline(baseOfflineConfig)
 
     // eslint-disable-next-line func-style
-    const storeEnhancerForReduxBatch = function(...args: any[]) {
+    // eslint-disable-next-line func-names
+    const storeEnhancerForReduxBatch = (...args: any[]) => {
+        // eslint-disable-next-line no-process-env
         const loadReduxDevtools = process.env.NODE_ENV !== 'test';
         let customCompose = redux.compose;
 
         if (loadReduxDevtools) {
+            // eslint-disable-next-line global-require
             const {composeWithDevTools} = require('redux-devtools-extension/developmentOnly');
             customCompose = composeWithDevTools({maxAge: 500});
         }
@@ -120,6 +127,7 @@ export default function configureServiceStore<S>(
 //   return enableFreezing(createReducer(baseState, ...reducers))
 // }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function enableFreezing(reducer: Reducer) {
     return (state: GlobalState, action: Action) => {
         const nextState = reducer(state, action);

@@ -64,6 +64,12 @@
       "client/*": [
         "src/client/*"
       ],
+      "test": [
+        "src/test"
+      ],
+      "test/*": [
+        "src/test/*"
+      ],
       "testlib": [
         "src/testlib"
       ],

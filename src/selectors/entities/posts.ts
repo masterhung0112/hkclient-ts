@@ -56,20 +56,20 @@ export function getPostsInThread(state: GlobalState): RelationOneToMany<Post, Po
 }
 
 export function getReactionsForPosts(state: GlobalState): RelationOneToOne<Post, {
-    [x: string]: Reaction;
+  [x: string]: Reaction;
 }> {
     return state.entities.posts.reactions;
 }
 
 export function makeGetReactionsForPost(): (state: GlobalState, postId: $ID<Post>) => {
-      [x: string]: Reaction;
+  [x: string]: Reaction;
 } | undefined | null {
     return createSelector(getReactionsForPosts, (state: GlobalState, postId: string) => postId, (reactions, postId) => {
-            if (reactions[postId]) {
-                return reactions[postId];
-            }
+        if (reactions[postId]) {
+            return reactions[postId];
+        }
 
-            return null;
+        return null;
     });
 }
 
@@ -148,8 +148,8 @@ export function makeGetPostsChunkAroundPost(): (state: GlobalState, postId: $ID<
 }
 
 export function makeGetPostIdsAroundPost(): (state: GlobalState, postId: $ID<Post>, channelId: $ID<Channel>, a: {
-    postsBeforeCount: number;
-    postsAfterCount: number;
+  postsBeforeCount: number;
+  postsAfterCount: number;
 }) => Array<$ID<Post>> | undefined | null {
     const getPostsChunkAroundPost = makeGetPostsChunkAroundPost();
     return createIdsSelector(
@@ -178,7 +178,7 @@ function formatPostInChannel(post: Post, previousPost: Post | undefined | null, 
     let isFirstReply = false;
     let isLastReply = false;
     let highlight = false;
-    let commentedOnPost: Post | undefined;
+    let commentedOnPost: Post| undefined;
 
     if (post.id === focusedPostId) {
         highlight = true;
@@ -210,11 +210,11 @@ function formatPostInChannel(post: Post, previousPost: Post | undefined | null, 
     const prevPostFromWebhook = Boolean(previousPost && previousPost.props && previousPost.props.from_webhook);
     let consecutivePostByUser = false;
     if (previousPost &&
-    previousPost.user_id === post.user_id &&
-    post.create_at - previousPost.create_at <= Posts.POST_COLLAPSE_TIMEOUT &&
+            previousPost.user_id === post.user_id &&
+            post.create_at - previousPost.create_at <= Posts.POST_COLLAPSE_TIMEOUT &&
             !postFromWebhook && !prevPostFromWebhook &&
             !isSystemMessage(post) && !isSystemMessage(previousPost)) {
-    // The last post and this post were made by the same user within some time
+        // The last post and this post were made by the same user within some time
         consecutivePostByUser = true;
     }
 
@@ -343,11 +343,11 @@ export function makeGetPostsAroundPost(): (state: GlobalState, postId: $ID<Post>
 // That selector will take a props object (containing a rootId field) as its
 // only argument and will be memoized based on that argument.
 
-export function makeGetPostsForThread(): (state: GlobalState, props: { rootId: $ID<Post> }) => Post[] {
+export function makeGetPostsForThread(): (state: GlobalState, props: {rootId: $ID<Post>}) => Post[] {
     return createSelector(
         getAllPosts,
-        (state: GlobalState, props: { rootId: $ID<Post> }) => state.entities.posts.postsInThread[props.rootId] || [],
-        (state: GlobalState, props: { rootId: $ID<Post> }) => state.entities.posts.posts[props.rootId],
+        (state: GlobalState, props: {rootId: $ID<Post>}) => state.entities.posts.postsInThread[props.rootId] || [],
+        (state: GlobalState, props: {rootId: $ID<Post>}) => state.entities.posts.posts[props.rootId],
         (posts, postsForThread, rootPost) => {
             const thread: Post[] = [];
 
@@ -369,32 +369,32 @@ export function makeGetPostsForThread(): (state: GlobalState, props: { rootId: $
 }
 
 // The selector below filters current user if it exists. Excluding currentUser is just for convinience
-export function makeGetProfilesForThread(): (state: GlobalState, props: { rootId: $ID<Post> }) => UserProfile[] {
+export function makeGetProfilesForThread(): (state: GlobalState, props: {rootId: $ID<Post>}) => UserProfile[] {
     const getPostsForThread = makeGetPostsForThread();
     return createSelector(
         getUsers,
         getCurrentUserId,
         getPostsForThread,
         (allUsers, currentUserId, posts) => {
-        const profileIds = posts.map((post) => post.user_id);
-        const uniqueIds = [...new Set(profileIds)];
-        return uniqueIds.reduce((acc, id) => {
-            if (allUsers[id] && currentUserId !== id) {
+            const profileIds = posts.map((post) => post.user_id);
+            const uniqueIds = [...new Set(profileIds)];
+            return uniqueIds.reduce((acc, id) => {
+                if (allUsers[id] && currentUserId !== id) {
                     return [
                         ...acc,
                         allUsers[id],
                     ];
-            }
-            return acc;
-        }, []);
+                }
+                return acc;
+            }, []);
         },
     );
 }
 
-export function makeGetCommentCountForPost(): (state: GlobalState, props: { post: Post }) => number {
+export function makeGetCommentCountForPost(): (state: GlobalState, props: {post: Post}) => number {
     return createSelector(
         getAllPosts,
-        (state: GlobalState, {post}: { post: Post }) => state.entities.posts.postsInThread[post ? post.id : ''] || [],
+        (state: GlobalState, {post}: {post: Post}) => state.entities.posts.postsInThread[post ? post.id : ''] || [],
         (state, props) => props,
         (posts, postsForThread, {post: currentPost}) => {
             if (!currentPost) {
@@ -434,7 +434,7 @@ export function getSearchMatches(state: GlobalState): {
     return state.entities.search.matches;
 }
 
-export function makeGetMessageInHistoryItem(type: 'post' | 'comment'): (state: GlobalState) => string {
+export function makeGetMessageInHistoryItem(type: 'post'|'comment'): (state: GlobalState) => string {
     return createSelector(
         (state: GlobalState) => state.entities.posts.messagesHistory,
         (messagesHistory: MessageHistory) => {
@@ -627,9 +627,9 @@ export function getUnreadPostsChunk(state: GlobalState, channelId: $ID<Channel>,
     */
 
     if (recentChunk) {
-    // This would happen if there are no posts in channel.
-    // If the system messages are deleted by sys admin.
-    // Experimental changes like hiding Join/Leave still will have recent chunk so it follows the default path based on timestamp
+        // This would happen if there are no posts in channel.
+        // If the system messages are deleted by sys admin.
+        // Experimental changes like hiding Join/Leave still will have recent chunk so it follows the default path based on timestamp
         if (!recentChunk.order.length) {
             return recentChunk;
         }

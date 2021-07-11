@@ -3,10 +3,10 @@
 import {DialogElement} from 'types/integrations';
 
 type DialogError = {
-  id: string;
-  defaultMessage: string;
-  values?: any;
-}
+    id: string;
+    defaultMessage: string;
+    values?: any;
+};
 export function checkDialogElementForError(elem: DialogElement, value: any): DialogError | undefined | null {
     if (!value && !elem.optional) {
         return {

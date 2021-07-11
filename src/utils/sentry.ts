@@ -35,15 +35,15 @@ export function cleanUrlForLogging(baseUrl: string, apiUrl: string): string {
     ];
 
     url = url.split('/').map((part) => {
-            if (part !== '' && whitelist.indexOf(part) === -1) {
-                return '<filtered>';
-            }
+        if (part !== '' && whitelist.indexOf(part) === -1) {
+            return '<filtered>';
+        }
 
-            return part;
+        return part;
     }).join('/');
 
     if (index !== -1) {
-    // Add this on afterwards since it wouldn't pass the whitelist
+        // Add this on afterwards since it wouldn't pass the whitelist
         url += '?<filtered>';
     }
 

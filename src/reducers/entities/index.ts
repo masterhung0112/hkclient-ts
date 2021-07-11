@@ -24,7 +24,6 @@ import channelCategories from './channel_categories';
 import apps from './apps';
 import cloud from './cloud';
 import threads from './threads';
-export * from './counter';
 
 export default combineReducers({
     general,

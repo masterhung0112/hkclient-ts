@@ -47,14 +47,14 @@ import {
 export {getCurrentUser, getCurrentUserId, getUsers};
 
 type Filters = {
-  role?: string;
-  inactive?: boolean;
-  active?: boolean;
-  roles?: string[];
-  exclude_roles?: string[];
-  channel_roles?: string[];
-  team_roles?: string[];
-}
+    role?: string;
+    inactive?: boolean;
+    active?: boolean;
+    roles?: string[];
+    exclude_roles?: string[];
+    channel_roles?: string[];
+    team_roles?: string[];
+};
 
 export function getUserIdsInChannels(state: GlobalState): RelationOneToMany<Channel, UserProfile> {
     return state.entities.users.profilesInChannel;
@@ -136,16 +136,16 @@ export function getUserByEmail(state: GlobalState, email: $Email<UserProfile>): 
 export const isCurrentUserSystemAdmin: (state: GlobalState) => boolean = createSelector(
     getCurrentUser,
     (user) => {
-    const roles = user?.roles || '';
-    return isSystemAdmin(roles);
+        const roles = user?.roles || '';
+        return isSystemAdmin(roles);
     },
 );
 
 export const currentUserHasAnAdminRole: (state: GlobalState) => boolean = createSelector(
     getCurrentUser,
     (user) => {
-    const roles = user.roles || '';
-    return includesAnAdminRole(roles);
+        const roles = user.roles || '';
+        return includesAnAdminRole(roles);
     },
 );
 
@@ -170,9 +170,9 @@ export const getCurrentUserRoles: (a: GlobalState) => UserProfile['roles'] = cre
     },
 );
 
-export type UserMentionKey = {
-  key: string;
-  caseSensitive?: boolean;
+export type UserMentionKey= {
+    key: string;
+    caseSensitive?: boolean;
 }
 
 export const getCurrentUserMentionKeys: (state: GlobalState) => UserMentionKey[] = createSelector(
@@ -186,7 +186,7 @@ export const getCurrentUserMentionKeys: (state: GlobalState) => UserMentionKey[]
 
         if (user.notify_props.mention_keys) {
             keys = keys.concat(user.notify_props.mention_keys.split(',').map((key) => {
-                    return {key};
+                return {key};
             }));
         }
 
@@ -491,7 +491,7 @@ export const shouldShowTermsOfService: (state: GlobalState) => boolean = createS
     getCurrentUser,
     getLicense,
     (config, user, license) => {
-    // Defaults to false if the user is not logged in or the setting doesn't exist
+        // Defaults to false if the user is not logged in or the setting doesn't exist
         const acceptedTermsId = user ? user.terms_of_service_id : '';
         const acceptedAt = user ? user.terms_of_service_create_at : 0;
 
@@ -572,11 +572,11 @@ export function makeGetProfilesNotInChannel(): (state: GlobalState, channelId: $
 }
 
 export function makeGetProfilesByIdsAndUsernames(): (
-  state: GlobalState,
-  props: {
-    allUserIds: Array<$ID<UserProfile>>;
-    allUsernames: Array<$Username<UserProfile>>;
-  }
+    state: GlobalState,
+    props: {
+        allUserIds: Array<$ID<UserProfile>>;
+        allUsernames: Array<$Username<UserProfile>>;
+    }
 ) => UserProfile[] {
     return createSelector(
         getUsers,

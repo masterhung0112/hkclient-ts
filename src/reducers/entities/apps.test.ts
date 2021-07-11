@@ -161,8 +161,8 @@ describe('bindings', () => {
         const state = Reducers.bindings(
             initialState,
             {
-            type: AppsTypes.RECEIVED_APP_BINDINGS,
-            data,
+                type: AppsTypes.RECEIVED_APP_BINDINGS,
+                data,
             },
         );
 
@@ -242,8 +242,8 @@ describe('bindings', () => {
         const state = Reducers.bindings(
             initialState,
             {
-            type: AppsTypes.RECEIVED_APP_BINDINGS,
-            data,
+                type: AppsTypes.RECEIVED_APP_BINDINGS,
+                data,
             },
         );
 
@@ -351,8 +351,8 @@ describe('bindings', () => {
         const state = Reducers.bindings(
             initialState,
             {
-            type: AppsTypes.RECEIVED_APP_BINDINGS,
-            data,
+                type: AppsTypes.RECEIVED_APP_BINDINGS,
+                data,
             },
         );
 

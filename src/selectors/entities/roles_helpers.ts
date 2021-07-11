@@ -9,10 +9,10 @@ import {GlobalState} from 'types/store';
 import {UserProfile} from 'types/users';
 
 export type PermissionsOptions = {
-  channel?: string;
-  team?: string;
-  permission: string;
-}
+    channel?: string;
+    team?: string;
+    permission: string;
+};
 
 export function getRoles(state: GlobalState) {
     return state.entities.roles.roles;

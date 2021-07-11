@@ -8,47 +8,47 @@ import {PluginManifest} from './plugins';
 import {AppManifest} from './apps';
 
 export type MarketplaceLabel = {
-  name: string;
-  description?: string;
-  url?: string;
-  color?: string;
+    name: string;
+    description?: string;
+    url?: string;
+    color?: string;
 }
 
 export enum HostingType {
-  OnPrem = 'on-prem',
-  Cloud = 'cloud',
+    OnPrem = 'on-prem',
+    Cloud = 'cloud',
 }
 
 export enum AuthorType {
-  Mattermost = 'mattermost',
-  Partner = 'partner',
-  Community = 'community',
+    Mattermost = 'mattermost',
+    Partner = 'partner',
+    Community = 'community',
 }
 
 export enum ReleaseStage {
-  Production = 'production',
-  Beta = 'beta',
-  Experimental = 'experimental',
+    Production = 'production',
+    Beta = 'beta',
+    Experimental = 'experimental',
 }
 
 interface MarketplaceBaseItem {
-  labels?: MarketplaceLabel[];
-  hosting?: HostingType;
-  author_type: AuthorType;
-  release_stage: ReleaseStage;
-  enterprise: boolean;
+    labels?: MarketplaceLabel[];
+    hosting?: HostingType;
+    author_type: AuthorType;
+    release_stage: ReleaseStage;
+    enterprise: boolean;
 }
 
 export interface MarketplacePlugin extends MarketplaceBaseItem {
-  manifest: PluginManifest;
-  icon_data?: string;
-  homepage_url?: string;
-  download_url?: string;
-  release_notes_url?: string;
-  installed_version?: string;
+    manifest: PluginManifest;
+    icon_data?: string;
+    homepage_url?: string;
+    download_url?: string;
+    release_notes_url?: string;
+    installed_version?: string;
 }
 
 export interface MarketplaceApp extends MarketplaceBaseItem {
-  manifest: AppManifest;
-  installed: boolean;
+    manifest: AppManifest;
+    installed: boolean;
 }

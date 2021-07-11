@@ -76,8 +76,8 @@ export function canDeletePost(state: GlobalState, config: any, license: any, tea
     // Backwards compatibility with pre-advanced permissions config settings.
     if (license.IsLicensed === 'true') {
         return (config.RestrictPostDelete === General.PERMISSIONS_ALL && (isOwner || isAdmin)) ||
-      (config.RestrictPostDelete === General.PERMISSIONS_TEAM_ADMIN && isAdmin) ||
-      (config.RestrictPostDelete === General.PERMISSIONS_SYSTEM_ADMIN && isSystemAdmin)
+            (config.RestrictPostDelete === General.PERMISSIONS_TEAM_ADMIN && isAdmin) ||
+            (config.RestrictPostDelete === General.PERMISSIONS_SYSTEM_ADMIN && isSystemAdmin);
     }
     return isOwner || isAdmin;
 }
@@ -100,7 +100,7 @@ export function canEditPost(state: GlobalState, config: any, license: any, teamI
             }
         }
     } else {
-    // Backwards compatibility with pre-advanced permissions config settings.
+        // Backwards compatibility with pre-advanced permissions config settings.
         canEdit = isOwner && config.AllowEditPost !== 'never';
         if (config.AllowEditPost === General.ALLOW_EDIT_POST_TIME_LIMIT) {
             const timeLeft = (post.create_at + (config.PostEditTimeLimit * 1000)) - Date.now();
@@ -168,8 +168,8 @@ function isJoinLeavePostForUsername(post: Post, currentUsername: string): boolea
     }
 
     return post.props.username === currentUsername ||
-    post.props.addedUsername === currentUsername ||
-    post.props.removedUsername === currentUsername
+        post.props.addedUsername === currentUsername ||
+        post.props.removedUsername === currentUsername;
 }
 
 export function isPostPendingOrFailed(post: Post): boolean {

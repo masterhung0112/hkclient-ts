@@ -70,7 +70,7 @@ export function getTeam(state: GlobalState, id: string): Team {
 export const getCurrentTeamMembership: (state: GlobalState) => TeamMembership = createSelector(
     getCurrentTeamId,
     getTeamMemberships,
-    (currentTeamId: string, teamMemberships: { [teamId: string]: TeamMembership }): TeamMembership => {
+    (currentTeamId: string, teamMemberships: {[teamId: string]: TeamMembership}): TeamMembership => {
         return teamMemberships[currentTeamId];
     },
 );
@@ -183,7 +183,7 @@ export const getSortedListableTeams: (state: GlobalState, locale: string) => Tea
     getListableTeamIds,
     (state: GlobalState, locale: string) => locale,
     (teams, listableTeamIds, locale) => {
-        const listableTeams: { [x: string]: Team } = {};
+        const listableTeams: {[x: string]: Team} = {};
 
         for (const id of listableTeamIds) {
             listableTeams[id] = teams[id];
@@ -225,7 +225,7 @@ export const getSortedJoinableTeams: (state: GlobalState, locale: string) => Tea
     getJoinableTeamIds,
     (state: GlobalState, locale: string) => locale,
     (teams, joinableTeamIds, locale) => {
-        const joinableTeams: { [x: string]: Team } = {};
+        const joinableTeams: {[x: string]: Team} = {};
 
         for (const id of joinableTeamIds) {
             joinableTeams[id] = teams[id];

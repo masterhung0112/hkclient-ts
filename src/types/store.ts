@@ -35,57 +35,59 @@ import {Store} from 'redux';
 export type GlobalState = {
     entities: {
         general: GeneralState;
-  users: UsersState;
-  teams: TeamsState;
-  channels: ChannelsState;
-  posts: PostsState;
-  threads: ThreadsState;
-  bots: {
-    accounts: Dictionary<Bot>;
-  };
-  preferences: {
-    myPreferences: {
-      [x: string]: PreferenceType;
+
+        users: UsersState;
+        teams: TeamsState;
+        channels: ChannelsState;
+        posts: PostsState;
+        threads: ThreadsState;
+        bots: {
+            accounts: Dictionary<Bot>;
+        };
+        preferences: {
+            myPreferences: {
+                [x: string]: PreferenceType;
+            };
+        };
+        admin: AdminState;
+        jobs: JobsState;
+        search: SearchState;
+        integrations: IntegrationsState;
+        files: FilesState;
+        emojis: EmojisState;
+        typing: Typing;
+        roles: {
+            roles: {
+                [x: string]: Role;
+            };
+            pending: Set<string>;
+        };
+        schemes: SchemesState;
+        gifs: any;
+        groups: GroupsState;
+        channelCategories: ChannelCategoriesState;
+        apps: AppsState;
+        cloud: CloudState;
     };
-  };
-  admin: AdminState;
-  jobs: JobsState;
-  search: SearchState;
-  integrations: IntegrationsState;
-  files: FilesState;
-  emojis: EmojisState;
-  typing: Typing;
-  roles: {
-    roles: {
-      [x: string]: Role;
+    errors: any[];
+
+    requests: {
+        channels: ChannelsRequestsStatuses;
+        general: GeneralRequestsStatuses;
+        posts: PostsRequestsStatuses;
+        teams: TeamsRequestsStatuses;
+        users: UsersRequestsStatuses;
+        admin: AdminRequestsStatuses;
+        files: FilesRequestsStatuses;
+        roles: RolesRequestsStatuses;
+        jobs: JobsRequestsStatuses;
     };
-    pending: Set<string>;
-  };
-  schemes: SchemesState;
-  gifs: any;
-  groups: GroupsState;
-  channelCategories: ChannelCategoriesState;
-  apps: AppsState;
-  cloud: CloudState;
+    websocket: {
+        connected: boolean;
+        lastConnectAt: number;
+        lastDisconnectAt: number;
     };
-  errors: any[];
-  requests: {
-    channels: ChannelsRequestsStatuses;
-    general: GeneralRequestsStatuses;
-    posts: PostsRequestsStatuses;
-    teams: TeamsRequestsStatuses;
-    users: UsersRequestsStatuses;
-    admin: AdminRequestsStatuses;
-    files: FilesRequestsStatuses;
-    roles: RolesRequestsStatuses;
-    jobs: JobsRequestsStatuses;
-  };
-  websocket: {
-    connected: boolean;
-    lastConnectAt: number;
-    lastDisconnectAt: number;
-  };
-}
+};
 
 export interface SagaStore extends Store {
   getSagaTasks?: () => Task[];

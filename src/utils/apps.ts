@@ -15,7 +15,7 @@ export function fillAndTrimBindingsInformation(binding?: AppBinding) {
     }
 
     binding.bindings?.forEach((b) => {
-    // Propagate id down if not defined
+        // Propagate id down if not defined
         if (!b.app_id) {
             b.app_id = binding.app_id;
         }

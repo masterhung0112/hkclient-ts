@@ -13,4 +13,4 @@ export type Compliance = {
     end_at: number;
     keywords: string;
     emails: string;
-}
+};

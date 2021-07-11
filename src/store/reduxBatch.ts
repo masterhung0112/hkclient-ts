@@ -46,8 +46,8 @@ export default function reduxBatch<Ext = Record<string, unknown>, StateExt = Rec
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    // eslint-disable-next-line func-names
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line func-names
     return function <S = Record<string, any>, A extends AnyAction = AnyAction>(
         reducer: Reducer<S, A>,
         preloadedState?: PreloadedState<S>,

@@ -44,8 +44,8 @@ export function getSubscriptionStats(state: GlobalState): any {
 export function isCompatibleWithJoinViewTeamPermissions(state: GlobalState): boolean {
     const version = state.entities.general.serverVersion;
     return isMinimumServerVersion(version, 5, 10, 0) ||
-    (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 5, 8, 0)) ||
-    (version.match(/^5.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 5, 8, 0))
+       (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 5, 8, 0)) ||
+       (version.match(/^5.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 5, 8, 0));
 }
 
 export function hasNewPermissions(state: GlobalState): boolean {
@@ -53,17 +53,17 @@ export function hasNewPermissions(state: GlobalState): boolean {
 
     // FIXME This must be changed to 4, 9, 0 before we generate the 4.9.0 release
     return isMinimumServerVersion(version, 4, 9, 0) ||
-    (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 4, 8, 0)) ||
-    (version.match(/^4.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 4, 8, 0))
+           (version.indexOf('dev') !== -1 && isMinimumServerVersion(version, 4, 8, 0)) ||
+           (version.match(/^4.8.\d.\d\d\d\d.*$/) !== null && isMinimumServerVersion(version, 4, 8, 0));
 }
 
 export const canUploadFilesOnMobile: (a: GlobalState) => boolean = createSelector(
     getConfig,
     getLicense,
     (config: ClientConfig, license: any): boolean => {
-    // Defaults to true if either setting doesn't exist
+        // Defaults to true if either setting doesn't exist
         return config.EnableFileAttachments !== 'false' &&
-      (license.IsLicensed === 'false' || license.Compliance === 'false' || config.EnableMobileFileUpload !== 'false')
+           (license.IsLicensed === 'false' || license.Compliance === 'false' || config.EnableMobileFileUpload !== 'false');
     },
 );
 
@@ -71,7 +71,7 @@ export const canDownloadFilesOnMobile: (a: GlobalState) => boolean = createSelec
     getConfig,
     getLicense,
     (config: ClientConfig, license: any): boolean => {
-    // Defaults to true if the setting doesn't exist
+        // Defaults to true if the setting doesn't exist
         return license.IsLicensed === 'false' || license.Compliance === 'false' || config.EnableMobileFileDownload !== 'false';
     },
 );
@@ -93,14 +93,14 @@ export const getAutolinkedUrlSchemes: (a: GlobalState) => string[] = createSelec
 export const getManagedResourcePaths: (state: GlobalState) => string[] = createSelector(
     getConfig,
     (config) => {
-    if (!config.ManagedResourcePaths) {
-        return [];
-    }
+        if (!config.ManagedResourcePaths) {
+            return [];
+        }
 
-    return config.ManagedResourcePaths.split(',').map((path) => path.trim());
+        return config.ManagedResourcePaths.split(',').map((path) => path.trim());
     },
 );
 
 export const getServerVersion = (state: GlobalState): string => {
     return state.entities.general.serverVersion;
-}
+};

@@ -1,95 +1,96 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { combineReducers } from 'redux'
-import { CloudTypes } from 'action-types'
+import {combineReducers} from 'redux';
+import {CloudTypes} from 'action_types';
 
-import { GenericAction } from 'types/actions'
-import { Product, Subscription, CloudCustomer, Invoice, SubscriptionStats } from 'types/cloud'
-import { Dictionary } from 'types/utilities'
+import {GenericAction} from 'types/actions';
+import {Product, Subscription, CloudCustomer, Invoice, SubscriptionStats} from 'types/cloud';
+import {Dictionary} from 'types/utilities';
 
 function subscription(state: Subscription | null = null, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case CloudTypes.RECEIVED_CLOUD_SUBSCRIPTION: {
-      return action.data
+        return action.data;
     }
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 function customer(state: CloudCustomer | null = null, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case CloudTypes.RECEIVED_CLOUD_CUSTOMER: {
-      return action.data
+        return action.data;
     }
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 function products(state: Dictionary<Product> | null = null, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case CloudTypes.RECEIVED_CLOUD_PRODUCTS: {
-      const productList: Product[] = action.data
-      const productDict = productList.reduce((map, obj) => {
-        map[obj.id] = obj
-        return map
-      }, {} as Dictionary<Product>)
-      return {
-        ...state,
-        ...productDict,
-      }
+        const productList: Product[] = action.data;
+        const productDict = productList.reduce((map, obj) => {
+            map[obj.id] = obj;
+            return map;
+        }, {} as Dictionary<Product>);
+        return {
+            ...state,
+            ...productDict,
+        };
     }
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 function invoices(state: Dictionary<Invoice> | null = null, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case CloudTypes.RECEIVED_CLOUD_INVOICES: {
-      const invoiceList: Invoice[] = action.data
-      const invoiceDict = invoiceList.reduce((map, obj) => {
-        map[obj.id] = obj
-        return map
-      }, {} as Dictionary<Invoice>)
-      return {
-        ...state,
-        ...invoiceDict,
-      }
+        const invoiceList: Invoice[] = action.data;
+        const invoiceDict = invoiceList.reduce((map, obj) => {
+            map[obj.id] = obj;
+            return map;
+        }, {} as Dictionary<Invoice>);
+        return {
+            ...state,
+            ...invoiceDict,
+        };
     }
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 function subscriptionStats(state: SubscriptionStats | null = null, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case CloudTypes.RECEIVED_CLOUD_SUBSCRIPTION_STATS: {
-      const data = action.data
-      return {
-        ...state,
-        ...data,
-      }
+        const data = action.data;
+        return {
+            ...state,
+            ...data,
+        };
     }
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 export default combineReducers({
-  // represents the current cloud customer
-  customer,
 
-  // represents the current cloud subscription
-  subscription,
+    // represents the current cloud customer
+    customer,
 
-  // represents the cloud products offered
-  products,
+    // represents the current cloud subscription
+    subscription,
 
-  // represents the invoices tied to the current subscription
-  invoices,
+    // represents the cloud products offered
+    products,
 
-  subscriptionStats,
-})
+    // represents the invoices tied to the current subscription
+    invoices,
+
+    subscriptionStats,
+});

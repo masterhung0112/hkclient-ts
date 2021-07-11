@@ -1,5 +1,7 @@
-export * from './allSagasDone'
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+export * from './allSagasDone';
 
-import sagaPromiseMiddleware, { withPromise, getSagaPromiseExtension } from './sagaPromiseMiddleware'
+import sagaPromiseMiddleware, {withPromise, getSagaPromiseExtension} from './sagaPromiseMiddleware';
 
-export { sagaPromiseMiddleware, withPromise, getSagaPromiseExtension }
+export {sagaPromiseMiddleware, withPromise, getSagaPromiseExtension};

@@ -1,12 +1,15 @@
 {
   "include": [
-    "src", "index.d.ts"
+    "src"
   ],
   "exclude": [
     "node_modules",
     "build",
     "lib",
   ],
+  "typeAcquisition": {
+    "enable": true
+  },
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
@@ -15,18 +18,25 @@
       "esnext"
     ],
     "allowJs": false,
-    "jsx": "react",
+    "importHelpers": true,
     "declaration": true,
-    "declarationMap": true,
     "sourceMap": true,
     "rootDir": "./src",
     "outDir": "./lib",
-    "alwaysStrict": true,
-    "removeComments": true,
-    "noEmit": false,
-    "importHelpers": true,
-    "downlevelIteration": true,
     "strict": false,
+    "noEmit": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": false,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": false,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "downlevelIteration": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
@@ -54,17 +64,23 @@
       "client/*": [
         "src/client/*"
       ],
+      "test": [
+        "src/test"
+      ],
+      "test/*": [
+        "src/test/*"
+      ],
       "testlib": [
         "src/testlib"
       ],
       "testlib/*": [
         "src/testlib/*"
       ],
-      "action-types": [
-        "src/action-types"
+      "action_types": [
+        "src/action_types"
       ],
-      "action-types/*": [
-        "src/action-types/*"
+      "action_types/*": [
+        "src/action_types/*"
       ],
       "actions": [
         "src/actions"
@@ -72,16 +88,16 @@
       "actions/*": [
         "src/actions/*"
       ],
-      "hkreducers": [
+      "reducers": [
         "src/reducers"
       ],
-      "hkreducers/*": [
+      "reducers/*": [
         "src/reducers/*"
       ],
-      "hkconstants": [
+      "constants": [
         "src/constants"
       ],
-      "hkconstants/*": [
+      "constants/*": [
         "src/constants/*"
       ],
       "selectors": [
@@ -102,16 +118,16 @@
       "saga-modular/*": [
         "src/hkredux/saga-modular/*"
       ],
-      "hksagas": [
+      "sagas": [
         "src/sagas"
       ],
-      "hksagas/*": [
+      "sagas/*": [
         "src/sagas/*"
       ],
-      "hkmodules": [
+      "modules": [
         "src/modules"
       ],
-      "hkmodules/*": [
+      "modules/*": [
         "src/modules/*"
       ],
       "*": [
@@ -119,16 +135,16 @@
         "node_modules/*"
       ]
     },
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "plugins": [
-      { 
-        "transform": "@zerollup/ts-transform-paths",
-        "exclude": [
-          "*"
-        ] 
-      }
-    ],
+        {
+          "transform": "@zerollup/ts-transform-paths",
+          "exclude": [
+            "*"
+          ]
+        }
+      ],
+    "jsx": "react",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
   }
 }

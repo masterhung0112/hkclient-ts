@@ -1,151 +1,151 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux';
 
-import { ChannelCategoryTypes, TeamTypes, UserTypes, ChannelTypes } from 'action-types'
+import {ChannelCategoryTypes, TeamTypes, UserTypes, ChannelTypes} from 'action_types';
 
-import { GenericAction } from 'types/actions'
-import { ChannelCategory } from 'types/channel_categories'
-import { Team } from 'types/teams'
-import { $ID, IDMappedObjects, RelationOneToOne } from 'types/utilities'
+import {GenericAction} from 'types/actions';
+import {ChannelCategory} from 'types/channel_categories';
+import {Team} from 'types/teams';
+import {$ID, IDMappedObjects, RelationOneToOne} from 'types/utilities';
 
-import { removeItem } from 'utils/array_utils'
+import {removeItem} from 'utils/array_utils';
 
 export function byId(state: IDMappedObjects<ChannelCategory> = {}, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case ChannelCategoryTypes.RECEIVED_CATEGORIES: {
-      const categories: ChannelCategory[] = action.data
+        const categories: ChannelCategory[] = action.data;
 
-      return categories.reduce((nextState, category) => {
-        return {
-          ...nextState,
-          [category.id]: {
-            ...nextState[category.id],
-            ...category,
-          },
-        }
-      }, state)
+        return categories.reduce((nextState, category) => {
+            return {
+                ...nextState,
+                [category.id]: {
+                    ...nextState[category.id],
+                    ...category,
+                },
+            };
+        }, state);
     }
     case ChannelCategoryTypes.RECEIVED_CATEGORY: {
-      const category: ChannelCategory = action.data
+        const category: ChannelCategory = action.data;
 
-      return {
-        ...state,
-        [category.id]: {
-          ...state[category.id],
-          ...category,
-        },
-      }
+        return {
+            ...state,
+            [category.id]: {
+                ...state[category.id],
+                ...category,
+            },
+        };
     }
 
     case ChannelCategoryTypes.CATEGORY_DELETED: {
-      const categoryId: $ID<ChannelCategory> = action.data
+        const categoryId: $ID<ChannelCategory> = action.data;
 
-      const nextState = { ...state }
+        const nextState = {...state};
 
-      Reflect.deleteProperty(nextState, categoryId)
+        Reflect.deleteProperty(nextState, categoryId);
 
-      return nextState
+        return nextState;
     }
 
     case ChannelTypes.LEAVE_CHANNEL: {
-      const channelId: string = action.data.id
+        const channelId: string = action.data.id;
 
-      const nextState = { ...state }
-      let changed = false
+        const nextState = {...state};
+        let changed = false;
 
-      for (const category of Object.values(state)) {
-        const index = category.channel_ids.indexOf(channelId)
+        for (const category of Object.values(state)) {
+            const index = category.channel_ids.indexOf(channelId);
 
-        if (index === -1) {
-          continue
+            if (index === -1) {
+                continue;
+            }
+
+            const nextChannelIds = [...category.channel_ids];
+            nextChannelIds.splice(index, 1);
+
+            nextState[category.id] = {
+                ...category,
+                channel_ids: nextChannelIds,
+            };
+
+            changed = true;
         }
 
-        const nextChannelIds = [...category.channel_ids]
-        nextChannelIds.splice(index, 1)
-
-        nextState[category.id] = {
-          ...category,
-          channel_ids: nextChannelIds,
-        }
-
-        changed = true
-      }
-
-      return changed ? nextState : state
+        return changed ? nextState : state;
     }
     case TeamTypes.LEAVE_TEAM: {
-      const team: Team = action.data
+        const team: Team = action.data;
 
-      const nextState = { ...state }
-      let changed = false
+        const nextState = {...state};
+        let changed = false;
 
-      for (const category of Object.values(state)) {
-        if (category.team_id !== team.id) {
-          continue
+        for (const category of Object.values(state)) {
+            if (category.team_id !== team.id) {
+                continue;
+            }
+
+            Reflect.deleteProperty(nextState, category.id);
+            changed = true;
         }
 
-        Reflect.deleteProperty(nextState, category.id)
-        changed = true
-      }
-
-      return changed ? nextState : state
+        return changed ? nextState : state;
     }
 
     case UserTypes.LOGOUT_SUCCESS:
-      return {}
+        return {};
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 export function orderByTeam(state: RelationOneToOne<Team, Array<$ID<ChannelCategory>>> = {}, action: GenericAction) {
-  switch (action.type) {
+    switch (action.type) {
     case ChannelCategoryTypes.RECEIVED_CATEGORY_ORDER: {
-      const teamId: string = action.data.teamId
-      const order: string[] = action.data.order
+        const teamId: string = action.data.teamId;
+        const order: string[] = action.data.order;
 
-      return {
-        ...state,
-        [teamId]: order,
-      }
+        return {
+            ...state,
+            [teamId]: order,
+        };
     }
 
     case ChannelCategoryTypes.CATEGORY_DELETED: {
-      const categoryId: $ID<ChannelCategory> = action.data
+        const categoryId: $ID<ChannelCategory> = action.data;
 
-      const nextState = { ...state }
+        const nextState = {...state};
 
-      for (const teamId of Object.keys(nextState)) {
-        // removeItem only modifies the array if it contains the category ID, so other teams' state won't be modified
-        nextState[teamId] = removeItem(state[teamId], categoryId)
-      }
+        for (const teamId of Object.keys(nextState)) {
+            // removeItem only modifies the array if it contains the category ID, so other teams' state won't be modified
+            nextState[teamId] = removeItem(state[teamId], categoryId);
+        }
 
-      return nextState
+        return nextState;
     }
 
     case TeamTypes.LEAVE_TEAM: {
-      const team: Team = action.data
+        const team: Team = action.data;
 
-      if (!state[team.id]) {
-        return state
-      }
+        if (!state[team.id]) {
+            return state;
+        }
 
-      const nextState = { ...state }
-      Reflect.deleteProperty(nextState, team.id)
+        const nextState = {...state};
+        Reflect.deleteProperty(nextState, team.id);
 
-      return nextState
+        return nextState;
     }
 
     case UserTypes.LOGOUT_SUCCESS:
-      return {}
+        return {};
     default:
-      return state
-  }
+        return state;
+    }
 }
 
 export default combineReducers({
-  byId,
-  orderByTeam,
-})
+    byId,
+    orderByTeam,
+});

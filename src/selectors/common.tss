@@ -2,7 +2,7 @@ import { GlobalState } from 'types/store'
 import { UsersAwareState, UsersState } from 'types/users'
 import { RelationOneToOne } from 'types/utilities'
 import { Channel, ChannelMembership } from 'types/channels'
-import { USERS_MODULE_NAME } from 'hkconstants/users'
+import { USERS_MODULE_NAME } from 'constants/users'
 import { createSelector } from 'reselect'
 
 // Users

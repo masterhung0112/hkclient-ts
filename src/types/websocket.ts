@@ -2,21 +2,21 @@
 // See LICENSE.txt for license information.
 
 export type WebSocketBroadcast = {
-  omit_users: Record<string, boolean>
-  user_id: string
-  channel_id: string
-  team_id: string
+    omit_users: Record<string, boolean>;
+    user_id: string;
+    channel_id: string;
+    team_id: string;
 }
 
 export type WebSocketMessage<T> = {
-  event: string
-  data: T
-  broadcast: WebSocketBroadcast
-  seq: number
+    event: string;
+    data: T;
+    broadcast: WebSocketBroadcast;
+    seq: number;
 }
 
 export type WebsocketStatus = {
-  connected: boolean
-  lastConnectAt: number
-  lastDisconnectAt: number
+    connected: boolean;
+    lastConnectAt: number;
+    lastDisconnectAt: number;
 }

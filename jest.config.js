@@ -1,47 +1,34 @@
-module.exports = async () => {
-  return {
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+module.exports = {
     globals: {
-      'ts-jest': {
-        tsConfig: 'tsconfig.json',
-        diagnostics: true,
-      },
-      NODE_ENV: 'test',
+        'ts-jest': {
+            tsConfig: 'tsconfig.json',
+            diagnostics: true,
+        },
+        NODE_ENV: 'test',
     },
+    preset: 'ts-jest/presets/js-with-babel',
+    rootDir: '.',
+    moduleDirectories: ['node_modules', 'src'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-    verbose: true,
+    transformIgnorePatterns: ['<rootDir>/node_modules/'],
+    testMatch: [
+        '<rootDir>/src/**/*.(spec|test).(ts|js)?(x)',
+    ],
+    setupFiles: [
+        'core-js',
+    ],
+    setupFilesAfterEnv: ['<rootDir>/src/test/setup.js'],
     clearMocks: true,
-    rootDir: './src',
-    preset: 'ts-jest',
-    setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+    verbose: true,
     moduleNameMapper: {
-      '^types/(.*)$': '<rootDir>/types/$1',
-      '^store/(.*)$': '<rootDir>/store/$1',
-      '^client$': '<rootDir>/client',
-      '^client/(.*)$': '<rootDir>/client/$1',
-      '^hkconstants$': '<rootDir>/constants',
-      '^hkconstants/(.*)$': '<rootDir>/constants/$1',
-      '^utils$': '<rootDir>/utils',
-      '^utils/(.*)$': '<rootDir>/utils/$1',
-      '^testlib$': '<rootDir>/testlib',
-      '^testlib/(.*)$': '<rootDir>/testlib/$1',
-      '^action-types$': '<rootDir>/action-types',
-      '^action-types/(.*)$': '<rootDir>/action-types/$1',
-      '^actions$': '<rootDir>/actions',
-      '^actions/(.*)$': '<rootDir>/actions/$1',
-      '^reducers$': '<rootDir>/reducers',
-      '^reducers/(.*)$': '<rootDir>/reducers/$1',
-      '^selectors$': '<rootDir>/selectors',
-      '^selectors/(.*)$': '<rootDir>/selectors/$1',
-      '^hkmodules$': '<rootDir>/modules',
-      '^hkmodules/(.*)$': '<rootDir>/modules/$1',
-      '^saga-modular$': '<rootDir>/redux/saga-modular',
-      '^saga-modular/(.*)$': '<rootDir>/redux/saga-modular/$1',
-      '^hksagas$': '<rootDir>/sagas',
-      '^hksagas/(.*)$': '<rootDir>/sagas/$1',
-      '^hkreducers$': '<rootDir>/reducers',
-      '^hkreducers/(.*)$': '<rootDir>/reducers/$1',
-      '^hkredux$': '<rootDir>/hkredux',
-      '^hkredux/(.*)$': '<rootDir>/hkredux/$1',
+        '^src/(.*)$': '<rootDir>/src/$1',
+        '^saga-modular$': '<rootDir>/src/hkredux/saga-modular',
+        '^saga-modular/(.*)$': '<rootDir>/src/hkredux/saga-modular/$1',
+        '^sagas$': '<rootDir>/src/sagas',
+        '^sagas/(.*)$': '<rootDir>/src/sagas/$1',
+        '^hkredux$': '<rootDir>/src/hkredux',
+        '^hkredux/(.*)$': '<rootDir>/src/hkredux/$1',
     },
-  }
-}
+};

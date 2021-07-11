@@ -1,6 +1,6 @@
 import { isMinimumServerVersion } from 'utils/helpers'
 import { GeneralAwareState, GeneralState } from 'types/general'
-import General from 'hkconstants/general'
+import General from 'constants/general'
 import { createSelector } from 'reselect'
 
 export const generalSelector = (state: GeneralAwareState): GeneralState => {
